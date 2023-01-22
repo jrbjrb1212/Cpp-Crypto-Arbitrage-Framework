@@ -4,9 +4,38 @@
 #include <nlohmann/json.hpp>
 #include <unordered_map>
 #include <vector>
-#include "Header_Files/Graph.h"
 
 // must use VPN with a server outside of the US as binance does not allow US API requests
+
+struct Edge {
+    std::string to;
+    double weight;
+};
+
+class Graph {
+    public:
+        Graph () {}
+        std::unordered_map<std::string, std::vector<Edge>> adjacency_list;
+
+        // TODO: Change graph to add edges in both directions as the crypto exchange rate is the inverse
+        void addEdge(std::string from, std::string to, double weight) {
+            adjacency_list[from].push_back({to, weight});
+            adjacency_list[to].push_back({from, 1/weight});
+        }
+
+        void printGraph() {
+            for (auto it = adjacency_list.begin(); it != adjacency_list.end(); it++) {
+                std::string vertex = it->first;
+                std::vector<Edge> edges = it->second;
+                std::cout << vertex << ": ";
+                for (const auto& edge : edges) {
+                    std::cout << "(" << edge.to << ", " << edge.weight << ") ";
+                }
+                std::cout << std::endl;
+            }
+        }
+};
+
 
 static size_t writeCallback(void *contents, size_t size, size_t nmemb, void *userp)
 {
@@ -22,18 +51,8 @@ static void buildSymbolHashMap(std::unordered_map<std::string, std::vector<std::
     if (input_file.is_open()) {
         while (std::getline(input_file, line)) {
             std::vector<std::string> symbols_vec = {line.substr(0, line.find("/")), line.substr(line.find("/") + 1)};
-            std::string symbol_key = symbol.substr(0, line.find("/")) + line.substr(line.find("/") + 1);
-            symbols[symbol_key] = symbols_vec;
-
-
-
-            // line = line.substr(1, line.length()-2);
-            // lineCopy = line;
-            // slashPos = line.find("/"); // returns position of the slash
-            // line.replace(slashPos, 1, "");
-
-            // // add to symbolMap
-            // symbolMap[line] = lineCopy;
+            std::string symbol_key = line.substr(0, line.find("/")) + line.substr(line.find("/") + 1);
+            symbolMap[symbol_key] = symbols_vec;
         }
         input_file.close();
     }
@@ -51,6 +70,7 @@ int main()
     std::unordered_map<std::string, std::vector<std::string>> symbolMap;
 
     buildSymbolHashMap(symbolMap);
+    
 
     curl = curl_easy_init();
     if (curl)
@@ -73,10 +93,22 @@ int main()
         nlohmann::json json_data = nlohmann::json::parse(response);
         // print out every price data point from binance
         for (const auto& item : json_data) {
-            std::cout << item["symbol"] << std::endl;
-            // g.addEdge("A", "B", stod(item["price"]));
+            std::string tradeSymbol = "\"" + std::string(item["symbol"]) + "\"";
+            std::vector<std::string> assets = symbolMap[tradeSymbol];
+            if (assets.size() != 2){
+                continue;
+            }
+            std::string fromAsset, toAsset;
+            fromAsset = assets[0].substr(1);
+            toAsset = assets[1].substr(0, assets[1].length()-1);
+            std::string strPirce = item["price"];
+            double price = std::stod(strPirce);
+
+
+            g.addEdge(fromAsset, toAsset, price);
         }
-        // g.printGraph()
+        // g.printGraph();
+        std::cout << g.adjacency_list.size() << std::endl;
         
 
 

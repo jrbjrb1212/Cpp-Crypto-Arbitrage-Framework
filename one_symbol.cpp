@@ -49,9 +49,3 @@ int main()
     curl_global_cleanup();
     return 0;
 }
-
-// find_package(nlohmann_json REQUIRED)
-// include_directories(${nlohmann_json_INCLUDE_DIRS})
-
-// add_executable(your_program_name main.cpp)
-// target_link_libraries(your_program_name PRIVATE nlohmann_json)
