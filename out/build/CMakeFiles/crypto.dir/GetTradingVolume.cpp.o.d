@@ -1,5 +1,5 @@
-CMakeFiles/crypto.dir/main.cpp.o: \
-  /Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/main.cpp \
+CMakeFiles/crypto.dir/GetTradingVolume.cpp.o: \
+  /Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/GetTradingVolume.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/iostream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__config \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__config_site \
@@ -414,12 +414,6 @@ CMakeFiles/crypto.dir/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_fsfilcnt_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_types/_nl_item.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__bsd_locale_defaults.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/fstream \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/filesystem \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/stack \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/deque \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__split_buffer \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/iomanip \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/curl/curl.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/curl/curlver.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/curl/system.h \
@@ -445,6 +439,7 @@ CMakeFiles/crypto.dir/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/math.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/math.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/vector \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__split_buffer \
   /usr/local/include/nlohmann/adl_serializer.hpp \
   /usr/local/include/nlohmann/detail/abi_macros.hpp \
   /usr/local/include/nlohmann/detail/conversions/from_json.hpp \
@@ -495,8 +490,12 @@ CMakeFiles/crypto.dir/main.cpp.o: \
   /usr/local/include/nlohmann/detail/output/binary_writer.hpp \
   /usr/local/include/nlohmann/detail/output/output_adapters.hpp \
   /usr/local/include/nlohmann/detail/output/serializer.hpp \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/iomanip \
   /usr/local/include/nlohmann/detail/conversions/to_chars.hpp \
   /usr/local/include/nlohmann/ordered_map.hpp \
   /usr/local/include/nlohmann/detail/macro_unscope.hpp \
   /usr/local/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
-  /Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/Header_Files/Graph.h
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/fstream \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/filesystem \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/stack \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/deque

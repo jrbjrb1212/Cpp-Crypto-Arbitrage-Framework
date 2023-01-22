@@ -416,6 +416,12 @@ CMakeFiles/crypto.dir/main.cpp.o: /Users/johnbillos/Desktop/Projects/Crypto-Arbi
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_fsfilcnt_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_types/_nl_item.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__bsd_locale_defaults.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/fstream \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/filesystem \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/stack \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/deque \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__split_buffer \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/iomanip \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/curl/curl.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/curl/curlver.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/curl/system.h \
@@ -441,7 +447,6 @@ CMakeFiles/crypto.dir/main.cpp.o: /Users/johnbillos/Desktop/Projects/Crypto-Arbi
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/math.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/math.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/vector \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__split_buffer \
   /usr/local/include/nlohmann/adl_serializer.hpp \
   /usr/local/include/nlohmann/detail/abi_macros.hpp \
   /usr/local/include/nlohmann/detail/conversions/from_json.hpp \
@@ -492,18 +497,16 @@ CMakeFiles/crypto.dir/main.cpp.o: /Users/johnbillos/Desktop/Projects/Crypto-Arbi
   /usr/local/include/nlohmann/detail/output/binary_writer.hpp \
   /usr/local/include/nlohmann/detail/output/output_adapters.hpp \
   /usr/local/include/nlohmann/detail/output/serializer.hpp \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/iomanip \
   /usr/local/include/nlohmann/detail/conversions/to_chars.hpp \
   /usr/local/include/nlohmann/ordered_map.hpp \
   /usr/local/include/nlohmann/detail/macro_unscope.hpp \
-  /usr/local/include/nlohmann/thirdparty/hedley/hedley_undef.hpp
+  /usr/local/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+  /Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/Header_Files/Graph.h
 
 
 /usr/local/include/nlohmann/detail/macro_unscope.hpp:
 
 /usr/local/include/nlohmann/ordered_map.hpp:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/iomanip:
 
 /usr/local/include/nlohmann/detail/output/output_adapters.hpp:
 
@@ -555,8 +558,6 @@ CMakeFiles/crypto.dir/main.cpp.o: /Users/johnbillos/Desktop/Projects/Crypto-Arbi
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/forward_list:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__split_buffer:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/vector:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/math.h:
@@ -597,6 +598,12 @@ CMakeFiles/crypto.dir/main.cpp.o: /Users/johnbillos/Desktop/Projects/Crypto-Arbi
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/curl/curl.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/iomanip:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__split_buffer:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/stack:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/math.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__bsd_locale_defaults.h:
@@ -630,6 +637,8 @@ CMakeFiles/crypto.dir/main.cpp.o: /Users/johnbillos/Desktop/Projects/Crypto-Arbi
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__iterator/common_iterator.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/locale:
+
+/Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/Header_Files/Graph.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_pthread/_pthread_rwlockattr_t.h:
 
@@ -911,6 +920,8 @@ CMakeFiles/crypto.dir/main.cpp.o: /Users/johnbillos/Desktop/Projects/Crypto-Arbi
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__function_like.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/filesystem:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/iterator:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/remove.h:
@@ -998,6 +1009,8 @@ CMakeFiles/crypto.dir/main.cpp.o: /Users/johnbillos/Desktop/Projects/Crypto-Arbi
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_uid_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/chrono:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/fstream:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__thread/poll_with_backoff.h:
 
@@ -1454,6 +1467,8 @@ CMakeFiles/crypto.dir/main.cpp.o: /Users/johnbillos/Desktop/Projects/Crypto-Arbi
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/i386/_types.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/pthread/sched.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/deque:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/iostream:
 
