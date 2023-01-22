@@ -5,59 +5,71 @@
 #include <unordered_map>
 #include <vector>
 
+using namespace std;
+
 // must use VPN with a server outside of the US as binance does not allow US API requests
 
 struct Edge {
-    std::string to;
+    string to;
     double weight;
 };
 
 class Graph {
+    private:
+        int m_graphEdges = 0;
+
     public:
         Graph () {}
-        std::unordered_map<std::string, std::vector<Edge>> adjacency_list;
+        unordered_map<string, vector<Edge>> adjacency_list;
 
         // TODO: Change graph to add edges in both directions as the crypto exchange rate is the inverse
-        void addEdge(std::string from, std::string to, double weight) {
+        void addEdge(string from, string to, double weight) {
             adjacency_list[from].push_back({to, weight});
             adjacency_list[to].push_back({from, 1/weight});
+            m_graphEdges+=2;
         }
 
         void printGraph() {
             for (auto it = adjacency_list.begin(); it != adjacency_list.end(); it++) {
-                std::string vertex = it->first;
-                std::vector<Edge> edges = it->second;
-                std::cout << vertex << ": ";
+                string vertex = it->first;
+                vector<Edge> edges = it->second;
+                cout << vertex << ": ";
                 for (const auto& edge : edges) {
-                    std::cout << "(" << edge.to << ", " << edge.weight << ") ";
+                    cout << "(" << edge.to << ", " << edge.weight << ") ";
                 }
-                std::cout << std::endl;
+                cout << endl;
             }
+        }
+        int getVertexCount() {
+            return adjacency_list.size();
+        }
+        int getEdgeCount() {
+            return m_graphEdges;
         }
 };
 
 
 static size_t writeCallback(void *contents, size_t size, size_t nmemb, void *userp)
 {
-    ((std::string *)userp)->append((char *)contents, size * nmemb);
+    ((string *)userp)->append((char *)contents, size * nmemb);
     return size * nmemb;
 }
-static void buildSymbolHashMap(std::unordered_map<std::string, std::vector<std::string>>& symbolMap){
+static void buildSymbolHashMap(unordered_map<string, vector<string>>& symbolMap){
     // read from Symbols_Slash_Split.txt and build a dictionary
-    std::ifstream input_file("/Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/Symbol_Data_Files/Symbols_Slash_Split.txt");
-    std::string line, lineCopy;
+    ifstream input_file("/Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/Symbol_Data_Files/Symbols_Slash_Split.txt");
+    string line, lineCopy;
     short int slashPos;
 
     if (input_file.is_open()) {
-        while (std::getline(input_file, line)) {
-            std::vector<std::string> symbols_vec = {line.substr(0, line.find("/")), line.substr(line.find("/") + 1)};
-            std::string symbol_key = line.substr(0, line.find("/")) + line.substr(line.find("/") + 1);
+        while (getline(input_file, line)) {
+            vector<string> symbols_vec = {line.substr(0, line.find("/")), line.substr(line.find("/") + 1)};
+            string symbol_key = line.substr(0, line.find("/")) + line.substr(line.find("/") + 1);
             symbolMap[symbol_key] = symbols_vec;
         }
         input_file.close();
     }
     else {
-        std::cout << "Unable to open file" << std::endl;
+        cout << "Unable to open file" << endl;
     }
 }
 
@@ -66,8 +78,8 @@ int main()
 {
     CURL *curl;
     CURLcode res;
-    std::string response;
-    std::unordered_map<std::string, std::vector<std::string>> symbolMap;
+    string response;
+    unordered_map<string, vector<string>> symbolMap;
 
     buildSymbolHashMap(symbolMap);
     
@@ -86,34 +98,38 @@ int main()
         // Check for errors
         if (res != CURLE_OK)
         {
-            std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
+            cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
         }
         Graph g;
         // parse the list of json strings returned form the binance API call
         nlohmann::json json_data = nlohmann::json::parse(response);
-        // print out every price data point from binance
+
+        // parse every price data point from binance and add it to my graph
         for (const auto& item : json_data) {
-            std::string tradeSymbol = "\"" + std::string(item["symbol"]) + "\"";
-            std::vector<std::string> assets = symbolMap[tradeSymbol];
+            string tradeSymbol = "\"" + string(item["symbol"]) + "\"";
+            vector<string> assets = symbolMap[tradeSymbol];
+            // check for symbol that is not in my map
             if (assets.size() != 2){
                 continue;
             }
-            std::string fromAsset, toAsset;
+            string fromAsset, toAsset;
             fromAsset = assets[0].substr(1);
             toAsset = assets[1].substr(0, assets[1].length()-1);
-            std::string strPirce = item["price"];
-            double price = std::stod(strPirce);
+            string strPirce = item["price"];
+            double price = stod(strPirce);
 
 
             g.addEdge(fromAsset, toAsset, price);
         }
-        // g.printGraph();
-        std::cout << g.adjacency_list.size() << std::endl;
-        
 
+        // run BellmanFord from USD
+        // BellmanFord(g, "USDT");
+        g.printGraph();
 
-        // std::cout << response << std::endl;
-        
+        // TODO: remove later; for testing
+        cout << "Number of vertices: " << g.getVertexCount() << endl;
+        cout << "Number of edges: " << g.getEdgeCount() << endl;
+                
 
         curl_easy_cleanup(curl);
     }
