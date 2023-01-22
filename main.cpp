@@ -13,7 +13,7 @@ static size_t writeCallback(void *contents, size_t size, size_t nmemb, void *use
     ((std::string *)userp)->append((char *)contents, size * nmemb);
     return size * nmemb;
 }
-static void buildSymbolHashMap(std::unordered_map<std::string, std::string>& symbolMap){
+static void buildSymbolHashMap(std::unordered_map<std::string, std::vector<std::string>>& symbolMap){
     // read from Symbols_Slash_Split.txt and build a dictionary
     std::ifstream input_file("/Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/Symbol_Data_Files/Symbols_Slash_Split.txt");
     std::string line, lineCopy;
@@ -21,13 +21,19 @@ static void buildSymbolHashMap(std::unordered_map<std::string, std::string>& sym
 
     if (input_file.is_open()) {
         while (std::getline(input_file, line)) {
-            line = line.substr(1, line.length()-2);
-            lineCopy = line;
-            slashPos = line.find("/"); // returns position of the slash
-            line.replace(slashPos, 1, "");
+            std::vector<std::string> symbols_vec = {line.substr(0, line.find("/")), line.substr(line.find("/") + 1)};
+            std::string symbol_key = symbol.substr(0, line.find("/")) + line.substr(line.find("/") + 1);
+            symbols[symbol_key] = symbols_vec;
 
-            // add to symbolMap
-            symbolMap[line] = lineCopy;
+
+
+            // line = line.substr(1, line.length()-2);
+            // lineCopy = line;
+            // slashPos = line.find("/"); // returns position of the slash
+            // line.replace(slashPos, 1, "");
+
+            // // add to symbolMap
+            // symbolMap[line] = lineCopy;
         }
         input_file.close();
     }
@@ -42,7 +48,7 @@ int main()
     CURL *curl;
     CURLcode res;
     std::string response;
-    std::unordered_map<std::string, std::string> symbolMap;
+    std::unordered_map<std::string, std::vector<std::string>> symbolMap;
 
     buildSymbolHashMap(symbolMap);
 
