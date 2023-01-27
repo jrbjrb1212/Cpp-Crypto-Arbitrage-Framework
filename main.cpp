@@ -89,6 +89,8 @@ int main()
     {
         // TODO:
         // can query in parrelel later with https://api.binance.com/api/v3/ticker/price/?symbol=btcusdt
+        // but not sure it would becuase one call will give all data in one JSON string
+
         // where we iterate through a presaved file of all symbols
         curl_easy_setopt(curl, CURLOPT_URL, "https://api.binance.com/api/v3/ticker/price");
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallback);
@@ -102,6 +104,7 @@ int main()
         }
         Graph g;
         // parse the list of json strings returned form the binance API call
+        // TODO: Test to make sure something correct is returned from API call aka on the right VPN
         nlohmann::json json_data = nlohmann::json::parse(response);
 
         // parse every price data point from binance and add it to my graph

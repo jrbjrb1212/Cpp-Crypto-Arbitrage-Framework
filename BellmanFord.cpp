@@ -1,76 +1,169 @@
+/*
+Psudeo Code for Bellmon Ford
+BEGIN
+// Source distance set to 0
+d(v[1]) ← 0
+
+// Initalize members of distance array
+FOR j = 2,..,n DO
+    d(v[j]) ← ∞
+
+// Main Loop of iterations for Bellman
+FOR i = 1,..,(|V|-1) DO
+    FOR ALL (u,v) in E DO
+        d(v) ← min(d(v), d(u)+l(u,v))
+
+// V-th iteration check for negative cycles
+FOR ALL (u,v) in E DO
+    IF d(v) > d(u) + l(u,v) DO
+        Message: "Negative Circle"
+END
+*/
+
 #include <iostream>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
-#include <limits>
-
 using namespace std;
 
-const double INF = numeric_limits<double>::max();
+
+struct Edge;
+class Graph;
+void printBellmonFord(unordered_map<string, int> dists);
+unordered_map<string, int> BellmonFord(Graph g, string source);
+
+
 
 struct Edge {
     string to;
     double weight;
 };
 
-void BellmanFord(unordered_map<string, vector<Edge>>& adjList, string source, unordered_map<string, double>& dist, unordered_map<string, string>& pred) {
-    int V = adjList.size();
-    for(auto &[key, value]: dist) dist[key] = INF;
-    dist[source] = 1; //Initialize distance from source to source as 1
-    for(auto &[key, value]: pred) pred[key] = "";
-    pred[source] = source;
+class Graph {
+    private:
+        int m_graphEdges = 0;
 
-    for (int i = 0; i < V - 1; i++) {
-        for (auto& [u, edges] : adjList) {
-            for (auto& edge : edges) {
-                string v = edge.to;
-                double w = edge.weight;
-                if (dist[v] > dist[u] * (1/w)) {
-                    dist[v] = dist[u] * (1/w);
-                    pred[v] = u;
+    public:
+        Graph () {}
+        unordered_map<string, vector<Edge>> adjacency_list;
+
+        // TODO: Change graph to add edges in both directions as the crypto exchange rate is the inverse
+        void addEdge(string from, string to, double weight) {
+            adjacency_list[from].push_back({to, weight});
+			// make sure each vertex is a key in the adjaceny_list
+			if (adjacency_list.find(to) == adjacency_list.end()){
+				adjacency_list[to];
+			}
+			m_graphEdges++;
+
+			//TODO: Change back later
+            // adjacency_list[to].push_back({from, 1/weight});
+            // m_graphEdges+=2;
+        }
+
+        void printGraph() {
+			cout << "\nGraph Print in form of Adjaceny List: " << endl;
+            for (auto it = adjacency_list.begin(); it != adjacency_list.end(); it++) {
+                string vertex = it->first;
+                vector<Edge> edges = it->second;
+                cout << vertex << ": ";
+                for (const auto& edge : edges) {
+                    cout << "(" << edge.to << ", " << edge.weight << ") ";
                 }
+                cout << endl;
             }
         }
-    }
-
-    // check for negative cycles
-    for (auto& [u, edges] : adjList) {
-        for (auto& edge : edges) {
-            string v = edge.to;
-            double w = edge.weight;
-            if (dist[v] > dist[u] * (1/w)) {
-                cout << "Negative cycle detected!" << endl;
-                cout << "Negative cycle path: ";
-                string cur = v;
-                while (cur != source) {
-                    cout << cur << " ";
-                    cur = pred[cur];
-                }
-                cout << source << endl;
-                return;
-            }
+        int getVertexCount() {
+            return adjacency_list.size();
         }
-    }
+        int getEdgeCount() {
+            return m_graphEdges;
+        }
+};
 
-    // print the shortest distances
-    cout << "Shortest distances from the source vertex:" << endl;
-    for (auto& [i, d] : dist) {
-        cout << i << ": " << d << endl;
-    }
+void printBellmonFord(unordered_map<string, int> dists, string source){
+	cout << "\nPrint out of distance array of Bellmon Ford Algo: " << endl;
+	for (auto access : dists) {
+		string vertex = access.first;
+		int shortestPath = access.second;
+		cout << "Vertex: " << vertex << " shortest path from " << source <<  ": "  << shortestPath << endl;
+	}
 }
 
+unordered_map<string, int> BellmonFord(Graph g, string source){
+	const int INF = INT_MAX;
+	const int V = g.getVertexCount();
+    unordered_map<string, vector<Edge>> adjacency_list = g.adjacency_list;
 
-int main() {
-    unordered_map<string, vector<Edge>> adjList;
-    unordered_map<string, double> dist;
-    unordered_map<string, string> pred;
+	// Initialize distance array
+	unordered_map<string, int> dists;
+	for (auto access : adjacency_list){
+		dists[access.first] = INF;
+	}
+	dists[source] = 0;
 
-    // Add edges to the adjacency list
-    adjList["USD"].push_back({ "EUR", 0.8 });
-    adjList["EUR"].push_back({ "GBP", 1.2 });
-    adjList["GBP"].push_back({ "USD", 0.6 });
-    adjList["USD"].push_back({ "GBP", 0.9 });
+	// Do V-1 iterations of Bellmon Ford
+	for (int i = 0; i < V-1; i++){
+		vector<string> vertexStack {};
+		unordered_set<string> vertexSeenSet {}; 
+		vertexStack.push_back(source);
 
-    string source = "USD";
+		while(!vertexStack.empty()){
+			string currVertex = vertexStack.back();
+			vertexStack.pop_back();
+			vertexSeenSet.insert(currVertex);
 
-    BellmanFord(adjList, source, dist, pred);
+			// traverse all the edges of currVertex
+			for (Edge edge : adjacency_list[currVertex]){
+				if (vertexSeenSet.count(edge.to) == 0) {
+					vertexStack.push_back(edge.to);
+				}
+
+				int newCost = dists[currVertex] + edge.weight;
+				if (newCost < dists[edge.to]){
+					dists[edge.to] = newCost;
+				}
+			}
+		}
+	}
+	
+	// V-th relax loop to check for negative cycle
+	vector<string> vertexStack {};
+	unordered_set<string> vertexSeenSet {}; 
+	vertexStack.push_back(source);
+
+	while(!vertexStack.empty()){
+		string currVertex = vertexStack.back();
+		vertexStack.pop_back();
+		vertexSeenSet.insert(currVertex);
+		for (Edge edge : adjacency_list[currVertex]){
+			if (vertexSeenSet.count(edge.to) == 0) {
+				vertexStack.push_back(edge.to);
+			}
+
+			int newCost = dists[currVertex] + edge.weight;
+			if (newCost < dists[edge.to]){
+				cout << "Negative Cycle Detected!!!!" << endl;
+				printBellmonFord(dists, source);
+				return dists;
+			}
+		}
+	}
+
+	printBellmonFord(dists, source);
+    return dists;
+}
+
+int main(){
+    Graph g;
+    g.addEdge("A", "B", 10);
+    g.addEdge("B", "D", 10);
+    g.addEdge("D", "E", 7);
+    g.addEdge("E", "F", 15);
+    g.addEdge("E", "C", 5);
+    g.addEdge("C", "B", 5);
+
+	g.printGraph();
+    BellmonFord(g, "A");
+    return 0;
 }

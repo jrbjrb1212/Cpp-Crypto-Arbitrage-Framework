@@ -129,29 +129,29 @@ crypto/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/build
 .PHONY : crypto/fast
 
-main.o: main.cpp.o
-.PHONY : main.o
+BellmanFord.o: BellmanFord.cpp.o
+.PHONY : BellmanFord.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/main.cpp.o
-.PHONY : main.cpp.o
+BellmanFord.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/BellmanFord.cpp.o
+.PHONY : BellmanFord.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+BellmanFord.i: BellmanFord.cpp.i
+.PHONY : BellmanFord.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/main.cpp.i
-.PHONY : main.cpp.i
+BellmanFord.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/BellmanFord.cpp.i
+.PHONY : BellmanFord.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+BellmanFord.s: BellmanFord.cpp.s
+.PHONY : BellmanFord.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/main.cpp.s
-.PHONY : main.cpp.s
+BellmanFord.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/BellmanFord.cpp.s
+.PHONY : BellmanFord.cpp.s
 
 # Help Target
 help:
@@ -162,9 +162,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... crypto"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... BellmanFord.o"
+	@echo "... BellmanFord.i"
+	@echo "... BellmanFord.s"
 .PHONY : help
 
 
