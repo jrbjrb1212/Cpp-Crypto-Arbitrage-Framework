@@ -13,9 +13,14 @@
 
 using namespace std;
 vector<string> maxPath;
-double maxProfit = 0;
+// double maxProfit = 0;
 
 //TODO: Fix snake case typing of adjaceny list
+//TODO: Remove any size() for loop as size is a member variable of atleast the vector container
+
+double weightConversion(double edgeWeight){
+	return exp(-1 * (edgeWeight / log(exp(1))));
+}
 
 void printBellmonFord(unordered_map<string, double> dists, string source)
 {
@@ -110,112 +115,122 @@ void printUnorderedSet(const unordered_set<string> &set)
 	cout << endl;
 }
 
-// variable types
-void dfsMaxProfit(unordered_map<string, vector<Edge> > adjaceny_list, string source, double currProfit,
-				  string currVertex, unordered_set<string> seenVertexSet, vector<string> path)
+void printUnorderedMap(const unordered_map<string, string> &map)
 {
-	// base case for getting back to the source start
-	if ((currVertex == source))
+	for (auto access : map)
 	{
-		// printVector(path);
-		if (currProfit < maxProfit)
-		{
-			maxProfit = currProfit;
-			maxPath = path;
-		}
-		else if (currProfit == maxProfit)
-		{
-			maxPath = (path.size() < maxPath.size()) ? path : maxPath;
-		}
-		return;
-		// return currProfit;
+		cout << "From: " << access.first << ", To: " << access.second << endl;
 	}
-	if (seenVertexSet.size() >= 3)
-	{
-		return;
-		// return -1;
-	}
-
-	for (Edge edge : adjaceny_list[currVertex])
-	{
-		cout << "Curr Max Profit: " << maxProfit << endl;
-		cout << "Curr Profit: " << currProfit << endl;
-		cout << "Curr Vertex from: " << currVertex << endl;
-		cout << "Curr Edge To: " << edge.to << endl;
-		cout << "Curr Path Vector: ";
-		printVector(path);
-		cout << "Seen set: ";
-		printUnorderedSet(seenVertexSet);
-		cout << endl;
-		// if the desintation of the edge has not be visited yet
-		if (seenVertexSet.count(edge.to) == 0)
-		{
-			path.push_back(edge.to);
-			seenVertexSet.insert(edge.to);
-			// exp(-1 * (edge.weight / log(exp(1))));
-			currProfit += edge.weight;
-			dfsMaxProfit(adjaceny_list, source, currProfit, edge.to, seenVertexSet, path);
-			// double dfsProfit = dfsMaxProfit(adjaceny_list, source, currProfit, edge.to, seenVertexSet, path);
-			seenVertexSet.erase(edge.to);
-			// currProfit = (dfsProfit < currProfit) ? dfsProfit : currProfit;
-			path.pop_back();
-		}
-	}
-
-	return;
-	// return currProfit;
+	cout << endl;
 }
+
+// variable types
+// void dfsMaxProfit(unordered_map<string, vector<Edge> > adjaceny_list, string source, double currProfit,
+// 				  string currVertex, unordered_set<string> seenVertexSet, vector<string> path)
+// {
+// 	// base case for getting back to the source start
+// 	if ((currVertex == source))
+// 	{
+// 		// printVector(path);
+// 		if (currProfit < maxProfit)
+// 		{
+// 			maxProfit = currProfit;
+// 			maxPath = path;
+// 		}
+// 		else if (currProfit == maxProfit)
+// 		{
+// 			maxPath = (path.size() < maxPath.size()) ? path : maxPath;
+// 		}
+// 		return;
+// 		// return currProfit;
+// 	}
+// 	if (seenVertexSet.size() >= 3)
+// 	{
+// 		return;
+// 		// return -1;
+// 	}
+
+// 	for (Edge edge : adjaceny_list[currVertex])
+// 	{
+// 		cout << "Curr Max Profit: " << maxProfit << endl;
+// 		cout << "Curr Profit: " << currProfit << endl;
+// 		cout << "Curr Vertex from: " << currVertex << endl;
+// 		cout << "Curr Edge To: " << edge.to << endl;
+// 		cout << "Curr Path Vector: ";
+// 		printVector(path);
+// 		cout << "Seen set: ";
+// 		printUnorderedSet(seenVertexSet);
+// 		cout << endl;
+// 		// if the desintation of the edge has not be visited yet
+// 		if (seenVertexSet.count(edge.to) == 0)
+// 		{
+// 			path.push_back(edge.to);
+// 			seenVertexSet.insert(edge.to);
+// 			// exp(-1 * (edge.weight / log(exp(1))));
+// 			currProfit += edge.weight;
+// 			dfsMaxProfit(adjaceny_list, source, currProfit, edge.to, seenVertexSet, path);
+// 			// double dfsProfit = dfsMaxProfit(adjaceny_list, source, currProfit, edge.to, seenVertexSet, path);
+// 			seenVertexSet.erase(edge.to);
+// 			// currProfit = (dfsProfit < currProfit) ? dfsProfit : currProfit;
+// 			path.pop_back();
+// 		}
+// 	}
+
+// 	return;
+// 	// return currProfit;
+// }
 
 /*
 *
 * Implmenetation of Bellmon Ford Algorithm to detect Currency Arbritage opportunities
 * TODO: Implement more efficent or parallel versions of Bellmon Ford
 */
-void BellmonFord(Graph g, string source, double profitThreshold)
+vector<string> BellmonFord(Graph g, string source, double profitThreshold)
 {
-	const float INF = numeric_limits<float>::max();
-	const int V = g.getVertexCount();
+	// const float INF = numeric_limits<float>::max();
+	// const int V = g.getVertexCount();
 	unordered_map<string, vector<Edge> > adjacency_list = g.adjacency_list;
-	unordered_map<string, string> prevVert;
+	// unordered_map<string, string> prevVert;
 
-	// Initialize distance array
-	unordered_map<string, double> dists;
-	for (auto access : adjacency_list)
-	{
-		dists[access.first] = INF;
-	}
-	dists[source] = 1;
+	// // Initialize distance array
+	// unordered_map<string, double> dists;
+	// for (auto access : adjacency_list)
+	// {
+	// 	dists[access.first] = INF;
+	// }
+	// dists[source] = 1;
 
-	// Do V-1 iterations of Bellmon Ford
-	for (int i = 0; i < V - 1; i++)
-	{
-		vector<string> vertexStack{};
-		unordered_set<string> vertexSeenSet{};
-		vertexStack.push_back(source);
+	// // Do V-1 iterations of Bellmon Ford
+	// for (int i = 0; i < V - 1; i++)
+	// {
+	// 	vector<string> vertexStack{};
+	// 	unordered_set<string> vertexSeenSet{};
+	// 	vertexStack.push_back(source);
 
-		while (!vertexStack.empty())
-		{
-			string currVertex = vertexStack.back();
-			vertexStack.pop_back();
-			vertexSeenSet.insert(currVertex);
+	// 	while (!vertexStack.empty())
+	// 	{
+	// 		string currVertex = vertexStack.back();
+	// 		vertexStack.pop_back();
+	// 		vertexSeenSet.insert(currVertex);
 
-			// traverse all the edges of currVertex
-			for (Edge edge : adjacency_list[currVertex])
-			{
-				if (vertexSeenSet.count(edge.to) == 0)
-				{
-					vertexStack.push_back(edge.to);
-				}
+	// 		// traverse all the edges of currVertex
+	// 		for (Edge edge : adjacency_list[currVertex])
+	// 		{
+	// 			if (vertexSeenSet.count(edge.to) == 0)
+	// 			{
+	// 				vertexStack.push_back(edge.to);
+	// 			}
 
-				double newCost = dists[currVertex] + edge.weight;
-				if (newCost < dists[edge.to])
-				{
-					dists[edge.to] = newCost;
-					prevVert[edge.to] = currVertex;
-				}
-			}
-		}
-	}
+	// 			double newCost = dists[currVertex] + edge.weight;
+	// 			if (newCost < dists[edge.to])
+	// 			{
+	// 				dists[edge.to] = newCost;
+	// 				prevVert[edge.to] = currVertex;
+	// 			}
+	// 		}
+	// 	}
+	// }
+
 	// I only want to detect a negative cycle in which the source coin is invloved
 	/*
     string currVertex = source;
@@ -252,54 +267,104 @@ void BellmonFord(Graph g, string source, double profitThreshold)
     * V-th relax loop to check for negative cycle
     */
 
-	// TODO: modify such that I am only looking for negative cycles that start with our source Coin
-	// TODO:
-	string currVertex = source;
-	vector<string> vertexStack{currVertex};
-	unordered_set<string> vertexSeenSet;
-	vector<
+	// TODO: modify such that I am only looking for negative cycles that include my selected source Coin
 
-	while (!vertexStack.empty()){
-		string currVertex = vertexStack.back();
-		vertexStack.pop_back();
-		vertexSeenSet.insert(currVertex);
-		for (Edge edge : adjacency_list[currVertex])
-		{	
-			if (vertexSeenSet.count(edge.to) == 0)
-			{
-				vertexStack.push_back(edge.to);
+	// TODO: Try to implement this article https://www.geeksforgeeks.org/print-negative-weight-cycle-in-a-directed-graph/
+	// or this one https://cp-algorithms.com/graph/finding-negative-cycle-in-graph.html#implementation
+	// I need to have a way to discover the path that has a negative cycle and calculate if it is profitable
+	double maxProfit = 0;
+	double currProfit = 0;
+	int negCycles = 0;
+	vector<string> negCyclePath;
+
+	string currVertex = source;
+	for (Edge fristTradeEdge : adjacency_list[currVertex]){
+		currProfit += fristTradeEdge.weight;
+		
+		for (Edge secondTradeEdge : adjacency_list[fristTradeEdge.to]){
+			if (secondTradeEdge.to == source){
+				continue;
 			}
-			double newCost = dists[currVertex] + edge.weight;
-			if (newCost < dists[edge.to])
-			{
-				cout << "Negative Cycle Detected!!!" << endl;
-				cout << "Arbritage Opportunity Detected" << endl;
-				return;
+			currProfit += secondTradeEdge.weight;
+
+			for (Edge sourceTradeEdge : adjacency_list[secondTradeEdge.to]){
+				if (sourceTradeEdge.to != source){
+					continue;
+				}
+				currProfit += sourceTradeEdge.weight;
+				if (currProfit < maxProfit){
+					maxProfit = currProfit;
+					negCyclePath = {source, fristTradeEdge.to, secondTradeEdge.to, source};
+				}
+				currProfit -= sourceTradeEdge.weight;
+				break;
 			}
+
+			currProfit -= secondTradeEdge.weight;
 		}
+
+		currProfit -= fristTradeEdge.weight;
 	}
 
-	if (C != -1) {
-        for (int i = 0; i < V; i++)
-            C = parent[C];
-        // To store the cycle vertex
-        vector<int> cycle;
-        for (int v = C;; v = parent[v]) {
-            cycle.push_back(v);
-            if (v == C
-                && cycle.size() > 1)
-                break;
-        }
+	if (maxProfit < 0){
+		cout << endl;
+		cout << "Arbritarge Opportunity Detected!!" << endl;
+		double maxProfitConversion = weightConversion(maxProfit);
+		cout << "MaxProfit in -log(x): " << maxProfit << endl;
+		cout << "MaxProfit in x: " << maxProfitConversion << endl;
+		cout << ((maxProfitConversion - 1) * 100) << "% profitability" << endl;
+		PrintCycle(negCyclePath);
+		cout << endl;
+	}
 
-        // Reverse cycle[]
-        reverse(cycle.begin(), cycle.end());
+	return negCyclePath;
 
-        // Printing the negative cycle
-        for (int v : cycle)
-            cout << v << ' ';
-        cout << endl;
-		return;
-    }
+	// For loop to go through all the edges of USD
+	// For loop to go through all the edges of edges of USD
+	// get back to USD most likely by iterating through the edges of the previous
+
+
+
+	// while (!vertexStack.empty()){
+	// 	string currVertex = vertexStack.back();
+	// 	vertexStack.pop_back();
+	// 	vertexSeenSet.insert(currVertex);
+	// 	for (Edge edge : adjacency_list[currVertex])
+	// 	{	
+	// 		if (vertexSeenSet.count(edge.to) == 0)
+	// 		{
+	// 			vertexStack.push_back(edge.to);
+	// 		}
+	// 		double newCost = dists[currVertex] + edge.weight;
+	// 		if (newCost < dists[edge.to])
+	// 		{
+	// 			cout << "Negative Cycle Detected!!!" << endl;
+	// 			cout << "Arbritage Opportunity Detected" << endl;
+	// 		}
+	// 	}
+	// }
+
+	// if (C != -1) {
+    //     for (int i = 0; i < V; i++)
+    //         C = parent[C];
+    //     // To store the cycle vertex
+    //     vector<int> cycle;
+    //     for (int v = C;; v = parent[v]) {
+    //         cycle.push_back(v);
+    //         if (v == C
+    //             && cycle.size() > 1)
+    //             break;
+    //     }
+
+    //     // Reverse cycle[]
+    //     reverse(cycle.begin(), cycle.end());
+
+    //     // Printing the negative cycle
+    //     for (int v : cycle)
+    //         cout << v << ' ';
+    //     cout << endl;
+	// 	return;
+    // }
 
 	// while (!vertexStack.empty() && vertexStack[0] == source)
 	// {

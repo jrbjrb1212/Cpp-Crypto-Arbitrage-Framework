@@ -42,6 +42,7 @@ static void buildSymbolHashMap(unordered_map<string, vector<string> > &symbolMap
 
 int main()
 {
+    for (int i = 0; i < 10; i++){
     Graph g;
     CURL *curl;
     CURLcode res;
@@ -91,13 +92,27 @@ int main()
             g.addEdge(fromAsset, toAsset, price);
         }
 
-        vector<string> sourceCoins = {"USDT"};
+        vector<string> sourceCoins {"USDT", "BTC", "ETH", "LTC"};
 
         // run BellmanFord from USD
         for (string coin : sourceCoins)
         {
             cout << "Performing Bellmon Ford from " << coin << endl;
-            BellmonFord(g, coin, 0.05);
+            vector<string> arbPath = BellmonFord(g, coin, 0.05);
+            // validate the arbPath using the graph
+            if (arbPath.size() != 0) {
+                for(int i = 1; i < arbPath.size(); i++){
+                    string from = arbPath[i-1];
+                    string to = arbPath[i];
+                    for (Edge edge : g.adjacency_list[from]){
+                        if (edge.to != to)
+                        {
+                            continue;
+                        }
+                        cout << "From " << from << " to " << to << " trade val: " << weightConversion(edge.weight) << endl;
+                    }
+                }
+            }
         }
         // g.printGraph();
 
@@ -106,6 +121,7 @@ int main()
         // cout << "Number of edges: " << g.getEdgeCount() << endl;
 
         curl_easy_cleanup(curl);
+    }
     }
 
     return 0;
