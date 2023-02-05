@@ -1,123 +1,74 @@
+Start pull from binance...Finished pull from binance
 
-Graph Print in form of Adjaceny List: 
-SYS: (USDT, 1.74126) 
-RIF: (BTC, 12.8523) (USDT, 2.79198) 
-PROM: (BNB, 4.20505) (BTC, 8.46271) 
-XEM: (USDT, 3.20893) 
-UTK: (BTC, 12.343) (USDT, 2.28671) 
-ANT: (BNB, 4.67774) (BTC, 8.9343) (USDT, -1.12135) 
-DAI: (BTC, 10.057) (ETH, 7.4156) (BNB, 5.80874) (USDT, 0.000699755) 
-AVA: (BTC, 10.3981) (USDT, 0.34249) 
-MKR: (BTC, 3.50556) (USDT, -6.54822) 
-REP: (USDT, -1.55393) 
-STPT: (BTC, 13.1426) (USDT, 3.08873) 
-COTI: (BNB, 8.07411) (BTC, 12.3204) (USDT, 2.26625) 
-BTS: (USDT, 4.47239) 
-VITE: (BTC, 13.7112) (USDT, 3.64927) 
-ARPA: (BNB, 9.05078) (BTC, 13.3027) (USDT, 3.25243) (ETH, 10.6679) 
-COCOS: (USDT, 0.376878) 
-AMB: (BTC, 14.144) 
-ANKR: (BNB, 9.35421) (BTC, 13.6085) (USDT, 3.5554) 
-DOGE: (BTC, 12.4168) (USDT, 2.36127) 
-DENT: (ETH, 14.3263) (USDT, 6.90976) 
-ALGO: (BNB, 7.12591) (BTC, 11.3837) (USDT, 1.32614) (ETH, 8.74034) 
-FTM: (BNB, 6.29138) (BTC, 10.5498) (USDT, 0.492986) (ETH, 7.90661) 
-TOMO: (BTC, 10.9251) (USDT, 0.871795) 
-ONE: (BNB, 9.36699) (BTC, 13.6249) (USDT, 3.56914) (ETH, 10.9823) 
-AKRO: (USDT, 5.58068) 
-MITH: (USDT, 5.66938) 
-TRX: (BTC, 12.8076) (ETH, 10.163) (BNB, 8.54765) (USDT, 2.74934) (XRP, 1.85534) (WIN, -6.45287) 
-CELR: (BNB, 9.73916) (BTC, 13.9899) (USDT, 3.94197) (ETH, 11.7499) 
-CHR: (BNB, 7.53643) (BTC, 11.7953) (USDT, 1.73784) (ETH, 9.15113) 
-XVG: (ETH, 13.1632) (USDT, 5.75087) 
-REN: (BTC, 12.3385) (USDT, 2.28424) 
-DOCK: (BTC, 13.932) (USDT, 3.88149) 
-WIN: (BNB, 15.0195) (USDT, 9.20039) (TRX, 6.45287) 
-HOT: (ETH, 13.5154) (USDT, 6.10307) 
-POWR: (BTC, 11.4341) (ETH, 8.79691) (USDT, 1.37912) 
-DCR: (BTC, 6.90476) (USDT, -3.15274) 
-ARDR: (BTC, 12.3499) (USDT, 2.29263) 
-MFT: (ETH, 12.3499) (USDT, 5.24877) 
-NKN: (BTC, 12.2532) (USDT, 2.19642) 
-CHZ: (BNB, 7.73466) (BTC, 11.9942) (USDT, 1.93586) 
-OCEAN: (BNB, 6.73296) (BTC, 10.9906) (USDT, 0.933437) 
-KEY: (ETH, 12.9957) (USDT, 5.56829) 
-SC: (ETH, 13.0641) (USDT, 5.64929) 
-FUN: (ETH, 12.3499) (USDT, 4.93646) (BNB, 10.7341) 
-COS: (USDT, 5.1044) 
-FET: (BNB, 6.8988) (BTC, 11.1567) (USDT, 1.10051) 
-ETH: (BTC, 2.64282) (QTUM, -6.38362) (EOS, -7.32176) (SNT, -10.8999) (BNT, -8.22826) (BNB, -1.61546) (USDT, -7.41391) (LRC, -8.32591) (ZRX, -8.75355) (KNC, -7.53906) (FUN, -12.3499) (NEO, -5.24383) (LINK, -5.44126) (XVG, -13.1632) (MTL, -7.3866) (ETC, -4.2496) (ZEC, -3.58813) (DASH, -3.30962) (VIB, -9.78713) (TRX, -10.163) (POWR, -8.79691) (XRP, -8.30855) (ENJ, -8.14597) (XMR, -2.26433) (BAT, -8.65359) (LSK, -7.37616) (MANA, -7.67433) (ADX, -9.10959) (ADA, -8.33863) (XLM, -9.79374) (LTC, -2.82346) (WAVES, -6.37595) (ICX, -9.04567) (ELF, -9.00495) (RLC, -6.80791) (IOST, -11.9239) (STEEM, -8.92667) (BLZ, -10.0877) (ZIL, -10.9124) (ONT, -8.90359) (WAN, -8.92441) (LOOM, -10.3401) (ZEN, -5.02524) (THETA, -7.29342) (IOTX, -10.9097) (QKC, -11.903) (SC, -13.0641) (KEY, -12.9957) (MFT, -12.3499) (DENT, -14.3263) (HOT, -13.5154) (VET, -11.1108) (DAI, -7.4156) (FTM, -7.90661) (MATIC, -7.19384) (CHR, -9.15113) (ATOM, -4.7346) (ONE, -10.9823) (XTZ, -7.24884) (CELR, -11.7499) (ALGO, -8.74034) (SNX, -6.42595) (ARPA, -10.6679) 
-DATA: (BTC, 13.3837) (USDT, 3.32897) 
-DUSK: (BTC, 11.786) (USDT, 1.72822) 
-THETA: (BTC, 9.93808) (ETH, 7.29342) (BNB, 5.67811) (USDT, -0.120446) 
-RVN: (BTC, 13.5379) (USDT, 3.48317) 
-ZEN: (BTC, 7.66278) (ETH, 5.02524) (BNB, 3.41428) (USDT, -2.39425) 
-QLC: (BTC, 12.9317) 
-VIB: (BTC, 12.4317) (ETH, 9.78713) 
-WAN: (BTC, 11.5632) (ETH, 8.92441) (USDT, 1.50778) 
-XTZ: (BNB, 5.63407) (BTC, 9.89097) (USDT, -0.164667) (ETH, 7.24884) 
-QKC: (BTC, 14.5495) (ETH, 11.903) 
-ONT: (BTC, 11.5444) (ETH, 8.90359) (USDT, 1.49032) 
-CTXC: (BTC, 11.4425) (USDT, 1.38709) 
-ZIL: (BTC, 13.5531) (ETH, 10.9124) (BNB, 9.29917) (USDT, 3.49727) 
-BLZ: (BTC, 12.4045) (ETH, 10.0877) (USDT, 2.34758) 
-STEEM: (BTC, 11.5706) (ETH, 8.92667) (USDT, 1.51367) 
-IOST: (BTC, 14.5495) (ETH, 11.9239) (USDT, 4.51077) 
-RLC: (BTC, 9.45101) (ETH, 6.80791) (USDT, -0.605408) 
-QTUM: (ETH, 6.38362) (BTC, 9.02719) (USDT, -1.03033) 
-WABI: (BTC, 12.2161) 
-NEO: (BTC, 7.88592) (ETH, 5.24383) (USDT, -2.1702) (BNB, 3.63061) 
-ELF: (BTC, 11.6533) (ETH, 9.00495) (USDT, 1.59652) 
-LSK: (BTC, 10.0169) (ETH, 7.37616) (USDT, -0.0401818) 
-ADX: (BTC, 11.7525) (ETH, 9.10959) (USDT, 1.69554) 
-ADA: (BTC, 10.9817) (ETH, 8.33863) (USDT, 0.925079) (BNB, 6.7246) 
-EOS: (ETH, 7.32176) (USDT, -0.0916672) 
-BAT: (BTC, 11.2962) (ETH, 8.65359) (USDT, 1.23891) 
-KMD: (BTC, 11.3281) (USDT, 1.27297) 
-PERL: (USDT, 3.94094) 
-MATIC: (BNB, 5.57909) (BTC, 9.8377) (USDT, -0.219055) (ETH, 7.19384) 
-ENJ: (BTC, 10.7878) (ETH, 8.14597) (BNB, 6.52863) (USDT, 0.730434) 
-ICX: (BTC, 11.526) (ETH, 9.04567) (USDT, 1.46924) 
-XRP: (BTC, 10.9516) (ETH, 8.30855) (USDT, 0.894285) (BNB, 6.69345) (TRX, -1.85534) 
-XMR: (BTC, 4.9079) (ETH, 2.26433) (BNB, 0.649322) (USDT, -5.14924) 
-SNX: (BTC, 9.06797) (BNB, 4.81097) (USDT, -0.987308) (ETH, 6.42595) 
-ATOM: (BNB, 3.11926) (BTC, 7.37744) (USDT, -2.67938) (ETH, 4.7346) 
-XLM: (BTC, 12.4342) (ETH, 9.79374) (BNB, 8.17894) (USDT, 2.37947) 
-REQ: (BTC, 12.249) (USDT, 2.19283) 
-BNT: (ETH, 8.22826) (BTC, 10.8705) (USDT, 0.814186) 
-DASH: (BTC, 5.95301) (ETH, 3.30962) (BNB, 1.69282) (USDT, -4.10347) 
-AST: (BTC, 12.2407) (RBTC, 12.9359) 
-VTHO: (USDT, 6.72627) 
-DGB: (BTC, 14.5705) (USDT, 4.50714) 
-ETC: (ETH, 4.2496) (BTC, 6.89188) (USDT, -3.16421) (BNB, 2.63806) 
-STORJ: (BTC, 10.9274) (USDT, 0.871556) 
-WAVES: (ETH, 6.37595) (USDT, -1.04063) 
-MTL: (BTC, 10.0198) (ETH, 7.3866) (USDT, -0.0334348) 
-VET: (BTC, 13.7479) (ETH, 11.1108) (USDT, 3.69691) (BNB, 9.49536) 
-KNC: (BTC, 10.1816) (ETH, 7.53906) (USDT, 0.125563) (BNB, 5.92082) 
-BTC: (ETH, -2.64282) (LTC, -5.46579) (BNB, -4.25797) (NEO, -7.88592) (USDT, -10.0566) (WTC, -11.503) (LRC, -10.9706) (QTUM, -9.02719) (ZRX, -11.4014) (KNC, -10.1816) (SNM, -9.96813) (LINK, -8.08411) (MTL, -10.0198) (SNT, -13.5379) (ETC, -6.89188) (ZEC, -6.22769) (BNT, -10.8705) (AST, -12.2407) (DASH, -5.95301) (OAX, -11.8725) (REQ, -12.249) (VIB, -12.4317) (TRX, -12.8076) (POWR, -11.4341) (XRP, -10.9516) (ENJ, -10.7878) (STORJ, -10.9274) (KMD, -11.3281) (XMR, -4.9079) (AMB, -14.144) (BAT, -11.2962) (LSK, -10.0169) (MANA, -10.3184) (ADX, -11.7525) (ADA, -10.9817) (XLM, -12.4342) (WABI, -12.2161) (ICX, -11.526) (ELF, -11.6533) (AION, -13.4862) (NEBL, -9.55466) (RLC, -9.45101) (PIVX, -11.3987) (IOST, -14.5495) (STEEM, -11.5706) (BLZ, -12.4045) (ZIL, -13.5531) (ONT, -11.5444) (WAN, -11.5632) (QLC, -12.9317) (LOOM, -12.9526) (ZEN, -7.66278) (THETA, -9.93808) (IOTX, -13.5531) (QKC, -14.5495) (DATA, -13.3837) (ARDR, -12.3499) (VET, -13.7479) (DOCK, -13.932) (RVN, -13.5379) (DCR, -6.90476) (REN, -12.3385) (ONG, -11.2018) (FET, -11.1567) (CELR, -13.9899) (MATIC, -9.8377) (ATOM, -7.37744) (TFUEL, -12.8447) (ONE, -13.6249) (FTM, -10.5498) (ALGO, -11.3837) (DOGE, -12.4168) (DUSK, -11.786) (ANKR, -13.6085) (TOMO, -10.9251) (CHZ, -11.9942) (XTZ, -9.89097) (NKN, -12.2532) (ARPA, -13.3027) (CTXC, -11.4425) (BCH, -5.1379) (VITE, -13.7112) (COTI, -12.3204) (STPT, -13.1426) (CHR, -11.7953) (DGB, -14.5705) (SNX, -9.06797) (MKR, -3.50556) (AVA, -10.3981) (DAI, -10.057) (ANT, -8.9343) (OCEAN, -10.9906) (NMR, -7.05974) (UTK, -12.343) (RIF, -12.8523) (PROM, -8.46271) 
-NMR: (BTC, 7.05974) (USDT, -2.99673) 
-LTC: (BTC, 5.46579) (ETH, 2.82346) (USDT, -4.59067) (BNB, 1.20832) 
-LINK: (BTC, 8.08411) (ETH, 5.44126) (USDT, -1.97213) (BNB, 3.82768) 
-TFUEL: (BTC, 12.8447) (USDT, 2.79035) 
-ONG: (BTC, 11.2018) (USDT, 1.14508) 
-SNM: (BTC, 9.96813) 
-NEBL: (BTC, 9.55466) (USDT, -0.501987) 
-ZRX: (BTC, 11.4014) (ETH, 8.75355) (USDT, 1.34438) 
-LRC: (BTC, 10.9706) (ETH, 8.32591) (USDT, 0.913794) (BNB, 6.71219) 
-BCH: (BNB, 0.879477) (BTC, 5.1379) (USDT, -4.92071) 
-NULS: (USDT, 1.31864) 
-USDT: (BTC, 10.0566) (ETH, 7.41391) (BNB, 5.79849) (NEO, 2.1702) (LTC, 4.59067) (QTUM, 1.03033) (ADA, -0.925079) (XRP, -0.894285) (EOS, 0.0916672) (XLM, -2.37947) (ONT, -1.49032) (TRX, -2.74934) (ETC, 3.16421) (ICX, -1.46924) (NULS, -1.31864) (VET, -3.69691) (LINK, 1.97213) (WAVES, 1.04063) (ONG, -1.14508) (HOT, -6.10307) (ZIL, -3.49727) (ZRX, -1.34438) (FET, -1.10051) (BAT, -1.23891) (XMR, 5.14924) (ZEC, 3.83081) (IOST, -4.51077) (CELR, -3.94197) (DASH, 4.10347) (THETA, 0.120446) (ENJ, -0.730434) (MITH, -5.66938) (MATIC, 0.219055) (ATOM, 2.67938) (TFUEL, -2.79035) (ONE, -3.56914) (FTM, -0.492986) (ALGO, -1.32614) (DOGE, -2.36127) (DUSK, -1.72822) (ANKR, -3.5554) (WIN, -9.20039) (COS, -5.1044) (COCOS, -0.376878) (MTL, 0.0334348) (TOMO, -0.871795) (PERL, -3.94094) (DENT, -6.90976) (MFT, -5.24877) (KEY, -5.56829) (DOCK, -3.88149) (WAN, -1.50778) (FUN, -4.93646) (CHZ, -1.93586) (XTZ, 0.164667) (REN, -2.28424) (RVN, -3.48317) (NKN, -2.19642) (ARPA, -3.25243) (IOTX, -3.49727) (RLC, 0.605408) (CTXC, -1.38709) (BCH, 4.92071) (VITE, -3.64927) (BTS, -4.47239) (LSK, 0.0401818) (BNT, -0.814186) (AION, -3.33541) (COTI, -2.26625) (STPT, -3.08873) (WTC, -1.44902) (DATA, -3.32897) (CHR, -1.73784) (ARDR, -2.29263) (KNC, -0.125563) (REP, 1.55393) (LRC, -0.913794) (SC, -5.64929) (ZEN, 2.39425) (SNX, 0.987308) (VTHO, -6.72627) (DGB, -4.50714) (MKR, 6.54822) (DCR, 3.15274) (STORJ, -0.871556) (MANA, -0.262274) (BLZ, -2.34758) (KMD, -1.27297) (DAI, -0.000699755) (ANT, 1.12135) (OCEAN, -0.933437) (NMR, 2.99673) (UTK, -2.28671) (AKRO, -5.58068) (AVA, -0.34249) (XEM, -3.20893) (RIF, -2.79198) (XVG, -5.75087) (REQ, -2.19283) (ELF, -1.59652) (SYS, -1.74126) (ADX, -1.69554) (POWR, -1.37912) (STEEM, -1.51367) (NEBL, 0.501987) 
-AION: (BTC, 13.4862) (USDT, 3.33541) 
-PIVX: (BTC, 11.3987) 
-RBTC: (AST, -12.9359) 
-LOOM: (BTC, 12.9526) (ETH, 10.3401) 
-WTC: (BTC, 11.503) (USDT, 1.44902) 
-IOTX: (BTC, 13.5531) (ETH, 10.9097) (USDT, 3.49727) 
-OAX: (BTC, 11.8725) 
-SNT: (ETH, 10.8999) (BTC, 13.5379) 
-ZEC: (BTC, 6.22769) (ETH, 3.58813) (BNB, 1.97113) (USDT, -3.83081) 
-MANA: (BTC, 10.3184) (ETH, 7.67433) (USDT, 0.262274) 
-BNB: (BTC, 4.25797) (ETH, 1.61546) (USDT, -5.79849) (NEO, -3.63061) (XLM, -8.17894) (LTC, -1.20832) (ZIL, -9.29917) (ADA, -6.7246) (ZEN, -3.41428) (THETA, -5.67811) (XRP, -6.69345) (ENJ, -6.52863) (TRX, -8.54765) (ETC, -2.63806) (VET, -9.49536) (FET, -6.8988) (XMR, -0.649322) (ZEC, -1.97113) (CELR, -9.73916) (DASH, -1.69282) (MATIC, -5.57909) (ATOM, -3.11926) (ONE, -9.36699) (FTM, -6.29138) (ALGO, -7.12591) (ANKR, -9.35421) (WIN, -15.0195) (CHZ, -7.73466) (XTZ, -5.63407) (ARPA, -9.05078) (BCH, -0.879477) (COTI, -8.07411) (CHR, -7.53643) (SNX, -4.81097) (DAI, -5.80874) (ANT, -4.67774) (OCEAN, -6.73296) (PROM, -4.20505) (LINK, -3.82768) (LRC, -6.71219) (FUN, -10.7341) (KNC, -5.92082) 
+Start pull from bitget...Finished pull frombitget
+
+Start pull from bitmart...Finished pull frombitmart
+
+Start pull from gateio...Finished pull from gateio
+
+Start pull from kucoin...Finished pull from kucoin
+
+Start pull from huboi...Finished pull from huboi
+
 Number of vertices: 119
-Number of edges: 606
+Number of edges: 1846
+Performing Arb Finder from USDT
+Curr Profit: 13.2078% profitability :Log representation: -0.124055Upper Bound: -0.223144
+Curr Profit: 18.253% profitability :Log representation: -0.167656Upper Bound: -0.223144
+Curr Profit: 3.09488% profitability :Log representation: -0.0304795Upper Bound: -0.223144
+Curr Profit: 2.57792% profitability :Log representation: -0.0254525Upper Bound: -0.223144
+Curr Profit: 2.92038% profitability :Log representation: -0.0287855Upper Bound: -0.223144
+Curr Profit: 3.77781% profitability :Log representation: -0.037082Upper Bound: -0.223144
+Curr Profit: 6.27132% profitability :Log representation: -0.0608252Upper Bound: -0.223144
+Curr Profit: 3.53531% profitability :Log representation: -0.0347425Upper Bound: -0.223144
+Curr Profit: 3.03409% profitability :Log representation: -0.0298897Upper Bound: -0.223144
+Curr Profit: 13.2137% profitability :Log representation: -0.124107Upper Bound: -0.223144
+Curr Profit: 18.2565% profitability :Log representation: -0.167686Upper Bound: -0.223144
+Curr Profit: 3.09797% profitability :Log representation: -0.0305095Upper Bound: -0.223144
+Curr Profit: 3.87546% profitability :Log representation: -0.0380225Upper Bound: -0.223144
+Curr Profit: 2.60602% profitability :Log representation: -0.0257264Upper Bound: -0.223144
+Curr Profit: 3.57907% profitability :Log representation: -0.0351651Upper Bound: -0.223144
+Curr Profit: 2.63651% profitability :Log representation: -0.0260236Upper Bound: -0.223144
+Curr Profit: 2.95689% profitability :Log representation: -0.0291402Upper Bound: -0.223144
+Curr Profit: 3.33511% profitability :Log representation: -0.032807Upper Bound: -0.223144
+Curr Profit: 2.59333% profitability :Log representation: -0.0256027Upper Bound: -0.223144
+Curr Profit: 18.2523% profitability :Log representation: -0.16765Upper Bound: -0.223144
+Curr Profit: 3.09426% profitability :Log representation: -0.0304735Upper Bound: -0.223144
+Curr Profit: 3.48387% profitability :Log representation: -0.0342456Upper Bound: -0.223144
+Curr Profit: 13.2083% profitability :Log representation: -0.124059Upper Bound: -0.223144
+Curr Profit: 3.65826% profitability :Log representation: -0.0359293Upper Bound: -0.223144
+Curr Profit: 6.3637% profitability :Log representation: -0.0616942Upper Bound: -0.223144
+Curr Profit: 6.3637% profitability :Log representation: -0.0616942Upper Bound: -0.223144
+Curr Profit: 2.76368% profitability :Log representation: -0.0272618Upper Bound: -0.223144
+Curr Profit: 3.65826% profitability :Log representation: -0.0359293Upper Bound: -0.223144
+Curr Profit: 2.59025% profitability :Log representation: -0.0255727Upper Bound: -0.223144
+Curr Profit: 3.4993% profitability :Log representation: -0.0343946Upper Bound: -0.223144
+Curr Profit: 13.2305% profitability :Log representation: -0.124255Upper Bound: -0.223144
+Curr Profit: 18.2473% profitability :Log representation: -0.167608Upper Bound: -0.223144
+Curr Profit: 3.08993% profitability :Log representation: -0.0304315Upper Bound: -0.223144
+Curr Profit: 13.1995% profitability :Log representation: -0.123981Upper Bound: -0.223144
+Curr Profit: 3.91982% profitability :Log representation: -0.0384494Upper Bound: -0.223144
+Curr Profit: 18.2438% profitability :Log representation: -0.167578Upper Bound: -0.223144
+Curr Profit: 3.08684% profitability :Log representation: -0.0304016Upper Bound: -0.223144
+Curr Profit: 2.90943% profitability :Log representation: -0.0286791Upper Bound: -0.223144
+Curr Profit: 2.59426% profitability :Log representation: -0.0256118Upper Bound: -0.223144
+Curr Profit: 3.63833% profitability :Log representation: -0.035737Upper Bound: -0.223144
+Curr Profit: 3.48387% profitability :Log representation: -0.0342456Upper Bound: -0.223144
+Curr Profit: 18.2594% profitability :Log representation: -0.16771Upper Bound: -0.223144
+Curr Profit: 3.10044% profitability :Log representation: -0.0305335Upper Bound: -0.223144
+Curr Profit: 13.203% profitability :Log representation: -0.124013Upper Bound: -0.223144
+Curr Profit: 2.82922% profitability :Log representation: -0.0278994Upper Bound: -0.223144
+Curr Profit: 2.581% profitability :Log representation: -0.0254825Upper Bound: -0.223144
+Curr Profit: 3.68235% profitability :Log representation: -0.0361617Upper Bound: -0.223144
+-0.16771
+
+Arbritarge Opportunity Detected!!
+MaxProfit in -log(x): -0.16771
+MaxProfit in x: 1.18259
+18.2594% profitability
+Arbritrage Detected!
+USDT --> ETH --> ICX --> USDT
+
+From USDT to ETH trade val: 0.000599689 via huboi
+From ETH to ICX trade val: 8481.76 via binance
+From ICX to USDT trade val: 0.2325 via binance

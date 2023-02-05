@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/ExchangeTest.cpp" "CMakeFiles/crypto.dir/ExchangeTest.cpp.o" "gcc" "CMakeFiles/crypto.dir/ExchangeTest.cpp.o.d"
+  "/Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/BellmanFord.cpp" "CMakeFiles/crypto.dir/BellmanFord.cpp.o" "gcc" "CMakeFiles/crypto.dir/BellmanFord.cpp.o.d"
   )
 
 # Targets to which this target links.

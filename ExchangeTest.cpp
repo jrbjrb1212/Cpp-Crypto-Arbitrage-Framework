@@ -28,8 +28,7 @@ static void buildSymbolHashMap(unordered_map<string, vector<string> > &symbolMap
     {
         while (getline(input_file, line))
         {
-            short strLen = line.length();
-            short forSlashPos = line.find("/");
+            short strLen = line.length(), forSlashPos = line.find("/");
             string firstCoin = line.substr(1, forSlashPos-1);
             string secondCoin = line.substr(forSlashPos + 1, strLen - forSlashPos - 2);
 
