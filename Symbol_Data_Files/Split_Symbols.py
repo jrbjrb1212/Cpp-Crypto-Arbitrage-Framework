@@ -29,21 +29,6 @@ with open("Symbol_Data_Files/correct_binance_symbols.txt") as f_in:
             curr_str = ""
             for char in line:
                 if curr_str in symbols_set:
-                    f_out.write("\"" + curr_str + "/" + line[len(curr_str):-1] + "\"\n")
+                    f_out.write(curr_str + "/" + line[len(curr_str):-1] + "\n")
                     break
                 curr_str += char
-
-
-    
-
-
-# with open("all_binance_symbols.txt") as my_file:
-#     with open("correct_binance_symbols.txt", 'w') as out:
-#         for line in my_file:
-#             line = line.replace("\"", "")
-#             curr_str = ""
-#             for char in line:
-#                 if curr_str in symbols_set:
-#                     out.write(curr_str + "/" + line[len(curr_str):])
-#                     break
-#                 curr_str += char

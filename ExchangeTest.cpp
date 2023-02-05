@@ -28,9 +28,14 @@ static void buildSymbolHashMap(unordered_map<string, vector<string> > &symbolMap
     {
         while (getline(input_file, line))
         {
-            vector<string> symbols_vec = {line.substr(0, line.find("/")), line.substr(line.find("/") + 1)};
-            string symbol_key = line.substr(0, line.find("/")) + line.substr(line.find("/") + 1);
-            symbolMap[symbol_key] = symbols_vec;
+            short strLen = line.length();
+            short forSlashPos = line.find("/");
+            string firstCoin = line.substr(1, forSlashPos-1);
+            string secondCoin = line.substr(forSlashPos + 1, strLen - forSlashPos - 2);
+
+            vector<string> symbolsVec = {firstCoin, secondCoin};
+            string symbol_key = firstCoin + secondCoin;
+            symbolMap[symbol_key] = symbolsVec;
         }
         input_file.close();
     }
@@ -70,9 +75,8 @@ int main()
 
         for (const auto &item : json_data)
         {
-            string tradeSymbol = "\"" + string(item["symbol"]) + "\"";
+            string tradeSymbol = string(item["symbol"]);
             vector<string> assets = symbolMap[tradeSymbol];
-            // check for symbol that is not in my map
             if (assets.size() != 2)
             {
                 continue;
