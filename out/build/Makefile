@@ -129,29 +129,29 @@ crypto/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/build
 .PHONY : crypto/fast
 
-main.o: main.cpp.o
-.PHONY : main.o
+ExchangeTest.o: ExchangeTest.cpp.o
+.PHONY : ExchangeTest.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/main.cpp.o
-.PHONY : main.cpp.o
+ExchangeTest.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/ExchangeTest.cpp.o
+.PHONY : ExchangeTest.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+ExchangeTest.i: ExchangeTest.cpp.i
+.PHONY : ExchangeTest.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/main.cpp.i
-.PHONY : main.cpp.i
+ExchangeTest.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/ExchangeTest.cpp.i
+.PHONY : ExchangeTest.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+ExchangeTest.s: ExchangeTest.cpp.s
+.PHONY : ExchangeTest.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/main.cpp.s
-.PHONY : main.cpp.s
+ExchangeTest.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/ExchangeTest.cpp.s
+.PHONY : ExchangeTest.cpp.s
 
 # Help Target
 help:
@@ -162,9 +162,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... crypto"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... ExchangeTest.o"
+	@echo "... ExchangeTest.i"
+	@echo "... ExchangeTest.s"
 .PHONY : help
 
 

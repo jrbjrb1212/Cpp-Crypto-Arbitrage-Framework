@@ -69,28 +69,28 @@ include CMakeFiles/crypto.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/crypto.dir/flags.make
 
-CMakeFiles/crypto.dir/main.cpp.o: CMakeFiles/crypto.dir/flags.make
-CMakeFiles/crypto.dir/main.cpp.o: /Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/main.cpp
-CMakeFiles/crypto.dir/main.cpp.o: CMakeFiles/crypto.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/out/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/crypto.dir/main.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/crypto.dir/main.cpp.o -MF CMakeFiles/crypto.dir/main.cpp.o.d -o CMakeFiles/crypto.dir/main.cpp.o -c /Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/main.cpp
+CMakeFiles/crypto.dir/ExchangeTest.cpp.o: CMakeFiles/crypto.dir/flags.make
+CMakeFiles/crypto.dir/ExchangeTest.cpp.o: /Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/ExchangeTest.cpp
+CMakeFiles/crypto.dir/ExchangeTest.cpp.o: CMakeFiles/crypto.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/out/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/crypto.dir/ExchangeTest.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/crypto.dir/ExchangeTest.cpp.o -MF CMakeFiles/crypto.dir/ExchangeTest.cpp.o.d -o CMakeFiles/crypto.dir/ExchangeTest.cpp.o -c /Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/ExchangeTest.cpp
 
-CMakeFiles/crypto.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/crypto.dir/main.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/main.cpp > CMakeFiles/crypto.dir/main.cpp.i
+CMakeFiles/crypto.dir/ExchangeTest.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/crypto.dir/ExchangeTest.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/ExchangeTest.cpp > CMakeFiles/crypto.dir/ExchangeTest.cpp.i
 
-CMakeFiles/crypto.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/crypto.dir/main.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/main.cpp -o CMakeFiles/crypto.dir/main.cpp.s
+CMakeFiles/crypto.dir/ExchangeTest.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/crypto.dir/ExchangeTest.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/ExchangeTest.cpp -o CMakeFiles/crypto.dir/ExchangeTest.cpp.s
 
 # Object files for target crypto
 crypto_OBJECTS = \
-"CMakeFiles/crypto.dir/main.cpp.o"
+"CMakeFiles/crypto.dir/ExchangeTest.cpp.o"
 
 # External object files for target crypto
 crypto_EXTERNAL_OBJECTS =
 
-crypto: CMakeFiles/crypto.dir/main.cpp.o
+crypto: CMakeFiles/crypto.dir/ExchangeTest.cpp.o
 crypto: CMakeFiles/crypto.dir/build.make
 crypto: CMakeFiles/crypto.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/johnbillos/Desktop/Projects/Crypto-Arbitrage-/out/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable crypto"

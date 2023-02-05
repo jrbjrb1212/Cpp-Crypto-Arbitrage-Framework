@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/crypto.dir/main.cpp.o"
-  "CMakeFiles/crypto.dir/main.cpp.o.d"
+  "CMakeFiles/crypto.dir/ExchangeTest.cpp.o"
+  "CMakeFiles/crypto.dir/ExchangeTest.cpp.o.d"
   "crypto"
   "crypto.pdb"
 )

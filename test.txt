@@ -1,480 +1,129 @@
-Performing Bellmon Ford from USDT
 
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274041
-MaxProfit in x: 1.31527
-31.5268% profitability
-Arbritrage Detected!
-USDT --> MFT --> ETH --> USDT
-
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-From ETH to USDT trade val: 1595.94
-Performing Bellmon Ford from BTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.147509
-MaxProfit in x: 1.15894
-15.8944% profitability
-Arbritrage Detected!
-BTC --> ETH --> ICX --> BTC
-
-From BTC to ETH trade val: 14.5516
-From ETH to ICX trade val: 8481.76
-From ICX to BTC trade val: 9.39e-06
-Performing Bellmon Ford from ETH
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274041
-MaxProfit in x: 1.31527
-31.5268% profitability
-Arbritrage Detected!
-ETH --> USDT --> MFT --> ETH
-
-From ETH to USDT trade val: 1595.94
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-Performing Bellmon Ford from LTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.00160923
-MaxProfit in x: 1.00161
-0.161052% profitability
-Arbritrage Detected!
-LTC --> BNB --> USDT --> LTC
-
-From LTC to BNB trade val: 0.3087
-From BNB to USDT trade val: 308.4
-From USDT to LTC trade val: 0.0105208
-Performing Bellmon Ford from USDT
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274041
-MaxProfit in x: 1.31527
-31.5268% profitability
-Arbritrage Detected!
-USDT --> MFT --> ETH --> USDT
-
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-From ETH to USDT trade val: 1595.94
-Performing Bellmon Ford from BTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.147509
-MaxProfit in x: 1.15894
-15.8944% profitability
-Arbritrage Detected!
-BTC --> ETH --> ICX --> BTC
-
-From BTC to ETH trade val: 14.5516
-From ETH to ICX trade val: 8481.76
-From ICX to BTC trade val: 9.39e-06
-Performing Bellmon Ford from ETH
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274041
-MaxProfit in x: 1.31527
-31.5268% profitability
-Arbritrage Detected!
-ETH --> USDT --> MFT --> ETH
-
-From ETH to USDT trade val: 1595.94
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-Performing Bellmon Ford from LTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.00171444
-MaxProfit in x: 1.00172
-0.171591% profitability
-Arbritrage Detected!
-LTC --> BNB --> USDT --> LTC
-
-From LTC to BNB trade val: 0.3087
-From BNB to USDT trade val: 308.4
-From USDT to LTC trade val: 0.0105219
-Performing Bellmon Ford from USDT
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274041
-MaxProfit in x: 1.31527
-31.5268% profitability
-Arbritrage Detected!
-USDT --> MFT --> ETH --> USDT
-
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-From ETH to USDT trade val: 1595.94
-Performing Bellmon Ford from BTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.147509
-MaxProfit in x: 1.15894
-15.8944% profitability
-Arbritrage Detected!
-BTC --> ETH --> ICX --> BTC
-
-From BTC to ETH trade val: 14.5516
-From ETH to ICX trade val: 8481.76
-From ICX to BTC trade val: 9.39e-06
-Performing Bellmon Ford from ETH
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274041
-MaxProfit in x: 1.31527
-31.5268% profitability
-Arbritrage Detected!
-ETH --> USDT --> MFT --> ETH
-
-From ETH to USDT trade val: 1595.94
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-Performing Bellmon Ford from LTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.00171444
-MaxProfit in x: 1.00172
-0.171591% profitability
-Arbritrage Detected!
-LTC --> BNB --> USDT --> LTC
-
-From LTC to BNB trade val: 0.3087
-From BNB to USDT trade val: 308.4
-From USDT to LTC trade val: 0.0105219
-Performing Bellmon Ford from USDT
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274103
-MaxProfit in x: 1.31535
-31.5351% profitability
-Arbritrage Detected!
-USDT --> MFT --> ETH --> USDT
-
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-From ETH to USDT trade val: 1596.04
-Performing Bellmon Ford from BTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.147509
-MaxProfit in x: 1.15894
-15.8944% profitability
-Arbritrage Detected!
-BTC --> ETH --> ICX --> BTC
-
-From BTC to ETH trade val: 14.5516
-From ETH to ICX trade val: 8481.76
-From ICX to BTC trade val: 9.39e-06
-Performing Bellmon Ford from ETH
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274103
-MaxProfit in x: 1.31535
-31.5351% profitability
-Arbritrage Detected!
-ETH --> USDT --> MFT --> ETH
-
-From ETH to USDT trade val: 1596.04
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-Performing Bellmon Ford from LTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.00171444
-MaxProfit in x: 1.00172
-0.171591% profitability
-Arbritrage Detected!
-LTC --> BNB --> USDT --> LTC
-
-From LTC to BNB trade val: 0.3087
-From BNB to USDT trade val: 308.4
-From USDT to LTC trade val: 0.0105219
-Performing Bellmon Ford from USDT
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274122
-MaxProfit in x: 1.31538
-31.5376% profitability
-Arbritrage Detected!
-USDT --> MFT --> ETH --> USDT
-
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-From ETH to USDT trade val: 1596.07
-Performing Bellmon Ford from BTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.147509
-MaxProfit in x: 1.15894
-15.8944% profitability
-Arbritrage Detected!
-BTC --> ETH --> ICX --> BTC
-
-From BTC to ETH trade val: 14.5516
-From ETH to ICX trade val: 8481.76
-From ICX to BTC trade val: 9.39e-06
-Performing Bellmon Ford from ETH
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274122
-MaxProfit in x: 1.31538
-31.5376% profitability
-Arbritrage Detected!
-ETH --> USDT --> MFT --> ETH
-
-From ETH to USDT trade val: 1596.07
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-Performing Bellmon Ford from LTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.00171444
-MaxProfit in x: 1.00172
-0.171591% profitability
-Arbritrage Detected!
-LTC --> BNB --> USDT --> LTC
-
-From LTC to BNB trade val: 0.3087
-From BNB to USDT trade val: 308.4
-From USDT to LTC trade val: 0.0105219
-Performing Bellmon Ford from USDT
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274128
-MaxProfit in x: 1.31538
-31.5384% profitability
-Arbritrage Detected!
-USDT --> MFT --> ETH --> USDT
-
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-From ETH to USDT trade val: 1596.08
-Performing Bellmon Ford from BTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.147509
-MaxProfit in x: 1.15894
-15.8944% profitability
-Arbritrage Detected!
-BTC --> ETH --> ICX --> BTC
-
-From BTC to ETH trade val: 14.5516
-From ETH to ICX trade val: 8481.76
-From ICX to BTC trade val: 9.39e-06
-Performing Bellmon Ford from ETH
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274128
-MaxProfit in x: 1.31538
-31.5384% profitability
-Arbritrage Detected!
-ETH --> USDT --> MFT --> ETH
-
-From ETH to USDT trade val: 1596.08
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-Performing Bellmon Ford from LTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.00181966
-MaxProfit in x: 1.00182
-0.182132% profitability
-Arbritrage Detected!
-LTC --> BNB --> USDT --> LTC
-
-From LTC to BNB trade val: 0.3087
-From BNB to USDT trade val: 308.4
-From USDT to LTC trade val: 0.010523
-Performing Bellmon Ford from USDT
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274128
-MaxProfit in x: 1.31538
-31.5384% profitability
-Arbritrage Detected!
-USDT --> MFT --> ETH --> USDT
-
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-From ETH to USDT trade val: 1596.08
-Performing Bellmon Ford from BTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.147509
-MaxProfit in x: 1.15894
-15.8944% profitability
-Arbritrage Detected!
-BTC --> ETH --> ICX --> BTC
-
-From BTC to ETH trade val: 14.5516
-From ETH to ICX trade val: 8481.76
-From ICX to BTC trade val: 9.39e-06
-Performing Bellmon Ford from ETH
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274128
-MaxProfit in x: 1.31538
-31.5384% profitability
-Arbritrage Detected!
-ETH --> USDT --> MFT --> ETH
-
-From ETH to USDT trade val: 1596.08
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-Performing Bellmon Ford from LTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.00181966
-MaxProfit in x: 1.00182
-0.182132% profitability
-Arbritrage Detected!
-LTC --> BNB --> USDT --> LTC
-
-From LTC to BNB trade val: 0.3087
-From BNB to USDT trade val: 308.4
-From USDT to LTC trade val: 0.010523
-Performing Bellmon Ford from USDT
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274122
-MaxProfit in x: 1.31538
-31.5376% profitability
-Arbritrage Detected!
-USDT --> MFT --> ETH --> USDT
-
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-From ETH to USDT trade val: 1596.07
-Performing Bellmon Ford from BTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.147509
-MaxProfit in x: 1.15894
-15.8944% profitability
-Arbritrage Detected!
-BTC --> ETH --> ICX --> BTC
-
-From BTC to ETH trade val: 14.5516
-From ETH to ICX trade val: 8481.76
-From ICX to BTC trade val: 9.39e-06
-Performing Bellmon Ford from ETH
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274122
-MaxProfit in x: 1.31538
-31.5376% profitability
-Arbritrage Detected!
-ETH --> USDT --> MFT --> ETH
-
-From ETH to USDT trade val: 1596.07
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-Performing Bellmon Ford from LTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.00181966
-MaxProfit in x: 1.00182
-0.182132% profitability
-Arbritrage Detected!
-LTC --> BNB --> USDT --> LTC
-
-From LTC to BNB trade val: 0.3087
-From BNB to USDT trade val: 308.4
-From USDT to LTC trade val: 0.010523
-Performing Bellmon Ford from USDT
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274122
-MaxProfit in x: 1.31538
-31.5376% profitability
-Arbritrage Detected!
-USDT --> MFT --> ETH --> USDT
-
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-From ETH to USDT trade val: 1596.07
-Performing Bellmon Ford from BTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.147509
-MaxProfit in x: 1.15894
-15.8944% profitability
-Arbritrage Detected!
-BTC --> ETH --> ICX --> BTC
-
-From BTC to ETH trade val: 14.5516
-From ETH to ICX trade val: 8481.76
-From ICX to BTC trade val: 9.39e-06
-Performing Bellmon Ford from ETH
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274122
-MaxProfit in x: 1.31538
-31.5376% profitability
-Arbritrage Detected!
-ETH --> USDT --> MFT --> ETH
-
-From ETH to USDT trade val: 1596.07
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-Performing Bellmon Ford from LTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.00181966
-MaxProfit in x: 1.00182
-0.182132% profitability
-Arbritrage Detected!
-LTC --> BNB --> USDT --> LTC
-
-From LTC to BNB trade val: 0.3087
-From BNB to USDT trade val: 308.4
-From USDT to LTC trade val: 0.010523
-Performing Bellmon Ford from USDT
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274122
-MaxProfit in x: 1.31538
-31.5376% profitability
-Arbritrage Detected!
-USDT --> MFT --> ETH --> USDT
-
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-From ETH to USDT trade val: 1596.07
-Performing Bellmon Ford from BTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.147509
-MaxProfit in x: 1.15894
-15.8944% profitability
-Arbritrage Detected!
-BTC --> ETH --> ICX --> BTC
-
-From BTC to ETH trade val: 14.5516
-From ETH to ICX trade val: 8481.76
-From ICX to BTC trade val: 9.39e-06
-Performing Bellmon Ford from ETH
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.274122
-MaxProfit in x: 1.31538
-31.5376% profitability
-Arbritrage Detected!
-ETH --> USDT --> MFT --> ETH
-
-From ETH to USDT trade val: 1596.07
-From USDT to MFT trade val: 190.331
-From MFT to ETH trade val: 4.33e-06
-Performing Bellmon Ford from LTC
-
-Arbritarge Opportunity Detected!!
-MaxProfit in -log(x): -0.00171444
-MaxProfit in x: 1.00172
-0.171591% profitability
-Arbritrage Detected!
-LTC --> BNB --> USDT --> LTC
-
-From LTC to BNB trade val: 0.3087
-From BNB to USDT trade val: 308.4
-From USDT to LTC trade val: 0.0105219
+Graph Print in form of Adjaceny List: 
+RBTC": ("AST, -12.9317) 
+"SYS: (USDT", 1.73898) 
+"RIF: (BTC", 12.8447) (USDT", 2.79035) 
+"PROM: (BNB", 4.20304) (BTC", 8.45375) 
+"AKRO: (USDT", 5.57275) 
+"UTK: (BTC", 12.3362) (USDT", 2.28573) 
+"OCEAN: (BNB", 6.74224) (BTC", 10.9995) (USDT", 0.941609) 
+"AVA: (BTC", 10.3961) (USDT", 0.339677) 
+"MKR: (BTC", 3.50423) (USDT", -6.55108) 
+"DGB: (BTC", 14.5705) (USDT", 4.50352) 
+"CHR: (BNB", 7.53699) (BTC", 11.7926) (USDT", 1.735) (ETH", 9.15302) 
+"STPT: (BTC", 13.1477) (USDT", 3.0896) 
+"VITE: (BTC", 13.7112) (USDT", 3.64812) 
+"BCH: (BNB", 0.879477) (BTC", 5.1362) (USDT", -4.9229) 
+"XTZ: (BNB", 5.64081) (BTC", 9.89492) (USDT", -0.162119) (ETH", 7.25307) 
+"CHZ: (BNB", 7.73879) (BTC", 11.9958) (USDT", 1.93794) 
+"COTI: (BNB", 8.07411) (BTC", 12.3271) (USDT", 2.26818) 
+TRX": ("WIN, -6.45795) 
+"BNB: (BTC", 4.2555) (ETH", 1.61546) (USDT", -5.80182) (DAI", -5.80874) 
+"TOMO: (BTC", 10.9218) (USDT", 0.868215) 
+"COCOS: (USDT", 0.371064) 
+"QLC: (BTC", 12.9317) 
+"COS: (USDT", 5.10275) 
+"DOGE: (BTC", 12.4143) (USDT", 2.3581) 
+"FTM: (BNB", 6.29252) (BTC", 10.549) (USDT", 0.49184) (ETH", 7.90852) 
+"ETC: (ETH", 4.2503) (BTC", 6.89188) (USDT", -3.16505) (BNB", 2.63806) 
+"CELR: (BNB", 9.73916) (BTC", 14.0018) (USDT", 3.93939) 
+"NEO: (BTC", 7.88062) (ETH", 5.24194) (USDT", -2.17475) (BNB", 3.62684) 
+"FET: (BNB", 6.90177) (BTC", 11.1581) (USDT", 1.10081) 
+"ONE: (BNB", 9.37286) (BTC", 13.6249) (USDT", 3.57199) (ETH", 10.9876) 
+XRP": ("TRX, -1.85361) 
+"BTS: (USDT", 4.46454) 
+"ANKR: (BNB", 9.35884) (BTC", 13.6167) (USDT", 3.55645) 
+"DCR: (BTC", 6.90177) (USDT", -3.157) 
+"VET: (BTC", 13.7479) (ETH", 11.1115) (USDT", 3.6945) (BNB", 9.49536) 
+"ENJ: (BTC", 10.7854) (ETH", 8.14494) (BNB", 6.52932) (USDT", 0.727946) 
+"HOT: (ETH", 13.5154) (USDT", 6.10173) 
+"ARDR: (BTC", 12.3662) (USDT", 2.3076) 
+"DENT: (ETH", 14.3263) (USDT", 6.90576) 
+"PERL: (USDT", 3.93223) 
+"REQ: (BTC", 12.2658) (USDT", 2.21092) 
+"MFT: (ETH", 12.3499) (USDT", 5.24877) 
+"DATA: (BTC", 13.3837) (USDT", 3.32535) 
+"KEY: (ETH", 12.9957) (USDT", 5.56489) 
+"VTHO: (USDT", 6.72045) 
+"EOS: (ETH", 7.32176) (USDT", -0.0944007) 
+"IOTX: (BTC", 13.5531) (ETH", 10.9108) (USDT", 3.4943) 
+"THETA: (BTC", 9.94223) (ETH", 7.30377) (BNB", 5.68693) (USDT", -0.114221) 
+"ZEN: (BTC", 7.66065) (ETH", 5.02524) (BNB", 3.41428) (USDT", -2.3979) 
+"ALGO: (BNB", 7.12716) (BTC", 11.3819) (USDT", 1.32576) (ETH", 8.74347) 
+"MATIC: (BNB", 5.57803) (BTC", 9.83359) (USDT", -0.223623) (ETH", 7.19371) 
+"LOOM: (BTC", 12.9526) (ETH", 10.3401) 
+"REN: (BTC", 12.3407) (USDT", 2.28586) 
+DAI": ("BTC, 10.0577) ("ETH, 7.41772) ("BNB, 5.80874) ("USDT, -0) 
+"WAN: (BTC", 11.5663) (ETH", 8.92516) (USDT", 1.50778) 
+"ZIL: (BTC", 13.5687) (ETH", 10.9302) (BNB", 9.31681) (USDT", 3.5109) 
+"MITH: (USDT", 5.66938) 
+"ONG: (BTC", 11.2091) (USDT", 1.15138) 
+"DUSK: (BTC", 11.7756) (USDT", 1.71925) 
+"QKC: (BTC", 14.5495) (ETH", 11.9089) 
+"STEEM: (BTC", 11.5706) (ETH", 8.93119) (USDT", 1.51367) 
+"XRP: (BTC", 10.9505) (ETH", 8.30977) (USDT", 0.893307) (BNB", 6.69507) 
+"PIVX: (BTC", 11.3987) 
+"AION: (BTC", 13.4862) (USDT", 3.33541) 
+"DASH: (BTC", 5.95109) (ETH", 3.30935) (BNB", 1.69282) (USDT", -4.10594) 
+"WAVES: (ETH", 6.37536) (USDT", -1.04134) 
+"NULS: (USDT", 1.31416) 
+"XLM: (BTC", 12.4342) (ETH", 9.79733) (BNB", 8.18144) (USDT", 2.37731) 
+"SC: (ETH", 13.0641) (USDT", 5.64929) 
+"ANT: (BNB", 4.67774) (BTC", 8.93369) (USDT", -1.1233) 
+"SNM: (BTC", 9.96621) 
+"ADA: (BTC", 10.9805) (ETH", 8.34114) (USDT", 0.923315) (BNB", 6.72377) 
+"ELF: (BTC", 11.6522) (ETH", 9.01313) (USDT", 1.59504) 
+"XEM: (USDT", 3.20399) 
+"ADX: (BTC", 11.7512) (ETH", 9.1114) (USDT", 1.69391) 
+BNB": ("NEO, -3.62684) ("XLM, -8.18144) ("LTC, -1.20899) ("ZIL, -9.31681) ("ADA, -6.72377) ("ZEN, -3.41428) ("THETA, -5.68693) ("XRP, -6.69507) ("ENJ, -6.52932) ("TRX, -8.54868) ("ETC, -2.63806) ("VET, -9.49536) ("FET, -6.90177) ("XMR, -0.657587) ("ZEC, -1.97113) ("CELR, -9.73916) ("DASH, -1.69282) ("MATIC, -5.57803) ("ATOM, -3.1247) ("ONE, -9.37286) ("FTM, -6.29252) ("ALGO, -7.12716) ("ANKR, -9.35884) ("WIN, -15.0195) ("CHZ, -7.73879) ("XTZ, -5.64081) ("ARPA, -9.0559) ("BCH, -0.879477) ("COTI, -8.07411) ("CHR, -7.53699) ("SNX, -4.8196) ("ANT, -4.67774) ("OCEAN, -6.74224) ("PROM, -4.20304) ("LINK, -3.82768) ("LRC, -6.70563) ("FUN, -10.7475) ("KNC, -5.92194) 
+"MANA: (BTC", 10.3151) (ETH", 7.67498) (USDT", 0.258123) 
+"CTXC: (BTC", 11.4537) (USDT", 1.39594) 
+"AMB: (BTC", 14.144) 
+"QTUM: (ETH", 6.38362) (BTC", 9.02552) (USDT", -1.03283) 
+"XMR: (BTC", 4.91197) (ETH", 2.27283) (BNB", 0.657587) (USDT", -5.14458) 
+"DOCK: (BTC", 13.932) (USDT", 3.88101) 
+"LSK: (BTC", 10.0281) (ETH", 7.38741) (USDT", -0.0305292) 
+"POWR: (BTC", 11.4651) (ETH", 8.83878) (USDT", 1.40854) 
+"SNT: (ETH", 10.8961) (BTC", 13.5303) 
+"VIB: (BTC", 12.4267) (ETH", 9.79177) 
+"WABI: (BTC", 12.2121) 
+"WTC: (BTC", 11.504) (USDT", 1.44689) 
+"BLZ: (BTC", 12.4021) (ETH", 10.0877) (USDT", 2.34549) 
+"ICX: (BTC", 11.5311) (ETH", 9.04567) (USDT", 1.47403) 
+"BAT: (BTC", 11.3108) (ETH", 8.67093) (USDT", 1.25386) 
+"USDT: (DAI", -0) 
+"LTC: (BTC", 5.46414) (ETH", 2.82413) (USDT", -4.593) (BNB", 1.20899) 
+"OAX: (BTC", 11.8797) 
+"ARPA: (BNB", 9.0559) (BTC", 13.3087) (USDT", 3.25037) (ETH", 10.6679) 
+"AST: (BTC", 12.2469) (RBTC", 12.9317) 
+USDT": ("BTC, 10.0572) ("ETH, 7.41727) ("BNB, 5.80182) ("NEO, 2.17475) ("LTC, 4.593) ("QTUM, 1.03283) ("ADA, -0.923315) ("XRP, -0.893307) ("EOS, 0.0944007) ("XLM, -2.37731) ("ONT, -1.48988) ("TRX, -2.74794) ("ETC, 3.16505) ("ICX, -1.47403) ("NULS, -1.31416) ("VET, -3.6945) ("LINK, 1.97297) ("WAVES, 1.04134) ("ONG, -1.15138) ("HOT, -6.10173) ("ZIL, -3.5109) ("ZRX, -1.36414) ("FET, -1.10081) ("BAT, -1.25386) ("XMR, 5.14458) ("ZEC, 3.83298) ("IOST, -4.52267) ("CELR, -3.93939) ("DASH, 4.10594) ("THETA, 0.114221) ("ENJ, -0.727946) ("MITH, -5.66938) ("MATIC, 0.223623) ("ATOM, 2.67807) ("TFUEL, -2.79035) ("ONE, -3.57199) ("FTM, -0.49184) ("ALGO, -1.32576) ("DOGE, -2.3581) ("DUSK, -1.71925) ("ANKR, -3.55645) ("WIN, -9.20535) ("COS, -5.10275) ("COCOS, -0.371064) ("MTL, 0.0314987) ("TOMO, -0.868215) ("PERL, -3.93223) ("DENT, -6.90576) ("MFT, -5.24877) ("KEY, -5.56489) ("DOCK, -3.88101) ("WAN, -1.50778) ("FUN, -4.93646) ("CHZ, -1.93794) ("XTZ, 0.162119) ("REN, -2.28586) ("RVN, -3.48122) ("NKN, -2.19642) ("ARPA, -3.25037) ("IOTX, -3.4943) ("RLC, 0.619501) ("CTXC, -1.39594) ("BCH, 4.9229) ("VITE, -3.64812) ("BTS, -4.46454) ("LSK, 0.0305292) ("BNT, -0.809681) ("AION, -3.33541) ("COTI, -2.26818) ("STPT, -3.0896) ("WTC, -1.44689) ("DATA, -3.32535) ("CHR, -1.735) ("ARDR, -2.3076) ("KNC, -0.11991) ("REP, 1.55393) ("LRC, -0.905845) ("SC, -5.64929) ("ZEN, 2.3979) ("SNX, 0.986563) ("VTHO, -6.72045) ("DGB, -4.50352) ("MKR, 6.55108) ("DCR, 3.157) ("STORJ, -0.884308) ("MANA, -0.258123) ("BLZ, -2.34549) ("KMD, -1.27189) ("ANT, 1.1233) ("OCEAN, -0.941609) ("NMR, 3.02335) ("UTK, -2.28573) ("AKRO, -5.57275) ("AVA, -0.339677) ("XEM, -3.20399) ("RIF, -2.79035) ("XVG, -5.75718) ("REQ, -2.21092) ("ELF, -1.59504) ("SYS, -1.73898) ("ADX, -1.69391) ("POWR, -1.40854) ("STEEM, -1.51367) ("NEBL, 0.503801) 
+"NMR: (BTC", 7.03559) (USDT", -3.02335) 
+"ETH: (BTC", 2.63995) (USDT", -7.41727) (DAI", -7.41772) 
+"KNC: (BTC", 10.1774) (ETH", 7.53868) (USDT", 0.11991) (BNB", 5.92194) 
+"SNX: (BTC", 9.06971) (BNB", 4.8196) (USDT", -0.986563) (ETH", 6.42718) 
+"XVG: (ETH", 13.1789) (USDT", 5.75718) 
+"WIN: (BNB", 15.0195) (USDT", 9.20535) (TRX", 6.45795) 
+"ATOM: (BNB", 3.1247) (BTC", 7.37824) (USDT", -2.67807) (ETH", 4.73927) 
+"FUN: (ETH", 12.3546) (USDT", 4.93646) (BNB", 10.7475) 
+"ZRX: (BTC", 11.4213) (ETH", 8.78051) (USDT", 1.36414) 
+"ZEC: (BTC", 6.22516) (ETH", 3.58813) (BNB", 1.97113) (USDT", -3.83298) 
+"KMD: (BTC", 11.3298) (USDT", 1.27189) 
+"LRC: (BTC", 10.9625) (ETH", 8.32101) (USDT", 0.905845) (BNB", 6.70563) 
+"NEBL: (BTC", 9.55297) (USDT", -0.503801) 
+"TRX: (BTC", 12.8039) (ETH", 10.1651) (BNB", 8.54868) (USDT", 2.74794) (XRP", 1.85361) 
+"ONT: (BTC", 11.5454) (ETH", 8.90802) (USDT", 1.48988) 
+"MTL: (BTC", 10.0293) (ETH", 7.3866) (USDT", -0.0314987) 
+"REP: (USDT", -1.55393) 
+"TFUEL: (BTC", 12.8485) (USDT", 2.79035) 
+"RVN: (BTC", 13.5455) (USDT", 3.48122) 
+BTC": ("ETH, -2.63995) ("LTC, -5.46414) ("BNB, -4.2555) ("NEO, -7.88062) ("WTC, -11.504) ("LRC, -10.9625) ("QTUM, -9.02552) ("ZRX, -11.4213) ("KNC, -10.1774) ("SNM, -9.96621) ("LINK, -8.08411) ("MTL, -10.0293) ("SNT, -13.5303) ("ETC, -6.89188) ("ZEC, -6.22516) ("BNT, -10.8658) ("AST, -12.2469) ("DASH, -5.95109) ("OAX, -11.8797) ("REQ, -12.2658) ("VIB, -12.4267) ("TRX, -12.8039) ("POWR, -11.4651) ("XRP, -10.9505) ("ENJ, -10.7854) ("STORJ, -10.9403) ("KMD, -11.3298) ("XMR, -4.91197) ("AMB, -14.144) ("BAT, -11.3108) ("LSK, -10.0281) ("MANA, -10.3151) ("ADX, -11.7512) ("ADA, -10.9805) ("XLM, -12.4342) ("WABI, -12.2121) ("ICX, -11.5311) ("ELF, -11.6522) ("AION, -13.4862) ("NEBL, -9.55297) ("RLC, -9.43825) ("PIVX, -11.3987) ("IOST, -14.592) ("STEEM, -11.5706) ("BLZ, -12.4021) ("ZIL, -13.5687) ("ONT, -11.5454) ("WAN, -11.5663) ("QLC, -12.9317) ("LOOM, -12.9526) ("ZEN, -7.66065) ("THETA, -9.94223) ("IOTX, -13.5531) ("QKC, -14.5495) ("DATA, -13.3837) ("ARDR, -12.3662) ("VET, -13.7479) ("DOCK, -13.932) ("RVN, -13.5455) ("DCR, -6.90177) ("REN, -12.3407) ("ONG, -11.2091) ("FET, -11.1581) ("CELR, -14.0018) ("MATIC, -9.83359) ("ATOM, -7.37824) ("TFUEL, -12.8485) ("ONE, -13.6249) ("FTM, -10.549) ("ALGO, -11.3819) ("DOGE, -12.4143) ("DUSK, -11.7756) ("ANKR, -13.6167) ("TOMO, -10.9218) ("CHZ, -11.9958) ("XTZ, -9.89492) ("NKN, -12.2532) ("ARPA, -13.3087) ("CTXC, -11.4537) ("BCH, -5.1362) ("VITE, -13.7112) ("COTI, -12.3271) ("STPT, -13.1477) ("CHR, -11.7926) ("DGB, -14.5705) ("SNX, -9.06971) ("MKR, -3.50423) ("AVA, -10.3961) ("ANT, -8.93369) ("OCEAN, -10.9995) ("NMR, -7.03559) ("UTK, -12.3362) ("RIF, -12.8447) ("PROM, -8.45375) 
+"BNT: (ETH", 8.22826) (BTC", 10.8658) (USDT", 0.809681) 
+"LINK: (BTC", 8.08411) (ETH", 5.44381) (USDT", -1.97297) (BNB", 3.82768) 
+"NKN: (BTC", 12.2532) (USDT", 2.19642) 
+ETH": ("QTUM, -6.38362) ("EOS, -7.32176) ("SNT, -10.8961) ("BNT, -8.22826) ("BNB, -1.61546) ("LRC, -8.32101) ("ZRX, -8.78051) ("KNC, -7.53868) ("FUN, -12.3546) ("NEO, -5.24194) ("LINK, -5.44381) ("XVG, -13.1789) ("MTL, -7.3866) ("ETC, -4.2503) ("ZEC, -3.58813) ("DASH, -3.30935) ("VIB, -9.79177) ("TRX, -10.1651) ("POWR, -8.83878) ("XRP, -8.30977) ("ENJ, -8.14494) ("XMR, -2.27283) ("BAT, -8.67093) ("LSK, -7.38741) ("MANA, -7.67498) ("ADX, -9.1114) ("ADA, -8.34114) ("XLM, -9.79733) ("LTC, -2.82413) ("WAVES, -6.37536) ("ICX, -9.04567) ("ELF, -9.01313) ("RLC, -6.7998) ("IOST, -11.9376) ("STEEM, -8.93119) ("BLZ, -10.0877) ("ZIL, -10.9302) ("ONT, -8.90802) ("WAN, -8.92516) ("LOOM, -10.3401) ("ZEN, -5.02524) ("THETA, -7.30377) ("IOTX, -10.9108) ("QKC, -11.9089) ("SC, -13.0641) ("KEY, -12.9957) ("MFT, -12.3499) ("DENT, -14.3263) ("HOT, -13.5154) ("VET, -11.1115) ("FTM, -7.90852) ("MATIC, -7.19371) ("CHR, -9.15302) ("ATOM, -4.73927) ("ONE, -10.9876) ("XTZ, -7.25307) ("ALGO, -8.74347) ("SNX, -6.42718) ("ARPA, -10.6679) 
+"IOST: (BTC", 14.592) (ETH", 11.9376) (USDT", 4.52267) 
+"STORJ: (BTC", 10.9403) (USDT", 0.884308) 
+"RLC: (BTC", 9.43825) (ETH", 6.7998) (USDT", -0.619501) 
+"BTC: (USDT", -10.0572) (DAI", -10.0577) 
+Number of vertices: 125
+Number of edges: 604

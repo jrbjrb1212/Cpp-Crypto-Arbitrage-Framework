@@ -1,0 +1,21 @@
+Binance base - https://api.binance.com
+    - /api/v3/ticker/price for all trading pairs and curr price
+
+Huobi base - https://api.huobi.pro/
+    /market/tickers - for a list of all currencies trading pairs and information about it
+        - Want to parse for the "ask" to get the price for my graph
+    /v1/common/currencys - for a list of all currencies
+
+Kucoin base - https://api.kucoin.com
+    /api/v1/market/allTickers - for a list of all currencies trading pairs and information about it
+        - Want to parse for the "buy" to get the price for my graph
+
+BitMart base - https://api-cloud.bitmart.com
+    /spot/v2/ticker - for a list of all currencies trading pairs and information about it 
+
+Bitget base - https://api.bitget.com/
+    /api/spot/v1/market/tickers - for a list of all currencies trading pairs and information about it
+
+Gate.io base - https://api.gateio.ws/api/v4
+    /spot/tickers - for a list of all currencies trading pairs and information about it
+

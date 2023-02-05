@@ -42,7 +42,6 @@ static void buildSymbolHashMap(unordered_map<string, vector<string> > &symbolMap
 
 int main()
 {
-    for (int i = 0; i < 10; i++){
     Graph g;
     CURL *curl;
     CURLcode res;
@@ -54,14 +53,12 @@ int main()
     curl = curl_easy_init();
     if (curl)
     {
-        // TODO:
-        // can query in parrelel later with https://api.binance.com/api/v3/ticker/price/?symbol=btcusdt
-        // but not sure it would becuase one call will give all data in one JSON string
-
-        curl_easy_setopt(curl, CURLOPT_URL, "https://api.binance.com/api/v3/ticker/price");
+        const char* exchangeURL = "https://api.bitget.com/api/spot/v1/market/tickers";
+        curl_easy_setopt(curl, CURLOPT_URL, exchangeURL);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
         res = curl_easy_perform(curl);
+        // cout << response << endl;
 
         // Check for errors
         if (res != CURLE_OK)
@@ -72,57 +69,32 @@ int main()
         // TODO: Test to make sure something correct is returned from API call aka on the right VPN
         nlohmann::json json_data = nlohmann::json::parse(response);
 
-        // parse every price data point from binance and add it to my graph
-        // Can defenstively paralleize parsing the json data
-        for (const auto &item : json_data)
-        {
-            string tradeSymbol = "\"" + string(item["symbol"]) + "\"";
+        for (auto& item : json_data["data"]) {
+            // symbol comes in uppercase with the coins seperated by a hyphen
+            string tradeSymbol = item["symbol"];
+            tradeSymbol = "\"" + tradeSymbol + "\"";
             vector<string> assets = symbolMap[tradeSymbol];
-            // check for symbol that is not in my map
             if (assets.size() != 2)
             {
                 continue;
             }
-            string fromAsset, toAsset;
-            fromAsset = assets[0].substr(1);
-            toAsset = assets[1].substr(0, assets[1].length() - 1);
-            string strPrice = item["price"];
-            double price = stod(strPrice);
-
+            string fromAsset, toAsset, stringPrice;
+            fromAsset = assets[0];
+            toAsset = assets[1];
+            stringPrice = item["buyOne"];
+            double price = stod(stringPrice);
             g.addEdge(fromAsset, toAsset, price);
         }
 
         vector<string> sourceCoins {"USDT", "BTC", "ETH", "LTC"};
 
-        // run BellmanFord from USD
-        for (string coin : sourceCoins)
-        {
-            cout << "Performing Bellmon Ford from " << coin << endl;
-            vector<string> arbPath = BellmonFord(g, coin, 0.05);
-            // validate the arbPath using the graph
-            if (arbPath.size() != 0) {
-                for(int i = 1; i < arbPath.size(); i++){
-                    string from = arbPath[i-1];
-                    string to = arbPath[i];
-                    for (Edge edge : g.adjacency_list[from]){
-                        if (edge.to != to)
-                        {
-                            continue;
-                        }
-                        cout << "From " << from << " to " << to << " trade val: " << weightConversion(edge.weight) << endl;
-                    }
-                }
-            }
-        }
-        // g.printGraph();
+        g.printGraph();
 
         // TODO: remove later; for testing
-        // cout << "Number of vertices: " << g.getVertexCount() << endl;
-        // cout << "Number of edges: " << g.getEdgeCount() << endl;
+        cout << "Number of vertices: " << g.getVertexCount() << endl;
+        cout << "Number of edges: " << g.getEdgeCount() << endl;
 
         curl_easy_cleanup(curl);
     }
-    }
-
     return 0;
 }

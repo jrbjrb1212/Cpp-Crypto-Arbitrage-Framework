@@ -75,5 +75,6 @@
         "unordered_set": "cpp",
         "valarray": "cpp",
         "filesystem": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": false
 }
