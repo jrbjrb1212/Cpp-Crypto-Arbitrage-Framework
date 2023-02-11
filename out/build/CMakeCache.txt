@@ -236,6 +236,9 @@ nlohmann_json_DIR:PATH=/usr/local/share/cmake/nlohmann_json
 //Path to a library.
 pkgcfg_lib_PC_CURL_curl:FILEPATH=/usr/lib/x86_64-linux-gnu/libcurl.so
 
+//The directory containing a CMake configuration file for pthread.
+pthread_DIR:PATH=pthread_DIR-NOTFOUND
+
 
 ########################
 # INTERNAL cache entries

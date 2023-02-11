@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/crypto.dir/BellmanFord.cpp.o -o crypto  -lcurl 
+/usr/bin/c++  -pthread CMakeFiles/crypto.dir/BellmanFord.cpp.o -o crypto  -lcurl 

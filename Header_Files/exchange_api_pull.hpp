@@ -7,8 +7,13 @@
 #include <unordered_map>
 #include <vector>
 #include <string>
+#include <thread>
+#include <mutex>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
+
 
 /*
 *
@@ -66,7 +71,7 @@ unordered_map<string, vector<string>> buildSymbolHashMap()
 * and add data to Graph
 *
 */
-void pullBinance(unordered_map<string, vector<string> > &symbolMap, Graph &g)
+void pullBinance(unordered_map<string, vector<string> > &symbolMap, Graph &g, mutex &symbolMapMutex)
 {
     CURL *curl;
     CURLcode res;
@@ -89,9 +94,15 @@ void pullBinance(unordered_map<string, vector<string> > &symbolMap, Graph &g)
             cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
         }
 
-        // TODO: Test to make sure something correct is returned from API call aka on the right VPN
+        auto start = high_resolution_clock::now();
         nlohmann::json json_data = nlohmann::json::parse(response);
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(stop - start);
+        cout << "\n\nTime to parse: " << duration.count() << endl;
 
+
+        // Lock the mutex
+        symbolMapMutex.lock();
         for (const auto &item : json_data)
         {
             string tradeSymbol = string(item["symbol"]);
@@ -107,7 +118,9 @@ void pullBinance(unordered_map<string, vector<string> > &symbolMap, Graph &g)
             double price = stod(strPrice);
             g.addEdge(fromAsset, toAsset, price, exchange);
         }
-
+        // Unlock the mutex
+        symbolMapMutex.unlock();
+        
         curl_easy_cleanup(curl);
         cout << "Finished pull from " << exchange << "\n" << endl;
     }
@@ -120,7 +133,7 @@ void pullBinance(unordered_map<string, vector<string> > &symbolMap, Graph &g)
 * and add data to Graph
 *
 */
-void pullBitget(unordered_map<string, vector<string> > &symbolMap, Graph &g)
+void pullBitget(unordered_map<string, vector<string> > &symbolMap, Graph &g, mutex &symbolMapMutex)
 {
     CURL *curl;
     CURLcode res;
@@ -144,9 +157,11 @@ void pullBitget(unordered_map<string, vector<string> > &symbolMap, Graph &g)
             cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
         }
 
-        // TODO: Test to make sure something correct is returned from API call aka on the right VPN
+        
         nlohmann::json json_data = nlohmann::json::parse(response);
 
+        // Lock the mutex
+        symbolMapMutex.lock();
         for (auto& item : json_data["data"]) {
             // symbol comes in uppercase with the coins seperated by a hyphen
             string tradeSymbol = item["symbol"];
@@ -160,6 +175,9 @@ void pullBitget(unordered_map<string, vector<string> > &symbolMap, Graph &g)
             double price = stod(stringPrice);
             g.addEdge(fromAsset, toAsset, price, exchange);
         }
+        // Unlock the mutex
+        symbolMapMutex.unlock();
+
         cout << "Finished pull from " << exchange << "\n" << endl;
         curl_easy_cleanup(curl);
     }
@@ -172,7 +190,7 @@ void pullBitget(unordered_map<string, vector<string> > &symbolMap, Graph &g)
 * and add data to Graph
 *
 */
-void pullBitMart(unordered_map<string, vector<string> > &symbolMap, Graph &g)
+void pullBitMart(unordered_map<string, vector<string> > &symbolMap, Graph &g, mutex &symbolMapMutex)
 {
     CURL *curl;
     CURLcode res;
@@ -195,8 +213,11 @@ void pullBitMart(unordered_map<string, vector<string> > &symbolMap, Graph &g)
             cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
         }
 
-        // TODO: Test to make sure something correct is returned from API call aka on the right VPN
+        
         nlohmann::json json_data = nlohmann::json::parse(response);
+        
+        // Lock the mutex
+        symbolMapMutex.lock();
         for (auto& item : json_data["data"]["tickers"]) {
             // symbol comes in uppercase with the coins seperated by a hyphen
             string tradeSymbol = item["symbol"];
@@ -214,6 +235,9 @@ void pullBitMart(unordered_map<string, vector<string> > &symbolMap, Graph &g)
             double price = stod(stringPrice);
             g.addEdge(fromAsset, toAsset, price, exchange);
         }
+        // Unlock the mutex
+        symbolMapMutex.unlock();
+
         cout << "Finished pull from " << exchange << "\n" <<endl;
         curl_easy_cleanup(curl);
     }
@@ -225,7 +249,7 @@ void pullBitMart(unordered_map<string, vector<string> > &symbolMap, Graph &g)
 * and add data to Graph
 *
 */
-void pullGateio(unordered_map<string, vector<string> > &symbolMap, Graph &g)
+void pullGateio(unordered_map<string, vector<string> > &symbolMap, Graph &g, mutex &symbolMapMutex)
 {
     CURL *curl;
     CURLcode res;
@@ -248,9 +272,11 @@ void pullGateio(unordered_map<string, vector<string> > &symbolMap, Graph &g)
             cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
         }
 
-        // TODO: Test to make sure something correct is returned from API call aka on the right VPN
+        
         nlohmann::json json_data = nlohmann::json::parse(response);
 
+        // Lock the mutex
+        symbolMapMutex.lock();
         for (auto& item : json_data) {
             // symbol comes in uppercase with the coins seperated by a hyphen
             string tradeSymbol = item["currency_pair"];
@@ -268,6 +294,9 @@ void pullGateio(unordered_map<string, vector<string> > &symbolMap, Graph &g)
             double price = stod(stringPrice);
             g.addEdge(fromAsset, toAsset, price, exchange);
         }
+        // Unlock the mutex
+        symbolMapMutex.unlock();
+
         cout << "Finished pull from " << exchange << "\n" << endl;
         curl_easy_cleanup(curl);
     }
@@ -280,7 +309,7 @@ void pullGateio(unordered_map<string, vector<string> > &symbolMap, Graph &g)
 * and add data to Graph
 *
 */
-void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g)
+void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g, mutex &symbolMapMutex)
 {
     CURL *curl;
     CURLcode res;
@@ -304,6 +333,9 @@ void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g)
         }
 
         nlohmann::json json_data = nlohmann::json::parse(response);
+        
+        // Lock the mutex
+        symbolMapMutex.lock();
         for (auto& item : json_data["data"]) {
             // Huobi returns symbol name in all lower case where my hashmap is all uppercase
             string tradeSymbol = item["symbol"];
@@ -322,6 +354,8 @@ void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g)
             double price = item["ask"];
             g.addEdge(fromAsset, toAsset, price, exchange);
         }
+        // Unlock the mutex
+        symbolMapMutex.unlock();
 
         cout << "Finished pull from " << exchange << "\n" << endl;
         curl_easy_cleanup(curl);
@@ -334,7 +368,7 @@ void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g)
 * and add data to Graph
 *
 */
-void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g)
+void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g, mutex &symbolMapMutex)
 {
     CURL *curl;
     CURLcode res;
@@ -360,6 +394,8 @@ void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g)
         // TODO: Test to make sure something correct is returned from API call aka on the right VPN
         nlohmann::json json_data = nlohmann::json::parse(response);
 
+        // Lock the mutex
+        symbolMapMutex.lock();
         for (auto& item : json_data["data"]["ticker"]) {
             // symbol comes in uppercase with the coins seperated by a hyphen
             string tradeSymbol = item["symbol"];
@@ -376,6 +412,8 @@ void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g)
             double price = stod(stringPrice);
             g.addEdge(fromAsset, toAsset, price, exchange);
         }
+        // Unlock the mutex
+        symbolMapMutex.unlock();
 
         cout << "Finished pull from " << exchange << "\n" << endl;
         curl_easy_cleanup(curl);
@@ -389,38 +427,25 @@ void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g)
 * supported in this framework via API
 *
 */
-void pullAll(unordered_map<string, vector<string> > &symbolMap, Graph &g, boolean parallelOpt){
-    if (parallelOpt){
-
-    } else{
-        pullBinance(symbolMap, g);
-        pullBitget(symbolMap, g);
-        pullBitMart(symbolMap, g);
-        pullGateio(symbolMap, g);
-        pullKucoin(symbolMap, g);
-        pullHuobi(symbolMap, g); 
-    }
-}
-
 void pullAll(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool parallelOpt) {
-    if (!parallelOpt) {
-        pullBinance(symbolMap, g);
-        pullBitget(symbolMap, g);
-        pullBitMart(symbolMap, g);
-        pullGateio(symbolMap, g);
-        pullKucoin(symbolMap, g);
-        pullHuobi(symbolMap, g);
-    } else {
+    // if (!parallelOpt) {
+    //     pullBinance(symbolMap, g);
+    //     pullBitget(symbolMap, g);
+    //     pullBitMart(symbolMap, g);
+    //     pullGateio(symbolMap, g);
+    //     pullKucoin(symbolMap, g);
+    //     pullHuobi(symbolMap, g);
+    // } else {
         mutex symbolMapMutex;
         vector<thread> threads;
         threads.push_back(thread(pullBinance, ref(symbolMap), ref(g), ref(symbolMapMutex)));
-        threads.push_back(thread(pullBitget, ref(symbolMap), ref(g), ref(symbolMapMutex)));
-        threads.push_back(thread(pullBitMart, ref(symbolMap), ref(g), ref(symbolMapMutex)));
-        threads.push_back(thread(pullGateio, ref(symbolMap), ref(g), ref(symbolMapMutex)));
-        threads.push_back(thread(pullKucoin, ref(symbolMap), ref(g), ref(symbolMapMutex)));
-        threads.push_back(thread(pullHuobi, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        // threads.push_back(thread(pullBitget, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        // threads.push_back(thread(pullBitMart, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        // threads.push_back(thread(pullGateio, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        // threads.push_back(thread(pullKucoin, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        // threads.push_back(thread(pullHuobi, ref(symbolMap), ref(g), ref(symbolMapMutex)));
         for (auto &thread : threads) {
             thread.join();
         }
-    }
+    // }
 }

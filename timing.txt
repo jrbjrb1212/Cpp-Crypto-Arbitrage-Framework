@@ -1,0 +1,33 @@
+From Parse to add to graph time:
+969 microseconds
+1004 microseconds
+1032 microseconds
+
+Curl time:
+1346582 microseconds
+1341916 microseconds
+1330167 microseconds
+
+
+JSON_pare time:
+34491 microseconds
+17585 microseconds
+16379 microseconds
+25111 microseconds
+
+
+
+
+sequential API pull/parse/update times:
+9.626 seconds
+9.648 seconds
+9.711 seconds
+9.377 seconds
+9.228 seconds
+
+Parallel API pull/parse/update times:
+2.164 seconds
+2.010 seconds
+1.990 seconds
+2.106 seconds
+2.166 seconds

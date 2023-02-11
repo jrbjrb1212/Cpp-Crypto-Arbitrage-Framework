@@ -56,16 +56,6 @@ int main()
 	// pullBitMart(symbolMap, g);
 	pullAll(symbolMap, g, true);
 
-	// sequential times:
-	// 9.626
-	// 9.648
-	// 9.7.11
-	// 9.377
-	// 9.228
-
-	// Parallel times:
-	//
-
 	cout << "Number of vertices: " << g.getVertexCount() << endl;
 	cout << "Number of edges: " << g.getEdgeCount() << endl;
 	// g.printGraph();
