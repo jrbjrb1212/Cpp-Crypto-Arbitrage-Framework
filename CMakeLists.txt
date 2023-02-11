@@ -9,4 +9,4 @@ find_package(CURL REQUIRED)
 include_directories(${CURL_INCLUDE_DIRS})
 
 add_executable(${PROJECT_NAME}  BellmanFord.cpp)
-target_link_libraries(${PROJECT_NAME}  PRIVATE nlohmann_json CURL)
+target_link_libraries(${PROJECT_NAME}  PRIVATE nlohmann_json curl)

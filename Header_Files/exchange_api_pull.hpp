@@ -137,6 +137,7 @@ void pullBitget(unordered_map<string, vector<string> > &symbolMap, Graph &g)
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
         res = curl_easy_perform(curl);
 
+
         // Check for errors
         if (res != CURLE_OK)
         {
@@ -159,7 +160,7 @@ void pullBitget(unordered_map<string, vector<string> > &symbolMap, Graph &g)
             double price = stod(stringPrice);
             g.addEdge(fromAsset, toAsset, price, exchange);
         }
-        cout << "Finished pull from" << exchange << "\n" << endl;
+        cout << "Finished pull from " << exchange << "\n" << endl;
         curl_easy_cleanup(curl);
     }
 }
@@ -213,7 +214,7 @@ void pullBitMart(unordered_map<string, vector<string> > &symbolMap, Graph &g)
             double price = stod(stringPrice);
             g.addEdge(fromAsset, toAsset, price, exchange);
         }
-        cout << "Finished pull from" << exchange << "\n" <<endl;
+        cout << "Finished pull from " << exchange << "\n" <<endl;
         curl_easy_cleanup(curl);
     }
 }
@@ -388,11 +389,38 @@ void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g)
 * supported in this framework via API
 *
 */
-void pullAll(unordered_map<string, vector<string> > &symbolMap, Graph &g){
-    pullBinance(symbolMap, g);
-    pullBitget(symbolMap, g);
-    pullBitMart(symbolMap, g);
-    pullGateio(symbolMap, g);
-    pullKucoin(symbolMap, g);
-    pullHuobi(symbolMap, g);
+void pullAll(unordered_map<string, vector<string> > &symbolMap, Graph &g, boolean parallelOpt){
+    if (parallelOpt){
+
+    } else{
+        pullBinance(symbolMap, g);
+        pullBitget(symbolMap, g);
+        pullBitMart(symbolMap, g);
+        pullGateio(symbolMap, g);
+        pullKucoin(symbolMap, g);
+        pullHuobi(symbolMap, g); 
+    }
+}
+
+void pullAll(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool parallelOpt) {
+    if (!parallelOpt) {
+        pullBinance(symbolMap, g);
+        pullBitget(symbolMap, g);
+        pullBitMart(symbolMap, g);
+        pullGateio(symbolMap, g);
+        pullKucoin(symbolMap, g);
+        pullHuobi(symbolMap, g);
+    } else {
+        mutex symbolMapMutex;
+        vector<thread> threads;
+        threads.push_back(thread(pullBinance, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        threads.push_back(thread(pullBitget, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        threads.push_back(thread(pullBitMart, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        threads.push_back(thread(pullGateio, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        threads.push_back(thread(pullKucoin, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        threads.push_back(thread(pullHuobi, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        for (auto &thread : threads) {
+            thread.join();
+        }
+    }
 }

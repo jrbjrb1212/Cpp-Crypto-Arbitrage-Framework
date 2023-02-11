@@ -163,7 +163,7 @@ vector<TrackProfit> ArbDetect(Graph g, string source, double lowerProfitThreshol
                     
                     if (lowerBound > currProfit && currProfit > upperBound){
                         cout << "Curr Profit: " << ((WeightConversion(currProfit) - 1) * 100) << "% profitability :";
-                        cout << "Log representation: " << currProfit << "Upper Bound: " << upperBound <<  endl;
+                        cout << " Log representation: " << currProfit << " Upper Bound: " << upperBound <<  endl;
                         if (currProfit < maxProfit){
                         maxProfit = currProfit;
                         TrackProfit trade1 {source, fristTradeEdge.to, fristTradeEdge.weight, fristTradeEdge.exchange};
