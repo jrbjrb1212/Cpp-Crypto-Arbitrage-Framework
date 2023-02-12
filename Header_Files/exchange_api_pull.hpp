@@ -67,6 +67,27 @@ unordered_map<string, vector<string>> buildSymbolHashMap()
 
 /*
 *
+* Develops a HashMap of exchanges and their spot trading fees
+* Map Strucuture: Binance -> [0.002] 
+* TODO: implement API request to get most up to date trading fees
+* not public endpoint so authoritzation via API key is required
+*
+*/
+unordered_map<string, double> buildFeeMap(vector<string> exchanges){
+    unordered_map<string, double> feeMap;
+    feeMap['binance'] = 0.002;
+    feeMap['bitget'] = 0.002;
+    feeMap['bitmart'] = 0.005;
+    feeMap['gateio'] = 0.003;
+    feeMap['huobi'] = 0.002;
+    feeMap['kucoin'] = 0.002;
+    return feeMap
+}
+
+
+
+/*
+*
 * Pull spot ticker data from Binance Exchange via API
 * and add data to Graph
 *
@@ -94,12 +115,7 @@ void pullBinance(unordered_map<string, vector<string> > &symbolMap, Graph &g, mu
             cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
         }
 
-        auto start = high_resolution_clock::now();
         nlohmann::json json_data = nlohmann::json::parse(response);
-        auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<microseconds>(stop - start);
-        cout << "\n\nTime to parse: " << duration.count() << endl;
-
 
         // Lock the mutex
         symbolMapMutex.lock();
@@ -439,11 +455,11 @@ void pullAll(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool p
         mutex symbolMapMutex;
         vector<thread> threads;
         threads.push_back(thread(pullBinance, ref(symbolMap), ref(g), ref(symbolMapMutex)));
-        // threads.push_back(thread(pullBitget, ref(symbolMap), ref(g), ref(symbolMapMutex)));
-        // threads.push_back(thread(pullBitMart, ref(symbolMap), ref(g), ref(symbolMapMutex)));
-        // threads.push_back(thread(pullGateio, ref(symbolMap), ref(g), ref(symbolMapMutex)));
-        // threads.push_back(thread(pullKucoin, ref(symbolMap), ref(g), ref(symbolMapMutex)));
-        // threads.push_back(thread(pullHuobi, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        threads.push_back(thread(pullBitget, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        threads.push_back(thread(pullBitMart, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        threads.push_back(thread(pullGateio, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        threads.push_back(thread(pullKucoin, ref(symbolMap), ref(g), ref(symbolMapMutex)));
+        threads.push_back(thread(pullHuobi, ref(symbolMap), ref(g), ref(symbolMapMutex)));
         for (auto &thread : threads) {
             thread.join();
         }

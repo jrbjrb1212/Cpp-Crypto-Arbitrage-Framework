@@ -10,7 +10,9 @@ using namespace std;
 struct Edge
 {
     string to;
-    double weight;
+    double bidPrice;
+    double askPrice;
+    double fee;
     string exchange;
 };
 
@@ -23,13 +25,16 @@ public:
     Graph() {}
     unordered_map<string, vector<Edge> > adjacency_list;
 
-    // TODO: Change graph to add edges in both directions as the crypto exchange rate is the inverse
-    void addEdge(string from, string to, double weight, string exchange)
+    void addEdge(string from, string to, double bidPrice, double askPrice, double fee, string exchange)
     {
-        adjacency_list[from].push_back({to, -log(weight), exchange});
-        adjacency_list[to].push_back({from, -log(1 / weight), exchange});
+        adjacency_list[from].push_back({to, bidPrice, askPrice, fee, exchange});
+        adjacency_list[to].push_back({from, (1 / askPrice), (1 / bidPrice), fee, exchange});
+        // adjacency_list[from].push_back({to, -log(weight), exchange});
+        // adjacency_list[to].push_back({from, -log(1 / weight), exchange});
         m_graphEdges +=2;
     }
+
+    //TODO: add a method to update an edge's weight as I think it will be faster than destroying the graph and rebuilding from scratch
 
     int getVertexCount()
     {
@@ -51,7 +56,7 @@ public:
             cout << vertex << ": ";
             for (Edge edge : edges)
             {
-                cout << "(" << edge.to << ", " << edge.weight << ", " << edge.exchange << ") ";
+                cout << "(" << edge.to << ", " << edge.bidPrice << ", " << edge.askPrice << ", " << edge.fee << ", " << edge.exchange << ") ";
             }
             cout << endl;
         }
