@@ -10,6 +10,7 @@ int main(){
 	Graph g;
 	// unordered_map<string, vector<string>> symbolMap = buildSymbolHashMap();
 	//    void addEdge(string from, string to, double bidPrice, double askPrice, double fee, string exchange)
+	// for fee do 1-fee
 	g.addEdge("USD", "LTC", 1.0, 1.0, 0, "A");
 	g.addEdge("USD", "LTC", 1.0, 1.0, 0, "B");
 	g.addEdge("USD", "BTC", 1.0, 1.0, 0, "A");
@@ -22,6 +23,12 @@ int main(){
 	string coin = "USD";
 	cout << "Performing Arb Finder from " << coin << endl;
 	vector<TrackProfit> arbPath = ArbDetect(g, coin, 0, 0);
+	if (arbPath.size() != 0) {
+		for(int i = 0; i < arbPath.size(); i++){
+			cout << "From " << arbPath[i].from << " to " << arbPath[i].to;
+			cout << " via " << arbPath[i].exchange << endl;
+		}
+	}
 
 }
 

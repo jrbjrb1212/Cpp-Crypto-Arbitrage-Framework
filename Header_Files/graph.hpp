@@ -27,8 +27,8 @@ public:
 
     void addEdge(string from, string to, double bidPrice, double askPrice, double fee, string exchange)
     {
-        adjacency_list[from].push_back({to, bidPrice, askPrice, fee, exchange});
-        adjacency_list[to].push_back({from, (1 / askPrice), (1 / bidPrice), fee, exchange});
+        adjacency_list[from].push_back({to, bidPrice, askPrice, (1-fee), exchange});
+        adjacency_list[to].push_back({from, (1 / askPrice), (1 / bidPrice), (1-fee), exchange});
         // adjacency_list[from].push_back({to, -log(weight), exchange});
         // adjacency_list[to].push_back({from, -log(1 / weight), exchange});
         m_graphEdges +=2;
