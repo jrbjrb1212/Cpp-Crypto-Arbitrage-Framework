@@ -10,8 +10,8 @@ using namespace std;
 struct Edge
 {
     string to;
-    double bidPrice;
-    double askPrice;
+    long double bidPrice;
+    long double askPrice;
     double fee;
     string exchange;
 };
@@ -25,12 +25,12 @@ public:
     Graph() {}
     unordered_map<string, vector<Edge> > adjacency_list;
 
-    void addEdge(string from, string to, double bidPrice, double askPrice, double fee, string exchange)
+    void addEdge(string from, string to, long double bidPrice, long double askPrice, double fee, string exchange)
     {
-        adjacency_list[from].push_back({to, bidPrice, askPrice, (1-fee), exchange});
-        adjacency_list[to].push_back({from, (1 / askPrice), (1 / bidPrice), (1-fee), exchange});
-        // adjacency_list[from].push_back({to, -log(weight), exchange});
-        // adjacency_list[to].push_back({from, -log(1 / weight), exchange});
+        // adjacency_list[from].push_back({to, bidPrice, askPrice, (1-fee), exchange});
+        // adjacency_list[to].push_back({from, (1 / askPrice), (1 / bidPrice), (1-fee), exchange});
+        adjacency_list[from].push_back({to, log(bidPrice), log(askPrice), log(1-fee), exchange});
+        adjacency_list[to].push_back({from, log(1 / askPrice), log(1/bidPrice), log(1-fee), exchange});
         m_graphEdges +=2;
     }
 

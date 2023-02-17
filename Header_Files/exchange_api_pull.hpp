@@ -73,15 +73,15 @@ unordered_map<string, vector<string>> buildSymbolHashMap()
 * not public endpoint so authoritzation via API key is required
 *
 */
-unordered_map<string, double> buildFeeMap(vector<string> exchanges){
+unordered_map<string, double> buildFeeMap(){
     unordered_map<string, double> feeMap;
-    feeMap['binance'] = 0.002;
-    feeMap['bitget'] = 0.002;
-    feeMap['bitmart'] = 0.005;
-    feeMap['gateio'] = 0.003;
-    feeMap['huobi'] = 0.002;
-    feeMap['kucoin'] = 0.002;
-    return feeMap
+    feeMap["binance"] = 0.002;
+    feeMap["bitget"] = 0.002;
+    feeMap["bitmart"] = 0.005;
+    feeMap["gateio"] = 0.003;
+    feeMap["huboi"] = 0.002;
+    feeMap["kucoin"] = 0.002;
+    return feeMap;
 }
 
 
@@ -98,12 +98,15 @@ void pullBinance(unordered_map<string, vector<string> > &symbolMap, Graph &g, mu
     CURLcode res;
     string response;
     string exchange= "binance";
+    double exchangeFee = 0.002;
+    long double epsilon = 0.0000000000000001;
+
 
     curl = curl_easy_init();
     if (curl)
     {
         cout << "Start pull from " << exchange << "...";
-        const char* exchangeURL = "https://api.binance.com/api/v3/ticker/price";
+        const char* exchangeURL = "https://api.binance.com/api/v3/ticker/bookTicker";
         curl_easy_setopt(curl, CURLOPT_URL, exchangeURL);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
@@ -127,12 +130,15 @@ void pullBinance(unordered_map<string, vector<string> > &symbolMap, Graph &g, mu
             // Trading pair is not viable by user settings
             if (assets.size() != 2)
                 continue;
-
-            string fromAsset = assets[0];
-            string toAsset = assets[1];
-            string strPrice = item["price"];
-            double price = stod(strPrice);
-            g.addEdge(fromAsset, toAsset, price, exchange);
+            
+            string strBidPrice = item["bidPrice"], strAskPrice = item["askPrice"];
+            long double bidPrice = stod(strBidPrice), askPrice = stod(strAskPrice);
+            if ((bidPrice == 0.0) || (askPrice == 0.0)){
+                continue;
+            }
+            string fromAsset = assets[0], toAsset = assets[1];
+            g.addEdge(fromAsset, toAsset, bidPrice, askPrice, exchangeFee, exchange);
+            // cout << "added: " << fromAsset << "/" << toAsset << endl;
         }
         // Unlock the mutex
         symbolMapMutex.unlock();
@@ -155,6 +161,7 @@ void pullBitget(unordered_map<string, vector<string> > &symbolMap, Graph &g, mut
     CURLcode res;
     string response;
     string exchange = "bitget";
+    double exchangeFee = 0.002;
 
     curl = curl_easy_init();
     if (curl)
@@ -186,10 +193,13 @@ void pullBitget(unordered_map<string, vector<string> > &symbolMap, Graph &g, mut
             {
                 continue;
             }
-            string fromAsset = assets[0], toAsset = assets[1], stringPrice;
-            stringPrice = item["buyOne"];
-            double price = stod(stringPrice);
-            g.addEdge(fromAsset, toAsset, price, exchange);
+            string fromAsset = assets[0], toAsset = assets[1];
+            string strBidPrice = item["buyOne"], strAskPrice = item["sellOne"];
+            long double bidPrice = stod(strBidPrice), askPrice = stod(strAskPrice);
+             if ((bidPrice == 0.0) || (askPrice == 0.0)){
+                continue;
+            }
+            g.addEdge(fromAsset, toAsset, bidPrice, askPrice, exchangeFee, exchange);
         }
         // Unlock the mutex
         symbolMapMutex.unlock();
@@ -212,6 +222,7 @@ void pullBitMart(unordered_map<string, vector<string> > &symbolMap, Graph &g, mu
     CURLcode res;
     string response;
     string exchange = "bitmart";
+    double exchangeFee = 0.005;
 
     curl = curl_easy_init();
     if (curl)
@@ -244,12 +255,14 @@ void pullBitMart(unordered_map<string, vector<string> > &symbolMap, Graph &g, mu
             {
                 continue;
             }
-            string fromAsset, toAsset, stringPrice;
-            fromAsset = assets[0];
-            toAsset = assets[1];
-            stringPrice = item["best_ask"];
-            double price = stod(stringPrice);
-            g.addEdge(fromAsset, toAsset, price, exchange);
+            string fromAsset = assets[0], toAsset = assets[1];
+            string strBidPrice = item["best_bid"], strAskPrice = item["best_ask"];
+            long double bidPrice = stod(strBidPrice), askPrice = stod(strAskPrice);
+             if ((bidPrice == 0.0) || (askPrice == 0.0)){
+                continue;
+            }
+            g.addEdge(fromAsset, toAsset, bidPrice, askPrice, exchangeFee, exchange);
+
         }
         // Unlock the mutex
         symbolMapMutex.unlock();
@@ -271,6 +284,7 @@ void pullGateio(unordered_map<string, vector<string> > &symbolMap, Graph &g, mut
     CURLcode res;
     string response;
     string exchange = "gateio";
+    double exchangeFee = 0.003;
 
     curl = curl_easy_init();
     if (curl)
@@ -303,12 +317,13 @@ void pullGateio(unordered_map<string, vector<string> > &symbolMap, Graph &g, mut
             {
                 continue;
             }
-            string fromAsset, toAsset, stringPrice;
-            fromAsset = assets[0];
-            toAsset = assets[1];
-            stringPrice = item["lowest_ask"];
-            double price = stod(stringPrice);
-            g.addEdge(fromAsset, toAsset, price, exchange);
+            string fromAsset = assets[0], toAsset = assets[1];
+            string strBidPrice = item["highest_bid"], strAskPrice = item["lowest_ask"];
+            long double bidPrice = stod(strBidPrice), askPrice = stod(strAskPrice);
+             if ((bidPrice == 0.0) || (askPrice == 0.0)){
+                continue;
+            }
+            g.addEdge(fromAsset, toAsset, bidPrice, askPrice, exchangeFee, exchange);
         }
         // Unlock the mutex
         symbolMapMutex.unlock();
@@ -331,6 +346,7 @@ void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g, mute
     CURLcode res;
     string response;
     string exchange = "huboi";
+    double exchangeFee = 0.002;
 
     curl = curl_easy_init();
     if (curl)
@@ -365,10 +381,11 @@ void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g, mute
                 continue;
 
             string fromAsset = assets[0], toAsset = assets[1];
-
-            // Huobi returns "ask" value as a double instead of a string
-            double price = item["ask"];
-            g.addEdge(fromAsset, toAsset, price, exchange);
+            long double bidPrice = item["bid"], askPrice = item["ask"];
+             if ((bidPrice == 0.0) || (askPrice == 0.0)){
+                continue;
+            }
+            g.addEdge(fromAsset, toAsset, bidPrice, askPrice, exchangeFee, exchange);
         }
         // Unlock the mutex
         symbolMapMutex.unlock();
@@ -390,6 +407,7 @@ void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g, mut
     CURLcode res;
     string response;
     string exchange = "kucoin";
+    double exchangeFee;
 
     curl = curl_easy_init();
     if (curl)
@@ -421,12 +439,15 @@ void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g, mut
             if (assets.size() != 2)
                 continue;
             
-            string fromAsset, toAsset, stringPrice;
-            fromAsset = assets[0];
-            toAsset = assets[1];
-            stringPrice = item["buy"];
-            double price = stod(stringPrice);
-            g.addEdge(fromAsset, toAsset, price, exchange);
+            string fromAsset = assets[0], toAsset = assets[1];
+            string strBidPrice = item["buy"], strAskPrice = item["sell"];
+            long double bidPrice = stod(strBidPrice), askPrice = stod(strAskPrice);
+             if ((bidPrice == 0.0) || (askPrice == 0.0)){
+                continue;
+            }
+            string strTakerFee = item["takerFeeRate"], strMakerFee = item["makerFeeRate"];
+            exchangeFee = stod(strTakerFee) + stod(strMakerFee);
+            g.addEdge(fromAsset, toAsset, bidPrice, askPrice, exchangeFee, exchange);
         }
         // Unlock the mutex
         symbolMapMutex.unlock();

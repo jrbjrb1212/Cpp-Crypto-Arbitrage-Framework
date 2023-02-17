@@ -1,34 +1,45 @@
 #include <iostream>
 #include "Header_Files/arbitrage_finder.hpp"
 #include "Header_Files/graph.hpp"
-// #include "Header_Files/exchange_api_pull.hpp"
+#include "Header_Files/exchange_api_pull.hpp"
 #include <chrono>
 
 using namespace std;
 
 int main(){
 	Graph g;
-	// unordered_map<string, vector<string>> symbolMap = buildSymbolHashMap();
-	//    void addEdge(string from, string to, double bidPrice, double askPrice, double fee, string exchange)
-	// for fee do 1-fee
-	g.addEdge("USD", "LTC", 1.0, 1.0, 0, "A");
-	g.addEdge("USD", "LTC", 1.0, 1.0, 0, "B");
-	g.addEdge("USD", "BTC", 1.0, 1.0, 0, "A");
-	g.addEdge("USD", "ETH", 1.0, 1.0, 0, "A");
-	g.addEdge("LTC", "ETH", 2.0, 1.0, 0, "A");
-	g.addEdge("LTC", "BTC", 1.0, 1.0, 0, "A");
-	g.addEdge("ETH", "BTC", 1.0, 1.0, 0, "A");
-	g.printGraph();
-
-	string coin = "USD";
+	unordered_map<string, vector<string>> symbolMap = buildSymbolHashMap();
+	unordered_map<string, double> feeMap = buildFeeMap();
+	// g.addEdge("USD", "LTC", 1.0, 1.0, 0.002, "A");
+	// g.addEdge("USD", "LTC", 1.0, 1.0, 0.002, "B");
+	// g.addEdge("USD", "BTC", 1.0, 1.0, 0.002, "A");
+	// g.addEdge("USD", "ETH", 1.0, 1.0, 0.002, "A");
+	// g.addEdge("LTC", "ETH", 1.1, 1.0, 0.002, "A");
+	// g.addEdge("LTC", "BTC", 1.0, 1.0, 0.002, "A");
+	// g.addEdge("ETH", "BTC", 1.0, 1.0, 0.002, "A");
+	auto start = high_resolution_clock::now();
+	pullAll(symbolMap, g, true);
+	auto stop = high_resolution_clock::now();
+	auto duration = duration_cast<microseconds>(stop - start);
+	cout << "\n\nTime to pull and parse data: " << duration.count() << " microseconds" << endl;
+	cout << "Number of vertices: " << g.getVertexCount() << endl;
+	cout << "Number of edges: " << g.getEdgeCount() << endl;
+	cout << endl;
+	// g.printGraph();
+	auto start2 = high_resolution_clock::now();
+	string coin = "USDT";
 	cout << "Performing Arb Finder from " << coin << endl;
-	vector<TrackProfit> arbPath = ArbDetect(g, coin, 0, 0);
+	vector<TrackProfit> arbPath = ArbDetect(g, coin, 1, 1.05);
 	if (arbPath.size() != 0) {
 		for(int i = 0; i < arbPath.size(); i++){
 			cout << "From " << arbPath[i].from << " to " << arbPath[i].to;
-			cout << " via " << arbPath[i].exchange << endl;
+			cout << " via " << arbPath[i].exchange << " using an " << arbPath[i].bidOrask;
+			cout << " at " << WeightConversion(arbPath[i].orderPrice) << " with " << feeMap[arbPath[i].exchange] * 100 << "%" << " fee" << endl;
 		}
 	}
+	auto stop2 = high_resolution_clock::now();
+	auto duration2 = duration_cast<microseconds>(stop2 - start2);
+	cout << "\n\nTime to Arbdetect: " << duration2.count() << " microseconds" << endl;
 
 }
 

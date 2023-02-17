@@ -1,0 +1,28 @@
+Start pull from bitget...Start pull from Start pull from bitmart...gateio...Start pull from kucoin...Start pull from huboi...Start pull from binance...Finished pull from bitmart
+
+Finished pull from kucoin
+
+Finished pull from bitget
+
+Finished pull from huboi
+
+Finished pull from binance
+
+Finished pull from gateio
+
+
+
+Time to pull and parse data: 2115207 microseconds
+Number of vertices: 119
+Number of edges: 1802
+
+Performing Arb Finder from USDT
+MaxProfit (log): 0.0416835
+MaxProfit: 4.25645%
+
+From USDT to DATA via gateio using an bid at 25.0501 with 0.3% fee
+From DATA to BTC via kucoin using an ask at 1.697e-06 with 0.2% fee
+From BTC to USDT via bitmart using an bid at 24772.1 with 0.5% fee
+
+
+Time to ARbdetect: 4943 microseconds
