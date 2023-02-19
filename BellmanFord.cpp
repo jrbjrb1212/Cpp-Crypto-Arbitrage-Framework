@@ -14,7 +14,6 @@ int main(){
 	
 	Graph g;
 	// Set the graph
-	
 	pullAll(symbolMap, g, true);
 	
 	// update the graph

@@ -1,14 +1,2 @@
-Number of vertices: 119
-Number of edges: 1826
-
-Performing Arb Finder from USDT
-AAA, AAB, ABA, ABB, BAA, BAB, BBA, BBB, 
-MaxProfit (log): 0.00983292
-MaxProfit: 0.988142%
-
-From USDT to KMD via binance using an ask at 3.36022 with 0.2% fee
-From KMD to BTC via huboi using an bid at 1.225e-05 with 0.2% fee
-From BTC to USDT via bitget using an bid at 24681.7 with 0.2% fee
-
-
-Time to Arbdetect: 2800 microseconds
+Please enter a number a real number for amount of coins
+CLI Format: python3 scrape_coinmarketcap.py <Number of coins> <minimum 24hr trade volume (USD)>
