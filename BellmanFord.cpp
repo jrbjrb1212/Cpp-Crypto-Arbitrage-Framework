@@ -14,7 +14,7 @@ int main(){
 	
 	Graph g;
 	// Set the graph
-	auto start = high_resolution_clock::now();
+	
 	pullAll(symbolMap, g, true);
 	
 	// update the graph
@@ -24,10 +24,11 @@ int main(){
 	cout << endl;
 	// g.printGraph();
 
+	auto start = high_resolution_clock::now();
 	string coin = "USDT";
 	cout << "Performing Arb Finder from " << coin << endl;
-	for(double i = 0.01; i < 0.25; i+=0.01){
-		vector<TrackProfit> arbPath = ArbDetectCombo(g, coin, 1.0, 1.0 + i, 4);
+	for(double i = 0.01; i < 0.25; i+=0.5){
+		vector<TrackProfit> arbPath = ArbDetectCombo(g, coin, 1.0, 1.0 + i, 3);
 		if (arbPath.size() != 0) {
 			for(int i = 0; i < arbPath.size(); i++){
 				cout << "From " << arbPath[i].from << " to " << arbPath[i].to;

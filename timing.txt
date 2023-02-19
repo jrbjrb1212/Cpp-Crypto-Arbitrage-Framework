@@ -1,3 +1,23 @@
+4-Path serial arbirtage detector (USDT):
+1141125 microseconds
+1262689 microseconds
+1117650 microseconds
+
+4-Path parallel arb detector (USDT):
+127489 microseconds
+125597 microseconds
+127043 microseconds
+
+3-Path serial arbritage detector (USDT):
+10129 microseconds
+9981 microseconds
+7738 microseconds
+
+3-Path parallel arb detector (USDT):
+4708 microseconds
+3397 microseconds
+8529 microseconds
+
 Destroy and Recreate Graph gateio time:
 2244115 microseconds
 2192950 microseconds

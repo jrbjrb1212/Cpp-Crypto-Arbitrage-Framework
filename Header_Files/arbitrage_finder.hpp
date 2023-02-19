@@ -1,5 +1,6 @@
 #pragma once
 
+// TODO: Remove imports that never get used
 #include <iostream>
 #include <unordered_map>
 #include <unordered_set>
@@ -8,9 +9,12 @@
 #include <algorithm>
 #include <limits>
 #include <tuple>
-#include "graph.hpp"
+#include <thread>
+#include <mutex>
 #include <assert.h>
+#include "graph.hpp"
 #include "combinations.hpp"
+
 
 using namespace std;
 
@@ -458,7 +462,7 @@ struct processCombinationInput{
 
 /*
 *
-* Strucutre method for determining profitability of triangular arbritages
+* Strucutre method for determining profitability of triangular arbitrages
 * Extropliated into a function as at each trade the bid or ask price can be used
 *
 */
@@ -482,7 +486,7 @@ void processCombinationLen3(Graph& g, double& maxProfit, vector<TrackProfit>& ne
 			for (Edge thirdTradeEdge : g.adjacency_list[secondTradeEdge.to]){
 				if (thirdTradeEdge.to == profitVars.source){
 					currProfit += tradeCostFromType(thirdTradeEdge, tradeTypes[2]);
-
+					// Lock maxProfit and negCyclePath
 					if (maxProfitCheck(maxProfit, currProfit, profitVars.lowerBound, profitVars.upperBound))
 					{
 						vector<Edge> path {firstTradeEdge, secondTradeEdge, thirdTradeEdge};
@@ -501,7 +505,53 @@ void processCombinationLen3(Graph& g, double& maxProfit, vector<TrackProfit>& ne
 
 /*
 *
-* Strucutre method for determining profitability of four-trade arbritages
+* Structure method for determining profitability of triangular arbitrages 
+* opportunties that are within a 4-way arbritrage
+*
+*/
+void processCombinationBase3(Graph& g, double currProfit, Edge startEdge, double& maxProfit, 
+						vector<TrackProfit>& negCyclePath, processCombinationInput profitVars, 
+						vector<string> tradeTypes)
+{
+	for (Edge firstTradeEdge : g.adjacency_list[startEdge.to])
+	{	
+		if (firstTradeEdge.to == profitVars.source)
+			continue;
+
+		currProfit += tradeCostFromType(firstTradeEdge, tradeTypes[1]);
+
+		for (Edge secondTradeEdge : g.adjacency_list[firstTradeEdge.to])
+		{
+			if (secondTradeEdge.to == profitVars.source)
+				continue;
+
+			currProfit += tradeCostFromType(secondTradeEdge, tradeTypes[2]);
+
+			for (Edge thirdTradeEdge : g.adjacency_list[secondTradeEdge.to])
+			{
+				if (thirdTradeEdge.to == profitVars.source){
+					currProfit += tradeCostFromType(thirdTradeEdge, tradeTypes[3]);
+					// Lock maxProfit and negCyclePath
+					if (maxProfitCheck(maxProfit, currProfit, profitVars.lowerBound, profitVars.upperBound))
+					{
+						vector<Edge> path {startEdge, firstTradeEdge, secondTradeEdge, thirdTradeEdge};
+						updateMaxPath(negCyclePath, tradeTypes, path);
+					}
+					currProfit -= tradeCostFromType(thirdTradeEdge, tradeTypes[3]);
+					break;
+				}
+			}
+
+			currProfit -= tradeCostFromType(secondTradeEdge, tradeTypes[2]);
+		}
+		currProfit -= tradeCostFromType(firstTradeEdge, tradeTypes[1]);
+	}
+}
+
+
+/*
+*
+* Strucutre method for determining profitability of four-trade arbitrages
 * Extropliated into a function as at each trade the bid or ask price can be used
 *
 */
@@ -510,42 +560,14 @@ void processCombinationLen4(Graph& g, double& maxProfit, vector<TrackProfit>& ne
 	double currProfit;
 	vector<string> tradeTypes;
 	combo2TradeType(tradeTypes, profitVars.combo);
-
 	
 	for (Edge firstTradeEdge : g.adjacency_list[profitVars.source]){	
 		currProfit = tradeCostFromType(firstTradeEdge, tradeTypes[0]);
+		
+		// Process all 3-way arbirtrage searchs in another function
+		processCombinationBase3(g, currProfit, firstTradeEdge, maxProfit, 
+						negCyclePath, profitVars, tradeTypes);
 
-		for (Edge secondTradeEdge : g.adjacency_list[firstTradeEdge.to])
-		{
-			if (secondTradeEdge.to == profitVars.source){
-				continue;
-			}
-
-			currProfit += tradeCostFromType(secondTradeEdge, tradeTypes[1]);
-
-			for (Edge thirdTradeEdge : g.adjacency_list[secondTradeEdge.to])
-			{
-				currProfit += tradeCostFromType(thirdTradeEdge, tradeTypes[2]);
-
-				for (Edge fourthTradeEdge : g.adjacency_list[thirdTradeEdge.to])
-				{
-					if (thirdTradeEdge.to == profitVars.source)
-					{
-						currProfit += tradeCostFromType(fourthTradeEdge, tradeTypes[3]);
-
-						if (maxProfitCheck(maxProfit, currProfit, profitVars.lowerBound, profitVars.upperBound))
-						{
-							vector<Edge> path = {firstTradeEdge, secondTradeEdge, thirdTradeEdge, fourthTradeEdge};
-							updateMaxPath(negCyclePath, tradeTypes, path);
-						}
-						currProfit -= tradeCostFromType(fourthTradeEdge, tradeTypes[3]);
-						break;
-					}
-				}
-				currProfit -= tradeCostFromType(thirdTradeEdge, tradeTypes[2]);
-			}
-			currProfit -= tradeCostFromType(secondTradeEdge, tradeTypes[1]);
-		}
 	}
 }
 
@@ -584,11 +606,22 @@ vector<TrackProfit> ArbDetectCombo(Graph& g, string source, double lowerProfitTh
 	* Algorithm maximizes for profitability between upper and lower thresholds
 	*
 	*/
+    vector<thread> threads;
 	for (int i = 0; i < combos.size(); i++)
    	{
 		processCombinationInput profitVars = {lowerBound, upperBound, source, combos[i]};
-		processCombinationLen3(g, maxProfit, negCyclePath, profitVars);
+		if (comboLen == 3)
+		{
+			threads.push_back(thread(processCombinationLen3, ref(g), ref(maxProfit), ref(negCyclePath), ref(profitVars)));
+		}
+		else if (comboLen == 4)
+		{
+			threads.push_back(thread(processCombinationLen4, ref(g), ref(maxProfit), ref(negCyclePath), ref(profitVars)));
+		}
   	}
+    for (auto &thread : threads) {
+        thread.join();
+    }
 
 	//TODO: Remove to another function that is used to validate the profitability of a series of trades
 	if (maxProfit != 0) 
