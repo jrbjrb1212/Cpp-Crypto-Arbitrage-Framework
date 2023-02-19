@@ -9,12 +9,14 @@
 /mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/BellmanFord.cpp
 iostream
 -
-Header_Files/arbitrage_finder.hpp
-/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/arbitrage_finder.hpp
 Header_Files/graph.hpp
 /mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/graph.hpp
+Header_Files/arbitrage_finder.hpp
+/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/arbitrage_finder.hpp
 Header_Files/exchange_api_pull.hpp
 /mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/exchange_api_pull.hpp
+Header_Files/combinations.hpp
+/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/combinations.hpp
 chrono
 -
 
@@ -38,6 +40,14 @@ tuple
 graph.hpp
 /mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/graph.hpp
 assert.h
+-
+combinations.hpp
+/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/combinations.hpp
+
+/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/combinations.hpp
+iostream
+-
+string
 -
 
 /mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/exchange_api_pull.hpp
@@ -70,5 +80,7 @@ unordered_map
 vector
 -
 string
+-
+cmath
 -
 

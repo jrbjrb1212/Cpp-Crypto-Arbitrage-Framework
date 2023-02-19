@@ -3,6 +3,7 @@
 
 CMakeFiles/crypto.dir/BellmanFord.cpp.o: ../../BellmanFord.cpp
 CMakeFiles/crypto.dir/BellmanFord.cpp.o: ../../Header_Files/arbitrage_finder.hpp
+CMakeFiles/crypto.dir/BellmanFord.cpp.o: ../../Header_Files/combinations.hpp
 CMakeFiles/crypto.dir/BellmanFord.cpp.o: ../../Header_Files/exchange_api_pull.hpp
 CMakeFiles/crypto.dir/BellmanFord.cpp.o: ../../Header_Files/graph.hpp
 

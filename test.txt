@@ -1,28 +1,175 @@
-Start pull from bitget...Start pull from Start pull from bitmart...gateio...Start pull from kucoin...Start pull from huboi...Start pull from binance...Finished pull from bitmart
-
-Finished pull from kucoin
-
-Finished pull from bitget
-
-Finished pull from huboi
-
-Finished pull from binance
-
-Finished pull from gateio
-
-
-
-Time to pull and parse data: 2115207 microseconds
 Number of vertices: 119
-Number of edges: 1802
+Number of edges: 1828
 
 Performing Arb Finder from USDT
-MaxProfit (log): 0.0416835
-MaxProfit: 4.25645%
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.00992044
+MaxProfit: 0.996981%
 
-From USDT to DATA via gateio using an bid at 25.0501 with 0.3% fee
-From DATA to BTC via kucoin using an ask at 1.697e-06 with 0.2% fee
-From BTC to USDT via bitmart using an bid at 24772.1 with 0.5% fee
+From USDT to ONT via gateio using an bid at 4.095 with 0.3% fee
+From ONT to ETH via gateio using an bid at 0.0001467 with 0.3% fee
+From ETH to USDT via bitget using an bid at 1694.74 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.0197836
+MaxProfit: 1.99806%
+
+From USDT to ETH via bitmart using an bid at 0.000590409 with 0.5% fee
+From ETH to XVG via binance using an bid at 520833 with 0.2% fee
+From XVG to USDT via huboi using an bid at 0.003347 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.0291533
+MaxProfit: 2.95824%
+
+From USDT to DGB via binance using an bid at 90.8265 with 0.2% fee
+From DGB to BTC via huboi using an ask at 4.62e-07 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.0385294
+MaxProfit: 3.92813%
+
+From USDT to LSK via binance using an ask at 0.793651 with 0.2% fee
+From LSK to BTC via huboi using an bid at 5.337e-05 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.0461353
+MaxProfit: 4.72161%
+
+From USDT to LSK via gateio using an bid at 0.800512 with 0.3% fee
+From LSK to BTC via huboi using an bid at 5.337e-05 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.0552464
+MaxProfit: 5.6801%
+
+From USDT to DATA via gateio using an bid at 25.3614 with 0.3% fee
+From DATA to BTC via binance using an bid at 1.7e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.0552464
+MaxProfit: 5.6801%
+
+From USDT to DATA via gateio using an bid at 25.3614 with 0.3% fee
+From DATA to BTC via binance using an bid at 1.7e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.0552464
+MaxProfit: 5.6801%
+
+From USDT to DATA via gateio using an bid at 25.3614 with 0.3% fee
+From DATA to BTC via binance using an bid at 1.7e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.0552464
+MaxProfit: 5.6801%
+
+From USDT to DATA via gateio using an bid at 25.3614 with 0.3% fee
+From DATA to BTC via binance using an bid at 1.7e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.0552464
+MaxProfit: 5.6801%
+
+From USDT to DATA via gateio using an bid at 25.3614 with 0.3% fee
+From DATA to BTC via binance using an bid at 1.7e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.0552464
+MaxProfit: 5.6801%
+
+From USDT to DATA via gateio using an bid at 25.3614 with 0.3% fee
+From DATA to BTC via binance using an bid at 1.7e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.0552464
+MaxProfit: 5.6801%
+
+From USDT to DATA via gateio using an bid at 25.3614 with 0.3% fee
+From DATA to BTC via binance using an bid at 1.7e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.120824
+MaxProfit: 12.8426%
+
+From USDT to ARDR via binance using an bid at 9.66184 with 0.2% fee
+From ARDR to BTC via huboi using an bid at 4.76e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.120824
+MaxProfit: 12.8426%
+
+From USDT to ARDR via binance using an bid at 9.66184 with 0.2% fee
+From ARDR to BTC via huboi using an bid at 4.76e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.120824
+MaxProfit: 12.8426%
+
+From USDT to ARDR via binance using an bid at 9.66184 with 0.2% fee
+From ARDR to BTC via huboi using an bid at 4.76e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.120824
+MaxProfit: 12.8426%
+
+From USDT to ARDR via binance using an bid at 9.66184 with 0.2% fee
+From ARDR to BTC via huboi using an bid at 4.76e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.120824
+MaxProfit: 12.8426%
+
+From USDT to ARDR via binance using an bid at 9.66184 with 0.2% fee
+From ARDR to BTC via huboi using an bid at 4.76e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.120824
+MaxProfit: 12.8426%
+
+From USDT to ARDR via binance using an bid at 9.66184 with 0.2% fee
+From ARDR to BTC via huboi using an bid at 4.76e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.120824
+MaxProfit: 12.8426%
+
+From USDT to ARDR via binance using an bid at 9.66184 with 0.2% fee
+From ARDR to BTC via huboi using an bid at 4.76e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.120824
+MaxProfit: 12.8426%
+
+From USDT to ARDR via binance using an bid at 9.66184 with 0.2% fee
+From ARDR to BTC via huboi using an bid at 4.76e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.120824
+MaxProfit: 12.8426%
+
+From USDT to ARDR via binance using an bid at 9.66184 with 0.2% fee
+From ARDR to BTC via huboi using an bid at 4.76e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.120824
+MaxProfit: 12.8426%
+
+From USDT to ARDR via binance using an bid at 9.66184 with 0.2% fee
+From ARDR to BTC via huboi using an bid at 4.76e-06 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.204415
+MaxProfit: 22.6808%
+
+From USDT to DGB via kucoin using an bid at 90.9256 with 0.2% fee
+From DGB to BTC via huboi using an bid at 5.499e-07 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
+AAAA, AAAB, AABA, AABB, ABAA, ABAB, ABBA, ABBB, BAAA, BAAB, BABA, BABB, BBAA, BBAB, BBBA, BBBB, 
+MaxProfit (log): 0.204415
+MaxProfit: 22.6808%
+
+From USDT to DGB via kucoin using an bid at 90.9256 with 0.2% fee
+From DGB to BTC via huboi using an bid at 5.499e-07 with 0.2% fee
+From BTC to USDT via bitget using an bid at 24684 with 0.2% fee
 
 
-Time to ARbdetect: 4943 microseconds
+Time to Arbdetect: 4701944 microseconds
