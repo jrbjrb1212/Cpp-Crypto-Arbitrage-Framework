@@ -1,10 +1,10 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/crypto.dir/BellmanFord.cpp.o"
-  "crypto"
-  "crypto.pdb"
+  "CMakeFiles/Crypto.dir/BellmanFord.cpp.o"
+  "Crypto"
+  "Crypto.pdb"
 )
 
 # Per-language clean rules from dependency scanning.
 foreach(lang CXX)
-  include(CMakeFiles/crypto.dir/cmake_clean_${lang}.cmake OPTIONAL)
+  include(CMakeFiles/Crypto.dir/cmake_clean_${lang}.cmake OPTIONAL)
 endforeach()

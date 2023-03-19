@@ -1,17 +1,34 @@
+Pull Ticker, ArbDetect and Pull Orderbook (From USDT):
+3512495 microseconds
+3555046 microseconds
+3708147 microseconds
+
+5-Path serial arbirtage detector (USDT):
+1135686 microseconds
+1126452 microseconds
+1126452 microseconds
+
+5-Path slightly parallel arb detector (USDT):
+332959 microseconds
+251890 microseconds
+255589 microseconds
+188364 microseconds
+123132 microseconds
+
 4-Path serial arbirtage detector (USDT):
-1141125 microseconds
-1262689 microseconds
-1117650 microseconds
+65227 microseconds
+63268 microseconds
+64293 microseconds
 
 4-Path parallel arb detector (USDT):
-127489 microseconds
-125597 microseconds
-127043 microseconds
+9707 microseconds
+8456 microseconds
+9933 microseconds
 
 3-Path serial arbritage detector (USDT):
-10129 microseconds
-9981 microseconds
-7738 microseconds
+771 microseconds
+802 microseconds
+778 microseconds
 
 3-Path parallel arb detector (USDT):
 4708 microseconds

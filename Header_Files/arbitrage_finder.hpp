@@ -78,6 +78,21 @@ void printVector(const vector<string> &vec)
 	cout << endl;
 }
 
+/*
+*
+* Heplful method that prints out contents of a double vector
+*
+*/
+void PrintVector(const vector<double> &vec)
+{
+	for (const double &doub : vec)
+	{
+		cout << doub << ", ";
+	}
+	cout << endl;
+}
+
+
 
 /*
 *
@@ -111,12 +126,28 @@ void printUnorderedMap(const unordered_map<string, string> &map)
 
 /*
 *
+* Print method for log message of tracking profitability
+*
+*/
+void printArbInfo(vector<TrackProfit> &arbPath, unordered_map<string, double> &feeMap)
+{
+	for(int i = 0; i < arbPath.size(); i++){
+		cout << "From " << arbPath[i].from << " to " << arbPath[i].to;
+		cout << " via " << arbPath[i].exchange << " using a " << arbPath[i].bidOrask;
+		cout << " at " << WeightConversion(arbPath[i].orderPrice);
+		cout << " with " << feeMap[arbPath[i].exchange] * 100 << "% fee" << endl;
+	}
+}
+
+
+/*
+*
 * Method for determing if current profit is the max profit
-* Also, makes applicable path tracking updates
 *
 */
 bool maxProfitCheck(double& maxProfit, double& currProfit, double& lowerThreshold, double& upperThreshold){
-	if (currProfit > maxProfit && currProfit > lowerThreshold && currProfit < upperThreshold) {
+	if (currProfit > maxProfit && currProfit > lowerThreshold && currProfit < upperThreshold)
+	{
 		maxProfit = currProfit;
 		return true;
 	}
@@ -131,16 +162,16 @@ bool maxProfitCheck(double& maxProfit, double& currProfit, double& lowerThreshol
 * When selling a currency, the bid price must be paid for likely instant order fullifillment 
 *
 */
-void makeTrackProfitStruct(TrackProfit& tradeStruct, Edge tradeInfo, string tradeType){
-	if (tradeType == "ask")
-	{
-		tradeStruct.orderPrice = tradeInfo.bidPrice;
-	}
-	else if (tradeType == "bid")
-	{
-		tradeStruct.orderPrice = tradeInfo.askPrice;
-	}
-}
+// void makeTrackProfitStruct(TrackProfit& tradeStruct, Edge tradeInfo, string tradeType){
+// 	if (tradeType == "ask")
+// 	{
+// 		tradeStruct.orderPrice = tradeInfo.bidPrice;
+// 	}
+// 	else if (tradeType == "bid")
+// 	{
+// 		tradeStruct.orderPrice = tradeInfo.askPrice;
+// 	}
+// }
 
 
 /*
@@ -149,21 +180,19 @@ void makeTrackProfitStruct(TrackProfit& tradeStruct, Edge tradeInfo, string trad
 * Designed to be used for profit validation and order/trade amount optimization 
 *
 */
-void updateMaxPath(vector<TrackProfit>& negCyclePath, vector<string>& tradeTypes, vector<Edge> trades){
-	vector<TrackProfit> path;
+void updateMaxPath(vector<TrackProfit>& negCyclePath, vector<Edge> trades)
+{
+	vector<TrackProfit> path (trades.size());
 	
-	// need to model start currency to end currency via a singular trade
-	// firstTrade is special case because each edge struct only contains the destination currency
-	TrackProfit firstTrade {trades[trades.size()-1].to, trades[0].to, 0.0, tradeTypes[0], trades[0].exchange};
-	makeTrackProfitStruct(firstTrade, trades[0], tradeTypes[0]);
-	path.push_back(firstTrade);
+	// firstTrade is special case; each edge struct only contains the destination currency
+	TrackProfit firstTrade {trades[trades.size()-1].to, trades[0].to, trades[0].exPrice, trades[0].bidOrAsk, trades[0].exchange};
+	path[0] = firstTrade;
 
 	// Add each trade edge to the cyclePath for later validation
 	for(int i = 0; i < trades.size()-1; i++)
 	{
-		TrackProfit trade {trades[i].to, trades[i+1].to, 0.0, tradeTypes[i+1], trades[i+1].exchange};
-		makeTrackProfitStruct(trade, trades[i+1], tradeTypes[i+1]);
-		path.push_back(trade);
+		TrackProfit trade {trades[i].to, trades[i+1].to, trades[i+1].exPrice, trades[i+1].bidOrAsk, trades[i+1].exchange};
+		path[i+1] = trade;
 	}
 	
 	negCyclePath = path;
@@ -181,7 +210,7 @@ void updateMaxPath(vector<TrackProfit>& negCyclePath, vector<string>& tradeTypes
 /*
 vector<TrackProfit> ArbDetect(Graph g, string source, double lowerProfitThreshold, double upperProfitThreshold)
 {
-	unordered_map<string, vector<Edge> > adjacency_list = g.adjacency_list;
+	unordered_map<string, vector<Edge> > adjacencyList = g.adjacencyList;
 
     double upperBound = log(upperProfitThreshold);
     double lowerBound = log(lowerProfitThreshold);
@@ -196,16 +225,16 @@ vector<TrackProfit> ArbDetect(Graph g, string source, double lowerProfitThreshol
     * 
     
 
-	for (Edge fristTradeEdge : adjacency_list[source]){
+	for (Edge fristTradeEdge : adjacencyList[source]){
 		currProfit += fristTradeEdge.weight;
 		
-		for (Edge secondTradeEdge : adjacency_list[fristTradeEdge.to]){
+		for (Edge secondTradeEdge : adjacencyList[fristTradeEdge.to]){
 			if (secondTradeEdge.to == source){
 				continue;
 			}
 			currProfit += secondTradeEdge.weight;
 
-			for (Edge sourceTradeEdge : adjacency_list[secondTradeEdge.to]){
+			for (Edge sourceTradeEdge : adjacencyList[secondTradeEdge.to]){
 				if (sourceTradeEdge.to == source){
                     currProfit += sourceTradeEdge.weight;
                     
@@ -247,6 +276,7 @@ vector<TrackProfit> ArbDetect(Graph g, string source, double lowerProfitThreshol
 */
 
 
+
 /*
 *
 * Implmenetation of a brute force O(n^3) algorithm 
@@ -254,154 +284,163 @@ vector<TrackProfit> ArbDetect(Graph g, string source, double lowerProfitThreshol
 * TODO: Implement parallel version of this code to massively speed up code
 * TODO: Implement a linear programming model that can solve faster asympotically
 */
-vector<TrackProfit> ArbDetect(Graph g, string source, double lowerProfitThreshold, double upperProfitThreshold)
-{
-	unordered_map<string, vector<Edge> > adjacency_list = g.adjacency_list;
 
-    double upperBound = log(upperProfitThreshold);
-    double lowerBound = log(lowerProfitThreshold);
-	double maxProfit = 0, currProfit;
-	int negCycles = 0;
-	int startCap = 1;
-	vector<TrackProfit> negCyclePath;
-	vector<string> tradeTypes { "BLANK", "BLANK", "BLANK"};
+/*
+*
+* Implmenetation of a brute force O(n^3) algorithm 
+* currency arrbritage opportunities with considerations for fees and spread
+* TODO: Implement parallel version of this code to massively speed up code
+* TODO: Implement a linear programming model that can solve faster asympotically
+*/
 
-    /*
-    *
-    * Algorithm attempts to fill in this path with the most profitable trade
-    * source --> Coin1 --> Coin2 --> source
-    * 
-    */
+// vector<TrackProfit> ArbDetect(Graph g, string source, double lowerProfitThreshold, double upperProfitThreshold)
+// {
+// 	unordered_map<string, vector<Edge> > adjacencyList = g.adjacencyList;
 
-   // Current algorithm relies on the idea that for a given edge there is only travel on that edge
-   // With the idea of bid-ask pricing, I have the choice at each egde to choose between buying the destination currency with the source currency
-   // at the Ask price or selling the source currency for the destination currency at the Bid price
+//     double upperBound = log(upperProfitThreshold);
+//     double lowerBound = log(lowerProfitThreshold);
+// 	double maxProfit = 0, currProfit;
+// 	int negCycles = 0;
+// 	int startCap = 1;
+// 	vector<TrackProfit> negCyclePath;
+// 	vector<string> tradeTypes { "BLANK", "BLANK", "BLANK"};
 
-	for (Edge firstTradeEdge : adjacency_list[source]){	
-		// search through buying the destination currency from the current currency	
+//     /*
+//     *
+//     * Algorithm attempts to fill in this path with the most profitable trade
+//     * source --> Coin1 --> Coin2 --> source
+//     * 
+//     */
 
-		// I am paying the askPrice price than I utilizing a buy
-		// If I want to instantly buy a currency, I pay the ask price
-		// If I want to instantly sell my currency, I pay the buy price
-		currProfit = (firstTradeEdge.askPrice + firstTradeEdge.fee);
-		tradeTypes[0] = "bid";
-		for (Edge secondTradeEdge : adjacency_list[firstTradeEdge.to]){
-			if (secondTradeEdge.to == source){
-				continue;
-			}
+//    // Current algorithm relies on the idea that for a given edge there is only travel on that edge
+//    // With the idea of bid-ask pricing, I have the choice at each egde to choose between buying the destination currency with the source currency
+//    // at the Ask price or selling the source currency for the destination currency at the Bid price
 
-			// Search through buying the destination currency from the current currency
-			currProfit += (secondTradeEdge.askPrice + secondTradeEdge.fee);
-			tradeTypes[1] = "bid";
-			for (Edge thirdTradeEdge : adjacency_list[secondTradeEdge.to]){
-				if (thirdTradeEdge.to == source){
-					// search through buying the destination currency from the current currency
-					currProfit += (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
-					tradeTypes[2] = "bid";
-					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
-						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
-					currProfit -= (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
+// 	for (Edge firstTradeEdge : adjacencyList[source]){	
+// 		// search through buying the destination currency from the current currency	
 
-		 			// Search through selling the current currency for the destination currency
-					currProfit += (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
-					tradeTypes[2] = "ask";
-					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
-						continue;
-						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
-					currProfit -= (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
-                    break;
-				}
-			}
-			currProfit -= (secondTradeEdge.askPrice + secondTradeEdge.fee);
+// 		// I am paying the askPrice price than I utilizing a buy
+// 		// If I want to instantly buy a currency, I pay the ask price
+// 		// If I want to instantly sell my currency, I pay the buy price
+// 		currProfit = (firstTradeEdge.askPrice + firstTradeEdge.fee);
+// 		tradeTypes[0] = "bid";
+// 		for (Edge secondTradeEdge : adjacencyList[firstTradeEdge.to]){
+// 			if (secondTradeEdge.to == source){
+// 				continue;
+// 			}
 
+// 			// Search through buying the destination currency from the current currency
+// 			currProfit += (secondTradeEdge.askPrice + secondTradeEdge.fee);
+// 			tradeTypes[1] = "bid";
+// 			for (Edge thirdTradeEdge : adjacencyList[secondTradeEdge.to]){
+// 				if (thirdTradeEdge.to == source){
+// 					// search through buying the destination currency from the current currency
+// 					currProfit += (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
+// 					tradeTypes[2] = "bid";
+// 					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
+// 						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
+// 					currProfit -= (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
 
-		 	// Search through selling the current currency for the destination currency
-			currProfit += (secondTradeEdge.bidPrice + secondTradeEdge.fee);
-			tradeTypes[1] = "ask";
-			for (Edge thirdTradeEdge : adjacency_list[secondTradeEdge.to]){
-				if (thirdTradeEdge.to == source){
-					// search through buying the destination currency from the current currency
-					currProfit += (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
-					tradeTypes[2] = "bid";
-					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
-						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
-					currProfit -= (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
-
-		 			// Search through selling the current currency for the destination currency
-					currProfit += (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
-					tradeTypes[2] = "ask";
-					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
-						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
-					currProfit -= (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
-                    break;
-				}
-			}
-			currProfit -= (secondTradeEdge.bidPrice + secondTradeEdge.fee);
-		}
-
-		// Search through selling the current currency for the destination currency
-		currProfit = (firstTradeEdge.bidPrice + firstTradeEdge.fee);
-		tradeTypes[0] = "ask";
-		for (Edge secondTradeEdge : adjacency_list[firstTradeEdge.to]){
-			if (secondTradeEdge.to == source){
-				continue;
-			}
-
-			// Search through buying the destination currency from the current currency
-			currProfit += (secondTradeEdge.askPrice + secondTradeEdge.fee);
-			tradeTypes[1] = "bid";
-			for (Edge thirdTradeEdge : adjacency_list[secondTradeEdge.to]){
-				if (thirdTradeEdge.to == source){
-					// search through buying the destination currency from the current currency
-					currProfit += (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
-					tradeTypes[2] = "bid";
-					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
-						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
-					currProfit -= (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
-
-		 			// Search through selling the current currency for the destination currency
-					currProfit += (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
-					tradeTypes[2] = "ask";
-					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
-						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
-					currProfit -= (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
-                    break;
-				}
-			}
-			currProfit -= (secondTradeEdge.askPrice + secondTradeEdge.fee);
+// 		 			// Search through selling the current currency for the destination currency
+// 					currProfit += (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
+// 					tradeTypes[2] = "ask";
+// 					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
+// 						continue;
+// 						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
+// 					currProfit -= (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
+//                     break;
+// 				}
+// 			}
+// 			currProfit -= (secondTradeEdge.askPrice + secondTradeEdge.fee);
 
 
-		 	// Search through selling the current currency for the destination currency
-			currProfit += (secondTradeEdge.bidPrice + secondTradeEdge.fee);
-			tradeTypes[1] = "ask";
-			for (Edge thirdTradeEdge : adjacency_list[secondTradeEdge.to]){
-				if (thirdTradeEdge.to == source){
-					// search through buying the destination currency from the current currency
-					currProfit += (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
-					tradeTypes[2] = "bid";
-					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
-						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
-					currProfit -= (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
+// 		 	// Search through selling the current currency for the destination currency
+// 			currProfit += (secondTradeEdge.bidPrice + secondTradeEdge.fee);
+// 			tradeTypes[1] = "ask";
+// 			for (Edge thirdTradeEdge : adjacencyList[secondTradeEdge.to]){
+// 				if (thirdTradeEdge.to == source){
+// 					// search through buying the destination currency from the current currency
+// 					currProfit += (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
+// 					tradeTypes[2] = "bid";
+// 					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
+// 						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
+// 					currProfit -= (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
 
-		 			// Search through selling the current currency for the destination currency
-					currProfit += (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
-					tradeTypes[2] = "ask";
-					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
-						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
-					currProfit -= (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
-                    break;
-				}
-			}
-			currProfit -= (secondTradeEdge.bidPrice + secondTradeEdge.fee);
+// 		 			// Search through selling the current currency for the destination currency
+// 					currProfit += (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
+// 					tradeTypes[2] = "ask";
+// 					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
+// 						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
+// 					currProfit -= (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
+//                     break;
+// 				}
+// 			}
+// 			currProfit -= (secondTradeEdge.bidPrice + secondTradeEdge.fee);
+// 		}
 
-		}
+// 		// Search through selling the current currency for the destination currency
+// 		currProfit = (firstTradeEdge.bidPrice + firstTradeEdge.fee);
+// 		tradeTypes[0] = "ask";
+// 		for (Edge secondTradeEdge : adjacencyList[firstTradeEdge.to]){
+// 			if (secondTradeEdge.to == source){
+// 				continue;
+// 			}
 
-	}
-	cout << "MaxProfit (log): " << maxProfit << endl;
-    cout << "MaxProfit: " << (WeightConversion(maxProfit) - 1) * 100 << "%\n" << endl;
+// 			// Search through buying the destination currency from the current currency
+// 			currProfit += (secondTradeEdge.askPrice + secondTradeEdge.fee);
+// 			tradeTypes[1] = "bid";
+// 			for (Edge thirdTradeEdge : adjacencyList[secondTradeEdge.to]){
+// 				if (thirdTradeEdge.to == source){
+// 					// search through buying the destination currency from the current currency
+// 					currProfit += (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
+// 					tradeTypes[2] = "bid";
+// 					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
+// 						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
+// 					currProfit -= (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
 
-	return negCyclePath;
-}
+// 		 			// Search through selling the current currency for the destination currency
+// 					currProfit += (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
+// 					tradeTypes[2] = "ask";
+// 					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
+// 						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
+// 					currProfit -= (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
+//                     break;
+// 				}
+// 			}
+// 			currProfit -= (secondTradeEdge.askPrice + secondTradeEdge.fee);
+
+
+// 		 	// Search through selling the current currency for the destination currency
+// 			currProfit += (secondTradeEdge.bidPrice + secondTradeEdge.fee);
+// 			tradeTypes[1] = "ask";
+// 			for (Edge thirdTradeEdge : adjacencyList[secondTradeEdge.to]){
+// 				if (thirdTradeEdge.to == source){
+// 					// search through buying the destination currency from the current currency
+// 					currProfit += (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
+// 					tradeTypes[2] = "bid";
+// 					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
+// 						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
+// 					currProfit -= (thirdTradeEdge.askPrice + thirdTradeEdge.fee);
+
+// 		 			// Search through selling the current currency for the destination currency
+// 					currProfit += (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
+// 					tradeTypes[2] = "ask";
+// 					if (maxProfitCheck(maxProfit, currProfit, lowerBound, upperBound))
+// 						// updateMaxPath(negCyclePath, tradeTypes, firstTradeEdge, secondTradeEdge, thirdTradeEdge);
+// 					currProfit -= (thirdTradeEdge.bidPrice + thirdTradeEdge.fee);
+//                     break;
+// 				}
+// 			}
+// 			currProfit -= (secondTradeEdge.bidPrice + secondTradeEdge.fee);
+
+// 		}
+
+// 	}
+// 	cout << "MaxProfit (log): " << maxProfit << endl;
+//     cout << "MaxProfit: " << (WeightConversion(maxProfit) - 1) * 100 << "%\n" << endl;
+
+// 	return negCyclePath;
+// }
 
 
 /*
@@ -410,20 +449,20 @@ vector<TrackProfit> ArbDetect(Graph g, string source, double lowerProfitThreshol
 * Method turns "AAB" to {"ask", "ask", "bid"} 
 *
 */
-void combo2TradeType(vector<string>& tradeTypes, string& combo)
-{
-	for(int i = 0; i < combo.length(); i++)
-	{
-		if (combo[i] == 'A')
-		{
-			tradeTypes.push_back("ask");
-		}
-		else if (combo[i] == 'B')
-		{
-			tradeTypes.push_back("bid");
-		}
-	}
-}
+// void combo2TradeType(vector<string>& tradeTypes, string& combo)
+// {
+// 	for(int i = 0; i < combo.length(); i++)
+// 	{
+// 		if (combo[i] == 'A')
+// 		{
+// 			tradeTypes.push_back("ask");
+// 		}
+// 		else if (combo[i] == 'B')
+// 		{
+// 			tradeTypes.push_back("bid");
+// 		}
+// 	}
+// }
 
 
 /*
@@ -432,32 +471,21 @@ void combo2TradeType(vector<string>& tradeTypes, string& combo)
 * Method determines that a buy trade will cost the askPrice + fees and vice versa 
 *
 */
-double tradeCostFromType(Edge& trade, string& tradeType)
-{
-	if (tradeType == "bid")
-	{
-		return trade.askPrice + trade.fee;
-	}
-	else if (tradeType == "ask")
-	{
-		return trade.bidPrice + trade.fee;
-	}
+// double tradeCostFromType(Edge& trade, string& tradeType)
+// {
+// 	if (tradeType == "bid")
+// 	{
+// 		return trade.askPrice + trade.fee;
+// 	}
+// 	else if (tradeType == "ask")
+// 	{
+// 		return trade.bidPrice + trade.fee;
+// 	}
 
-	return -1.0;
-}
+// 	return -1.0;
+// }
 
 
-/*
-*
-* Band-aid struct created to reduce arguments required for processCombination functions
-*
-*/
-struct processCombinationInput{
-	double lowerBound;
-	double upperBound;
-	string source;
-	string combo;
-};
 
 
 /*
@@ -466,41 +494,41 @@ struct processCombinationInput{
 * Extropliated into a function as at each trade the bid or ask price can be used
 *
 */
-void processCombinationLen3(Graph& g, double& maxProfit, vector<TrackProfit>& negCyclePath, processCombinationInput profitVars)
-{
-	double currProfit;
-	vector<string> tradeTypes;
-	combo2TradeType(tradeTypes, profitVars.combo);
+// void processCombinationLen3(Graph& g, double& maxProfit, vector<TrackProfit>& negCyclePath, processCombinationInput profitVars)
+// {
+// 	double currProfit;
+// 	vector<string> tradeTypes;
+// 	combo2TradeType(tradeTypes, profitVars.combo);
 
 	
-	for (Edge firstTradeEdge : g.adjacency_list[profitVars.source]){	
-		currProfit = tradeCostFromType(firstTradeEdge, tradeTypes[0]);
+// 	for (Edge firstTradeEdge : g.adjacencyList[profitVars.source]){	
+// 		currProfit = tradeCostFromType(firstTradeEdge, tradeTypes[0]);
 
-		for (Edge secondTradeEdge : g.adjacency_list[firstTradeEdge.to]){
-			if (secondTradeEdge.to == profitVars.source){
-				continue;
-			}
+// 		for (Edge secondTradeEdge : g.adjacencyList[firstTradeEdge.to]){
+// 			if (secondTradeEdge.to == profitVars.source){
+// 				continue;
+// 			}
 
-			currProfit += tradeCostFromType(secondTradeEdge, tradeTypes[1]);
+// 			currProfit += tradeCostFromType(secondTradeEdge, tradeTypes[1]);
 
-			for (Edge thirdTradeEdge : g.adjacency_list[secondTradeEdge.to]){
-				if (thirdTradeEdge.to == profitVars.source){
-					currProfit += tradeCostFromType(thirdTradeEdge, tradeTypes[2]);
-					// Lock maxProfit and negCyclePath
-					if (maxProfitCheck(maxProfit, currProfit, profitVars.lowerBound, profitVars.upperBound))
-					{
-						vector<Edge> path {firstTradeEdge, secondTradeEdge, thirdTradeEdge};
-						updateMaxPath(negCyclePath, tradeTypes, path);
-					}
-					currProfit -= tradeCostFromType(thirdTradeEdge, tradeTypes[2]);
-					break;
-				}
-			}
+// 			for (Edge thirdTradeEdge : g.adjacencyList[secondTradeEdge.to]){
+// 				if (thirdTradeEdge.to == profitVars.source){
+// 					currProfit += tradeCostFromType(thirdTradeEdge, tradeTypes[2]);
+// 					// Lock maxProfit and negCyclePath
+// 					if (maxProfitCheck(maxProfit, currProfit, profitVars.lowerBound, profitVars.upperBound))
+// 					{
+// 						vector<Edge> path {firstTradeEdge, secondTradeEdge, thirdTradeEdge};
+// 						updateMaxPath(negCyclePath, tradeTypes, path);
+// 					}
+// 					currProfit -= tradeCostFromType(thirdTradeEdge, tradeTypes[2]);
+// 					break;
+// 				}
+// 			}
 
-			currProfit -= tradeCostFromType(secondTradeEdge, tradeTypes[1]);
-		}
-	}
-}
+// 			currProfit -= tradeCostFromType(secondTradeEdge, tradeTypes[1]);
+// 		}
+// 	}
+// }
 
 
 /*
@@ -509,44 +537,44 @@ void processCombinationLen3(Graph& g, double& maxProfit, vector<TrackProfit>& ne
 * opportunties that are within a 4-way arbritrage
 *
 */
-void processCombinationBase3(Graph& g, double currProfit, Edge startEdge, double& maxProfit, 
-						vector<TrackProfit>& negCyclePath, processCombinationInput profitVars, 
-						vector<string> tradeTypes)
-{
-	for (Edge firstTradeEdge : g.adjacency_list[startEdge.to])
-	{	
-		if (firstTradeEdge.to == profitVars.source)
-			continue;
+// void processCombinationBase3(Graph& g, double currProfit, Edge startEdge, double& maxProfit, 
+// 						vector<TrackProfit>& negCyclePath, processCombinationInput profitVars, 
+// 						vector<string> tradeTypes)
+// {
+// 	for (Edge firstTradeEdge : g.adjacencyList[startEdge.to])
+// 	{	
+// 		if (firstTradeEdge.to == profitVars.source)
+// 			continue;
 
-		currProfit += tradeCostFromType(firstTradeEdge, tradeTypes[1]);
+// 		currProfit += tradeCostFromType(firstTradeEdge, tradeTypes[1]);
 
-		for (Edge secondTradeEdge : g.adjacency_list[firstTradeEdge.to])
-		{
-			if (secondTradeEdge.to == profitVars.source)
-				continue;
+// 		for (Edge secondTradeEdge : g.adjacencyList[firstTradeEdge.to])
+// 		{
+// 			if (secondTradeEdge.to == profitVars.source)
+// 				continue;
 
-			currProfit += tradeCostFromType(secondTradeEdge, tradeTypes[2]);
+// 			currProfit += tradeCostFromType(secondTradeEdge, tradeTypes[2]);
 
-			for (Edge thirdTradeEdge : g.adjacency_list[secondTradeEdge.to])
-			{
-				if (thirdTradeEdge.to == profitVars.source){
-					currProfit += tradeCostFromType(thirdTradeEdge, tradeTypes[3]);
-					// Lock maxProfit and negCyclePath
-					if (maxProfitCheck(maxProfit, currProfit, profitVars.lowerBound, profitVars.upperBound))
-					{
-						vector<Edge> path {startEdge, firstTradeEdge, secondTradeEdge, thirdTradeEdge};
-						updateMaxPath(negCyclePath, tradeTypes, path);
-					}
-					currProfit -= tradeCostFromType(thirdTradeEdge, tradeTypes[3]);
-					break;
-				}
-			}
+// 			for (Edge thirdTradeEdge : g.adjacencyList[secondTradeEdge.to])
+// 			{
+// 				if (thirdTradeEdge.to == profitVars.source){
+// 					currProfit += tradeCostFromType(thirdTradeEdge, tradeTypes[3]);
+// 					// Lock maxProfit and negCyclePath
+// 					if (maxProfitCheck(maxProfit, currProfit, profitVars.lowerBound, profitVars.upperBound))
+// 					{
+// 						vector<Edge> path {startEdge, firstTradeEdge, secondTradeEdge, thirdTradeEdge};
+// 						updateMaxPath(negCyclePath, tradeTypes, path);
+// 					}
+// 					currProfit -= tradeCostFromType(thirdTradeEdge, tradeTypes[3]);
+// 					break;
+// 				}
+// 			}
 
-			currProfit -= tradeCostFromType(secondTradeEdge, tradeTypes[2]);
-		}
-		currProfit -= tradeCostFromType(firstTradeEdge, tradeTypes[1]);
-	}
-}
+// 			currProfit -= tradeCostFromType(secondTradeEdge, tradeTypes[2]);
+// 		}
+// 		currProfit -= tradeCostFromType(firstTradeEdge, tradeTypes[1]);
+// 	}
+// }
 
 
 /*
@@ -555,80 +583,326 @@ void processCombinationBase3(Graph& g, double currProfit, Edge startEdge, double
 * Extropliated into a function as at each trade the bid or ask price can be used
 *
 */
-void processCombinationLen4(Graph& g, double& maxProfit, vector<TrackProfit>& negCyclePath, processCombinationInput profitVars)
+// void processCombinationLen4(Graph& g, double& maxProfit, vector<TrackProfit>& negCyclePath, processCombinationInput profitVars)
+// {
+// 	double currProfit;
+// 	vector<string> tradeTypes;
+// 	combo2TradeType(tradeTypes, profitVars.combo);
+	
+// 	for (Edge firstTradeEdge : g.adjacencyList[profitVars.source]){	
+// 		currProfit = tradeCostFromType(firstTradeEdge, tradeTypes[0]);
+		
+// 		// Process all 3-way arbirtrage searchs in another function
+// 		processCombinationBase3(g, currProfit, firstTradeEdge, maxProfit, 
+// 						negCyclePath, profitVars, tradeTypes);
+
+// 	}
+// }
+
+
+/*
+*
+* Band-aid struct created to reduce arguments required for arbirtrage finding functions
+*
+*/
+struct processInput{
+	double lowerBound;
+	double upperBound;
+	double &maxProfit;
+	int arbLen;
+	string source;
+};
+
+
+/*
+*
+* Algorithm attempts to fill in this path with the most profitable trade
+* SourceCoin --> Coin1 --> SourceCoin
+* 
+*/
+void ProcessLen2(Graph &g, vector<TrackProfit> &negCyclePath, processInput inputVars)
 {
 	double currProfit;
-	vector<string> tradeTypes;
-	combo2TradeType(tradeTypes, profitVars.combo);
-	
-	for (Edge firstTradeEdge : g.adjacency_list[profitVars.source]){	
-		currProfit = tradeCostFromType(firstTradeEdge, tradeTypes[0]);
-		
-		// Process all 3-way arbirtrage searchs in another function
-		processCombinationBase3(g, currProfit, firstTradeEdge, maxProfit, 
-						negCyclePath, profitVars, tradeTypes);
+	/*
+    *
+    * Algorithm attempts to fill in this path with the most profitable trade
+    * SourceCoin --> Coin1 --> SourceCoin
+    * 
+    */
+	for (Edge firstTradeEdge : g.adjacencyList[inputVars.source])
+	{	
+		// first trade cost
+		currProfit = (firstTradeEdge.exPrice + firstTradeEdge.fee);
 
+		// second trade
+		for (Edge secondTradeEdge : g.adjacencyList[firstTradeEdge.to])
+		{
+			// all arb paths must start and end at the source currencies
+			if (secondTradeEdge.to == inputVars.source)
+			{
+				currProfit += (secondTradeEdge.exPrice + secondTradeEdge.fee);
+									
+				// need to do a max profit check
+				if (maxProfitCheck(inputVars.maxProfit, currProfit, inputVars.lowerBound, inputVars.upperBound))
+				{
+					vector<Edge> path {firstTradeEdge, secondTradeEdge};
+					updateMaxPath(negCyclePath, path);
+				}
+				break;
+			}
+		}
+	} 
+}
+
+
+/*
+*
+* Algorithm attempts to fill in this path with the most profitable trade
+* SourceCoin --> Coin1 --> Coin2 --> SourceCoin
+* 
+*/
+void ProcessLen3(Graph &g, vector<TrackProfit> &negCyclePath, processInput inputVars)
+{
+	double currProfit;
+
+	// brute force combinations to maximize profitability
+	for (Edge firstTradeEdge : g.adjacencyList[inputVars.source])
+	{	
+		if (firstTradeEdge.to == inputVars.source)
+			continue;
+		currProfit += (firstTradeEdge.exPrice + firstTradeEdge.fee);
+
+		for (Edge secondTradeEdge : g.adjacencyList[firstTradeEdge.to])
+		{
+			if (secondTradeEdge.to == inputVars.source)
+				continue;
+			currProfit += (secondTradeEdge.exPrice + secondTradeEdge.fee);
+
+			for (Edge thirdTradeEdge : g.adjacencyList[secondTradeEdge.to])
+			{
+				// all arb paths must start and end at the source currencies
+				if (thirdTradeEdge.to == inputVars.source)
+				{
+					currProfit += (thirdTradeEdge.exPrice + thirdTradeEdge.fee);
+					// need to do a max profit check
+					if (maxProfitCheck(inputVars.maxProfit, currProfit, inputVars.lowerBound, inputVars.upperBound))
+					{
+						vector<Edge> path {firstTradeEdge, secondTradeEdge, thirdTradeEdge};
+						updateMaxPath(negCyclePath, path);
+					}
+					currProfit -= (thirdTradeEdge.exPrice + thirdTradeEdge.fee);
+					break;
+				}
+			}
+			currProfit -= (secondTradeEdge.exPrice + secondTradeEdge.fee);
+		}
+		currProfit -= (firstTradeEdge.exPrice + firstTradeEdge.fee);
+	} 
+}
+
+
+/*
+*
+* Base triangular arbirtarge algorithm from ProcessLen3 extrolated
+* for parallel time improvment of 4 path arbirtrages
+* 
+*/
+void ProcessBase3For4(Graph &g, vector<TrackProfit> &negCyclePath, processInput inputVars, 
+                      Edge firstTradeEdge, double currProfit, mutex &negCyclePath_mutex)
+{
+    for (Edge secondTradeEdge : g.adjacencyList[firstTradeEdge.to])
+    {   
+        if (secondTradeEdge.to == inputVars.source)
+            continue;
+        currProfit += (secondTradeEdge.exPrice + secondTradeEdge.fee);
+
+        for (Edge thirdTradeEdge : g.adjacencyList[secondTradeEdge.to])
+        {
+            if (thirdTradeEdge.to == inputVars.source)
+                continue;
+            currProfit += (thirdTradeEdge.exPrice + thirdTradeEdge.fee);
+
+            for (Edge fourthTradeEdge : g.adjacencyList[thirdTradeEdge.to])
+            {
+                // all arb paths must start and end at the source currencies
+                if (fourthTradeEdge.to == inputVars.source)
+                {
+                    currProfit += (fourthTradeEdge.exPrice + fourthTradeEdge.fee);
+                    // need to do a max profit check
+                    if (maxProfitCheck(inputVars.maxProfit, currProfit, inputVars.lowerBound, inputVars.upperBound))
+                    {
+                        vector<Edge> path {firstTradeEdge, secondTradeEdge, thirdTradeEdge, fourthTradeEdge};
+                        negCyclePath_mutex.lock();
+                        updateMaxPath(negCyclePath, path);
+                        negCyclePath_mutex.unlock();
+                    }
+                    currProfit -= (fourthTradeEdge.exPrice + fourthTradeEdge.fee);
+                    break;
+                }
+            }
+            currProfit -= (thirdTradeEdge.exPrice + thirdTradeEdge.fee);
+        }
+        currProfit -= (secondTradeEdge.exPrice + secondTradeEdge.fee);
+    } 
+}
+
+
+/*
+*
+* Base triangular arbirtarge algorithm from ProcessLen3 extrolated
+* for parallel time improvment of 5 path arbirtrages
+* 
+*/
+void ProcessBase3For5(Graph &g, vector<TrackProfit> &negCyclePath, processInput inputVars, 
+					  Edge firstTradeEdge, Edge secondTradeEdge, double currProfit, mutex &negCyclePath_mutex)
+{
+	for (Edge thirdTradeEdge : g.adjacencyList[secondTradeEdge.to])
+	{	
+		if (thirdTradeEdge.to == inputVars.source)
+			continue;
+		currProfit += (thirdTradeEdge.exPrice + thirdTradeEdge.fee);
+
+		for (Edge fourthTradeEdge : g.adjacencyList[thirdTradeEdge.to])
+		{
+			if (fourthTradeEdge.to == inputVars.source)
+				continue;
+			currProfit += (fourthTradeEdge.exPrice + fourthTradeEdge.fee);
+
+			for (Edge fifthTradeEdge : g.adjacencyList[fourthTradeEdge.to])
+			{
+				// all arb paths must start and end at the source currencies
+				if (fifthTradeEdge.to == inputVars.source)
+				{
+					currProfit += (fifthTradeEdge.exPrice + fifthTradeEdge.fee);
+					// need to do a max profit check
+					if (maxProfitCheck(inputVars.maxProfit, currProfit, inputVars.lowerBound, inputVars.upperBound))
+					{
+						vector<Edge> path {firstTradeEdge, secondTradeEdge, thirdTradeEdge, fourthTradeEdge, fifthTradeEdge};
+						negCyclePath_mutex.lock();
+						updateMaxPath(negCyclePath, path);
+						negCyclePath_mutex.unlock();
+					}
+					currProfit -= (fifthTradeEdge.exPrice + fifthTradeEdge.fee);
+					break;
+				}
+			}
+			currProfit -= (fourthTradeEdge.exPrice + fourthTradeEdge.fee);
+		}
+		currProfit -= (thirdTradeEdge.exPrice + thirdTradeEdge.fee);
+	} 
+}
+
+
+/*
+*
+* Algorithm attempts to fill in this path with the most profitable trade
+* SourceCoin --> Coin1 --> Coin2 --> Coin3 --> SourceCoin
+* 
+*/
+void ProcessLen4(Graph &g, vector<TrackProfit> &negCyclePath, processInput inputVars)
+{
+    double currProfit;
+    vector<thread> threads;
+    mutex negCyclePath_mutex;
+
+    // brute force combinations to maximize profitability
+    for (Edge firstTradeEdge : g.adjacencyList[inputVars.source])
+    {
+        currProfit = (firstTradeEdge.exPrice + firstTradeEdge.fee);
+        threads.push_back(thread(ProcessBase3For4, 
+                                ref(g), ref(negCyclePath), ref(inputVars), 
+                                ref(firstTradeEdge), ref(currProfit),
+                                ref(negCyclePath_mutex)));
+    }
+    for (auto &thread : threads) {
+        thread.join();
+    }
+}
+
+
+/*
+*
+* Algorithm attempts to fill in this path with the most profitable trade
+* SourceCoin --> Coin1 --> Coin2 --> Coin3 --> Coin4 --> SourceCoin
+* 
+*/
+void ProcessLen5(Graph &g, vector<TrackProfit> &negCyclePath, processInput inputVars)
+{
+	double currProfit;
+	mutex negCyclePath_mutex;
+	vector<thread> threads;
+	for (Edge firstTradeEdge : g.adjacencyList[inputVars.source])
+	{
+		currProfit = (firstTradeEdge.exPrice + firstTradeEdge.fee);
+
+		for (Edge secondTradeEdge : g.adjacencyList[firstTradeEdge.to])
+		{
+			currProfit += (secondTradeEdge.exPrice + secondTradeEdge.fee);
+
+			threads.push_back(thread(ProcessBase3For5, ref(g), ref(negCyclePath), 
+									ref(inputVars), ref(firstTradeEdge), ref(secondTradeEdge), 
+									ref(currProfit), ref(negCyclePath_mutex)));
+
+			currProfit -= (secondTradeEdge.exPrice + secondTradeEdge.fee);
+		}
 	}
+	for (thread &thread : threads) {
+        thread.join();
+    }
 }
 
 
 
+void ArbDetectControl(Graph &g, vector<TrackProfit> &negCyclePath, processInput inputVars)
+{
+	double currProfit = 0;
+	if (inputVars.arbLen > 3)
+	{
+		if (inputVars.arbLen == 4)
+		{
+			ProcessLen4(g, negCyclePath, inputVars);
+		}
+		else if (inputVars.arbLen == 5)
+		{
+			ProcessLen5(g, negCyclePath, inputVars);
+		}
+	}
+
+	if (inputVars.arbLen == 3)
+	{
+		ProcessLen3(g, negCyclePath, inputVars);
+	}
+	else if (inputVars.arbLen == 2)
+	{
+		ProcessLen2(g, negCyclePath, inputVars);
+	}
+
+}
+
 
 /*
-* O(n^3) brute force algorithm for determing arbritage profitability
+* O(n^k) brute force algorithm for determing arbritage profitability
+* k is the length of the arb path requested by user
 * Algorithm attempts to fill in this path with the most profitable trade
-* source --> Coin1 --> Coin2 --> source
+* source --> Coin1 --> Coin2 --> ... --> source
 *  - Each --> represents a trade and at each the bid or ask price can be used
 *
 */
-vector<TrackProfit> ArbDetectCombo(Graph& g, string source, double lowerProfitThreshold, double upperProfitThreshold, int comboLen)
+vector<TrackProfit> ArbDetect(Graph& g, string source, double lowerProfitThreshold, double upperProfitThreshold, int arbLen)
 {
 	double upperBound = log(upperProfitThreshold);
 	double lowerBound = log(lowerProfitThreshold);
 	double maxProfit = 0;
 	vector<TrackProfit> negCyclePath;
-	vector<string> tradeTypes { "BLANK", "BLANK", "BLANK"};
 
-
-	// Current algorithm relies on the idea that for a given edge there is only travel on that edge
-	// With the idea of bid-ask pricing, I have the choice at each egde to choose between buying the destination currency with the source currency
-	// at the Ask price or selling the source currency for the destination currency at the Bid price
-
-	// generate all bid-ask trade combinations of certain length that is parameter passed
-	vector<string> combos;
-	vector<char> bidOrAsk {'A', 'B'};
-	generateCombinations(comboLen, "", combos, bidOrAsk);
-	printVector(combos);
-
-	/*
-	*
-	* Test every bid-ask trade combination generated above
-	* Algorithm maximizes for profitability between upper and lower thresholds
-	*
-	*/
-    vector<thread> threads;
-	for (int i = 0; i < combos.size(); i++)
-   	{
-		processCombinationInput profitVars = {lowerBound, upperBound, source, combos[i]};
-		if (comboLen == 3)
-		{
-			threads.push_back(thread(processCombinationLen3, ref(g), ref(maxProfit), ref(negCyclePath), ref(profitVars)));
-		}
-		else if (comboLen == 4)
-		{
-			threads.push_back(thread(processCombinationLen4, ref(g), ref(maxProfit), ref(negCyclePath), ref(profitVars)));
-		}
-  	}
-    for (auto &thread : threads) {
-        thread.join();
-    }
+	processInput arbFindVars = {lowerBound, upperBound, maxProfit, arbLen, source};
+	ArbDetectControl(g, negCyclePath, arbFindVars);
 
 	//TODO: Remove to another function that is used to validate the profitability of a series of trades
 	if (maxProfit != 0) 
 	{
-		cout << "MaxProfit (log): " << maxProfit << endl;
-		cout << "MaxProfit: " << (WeightConversion(maxProfit) - 1) * 100 << "%\n" << endl;
+		cout << "MaxProfit: " << (WeightConversion(maxProfit) - 1) * 100 << "% for " << arbLen << "-length path" << endl;
 	}
-
+	
 	return negCyclePath;
 }

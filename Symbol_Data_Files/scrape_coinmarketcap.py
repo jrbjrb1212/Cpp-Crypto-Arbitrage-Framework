@@ -2,7 +2,11 @@ import requests
 import concurrent.futures
 from bs4 import BeautifulSoup
 import sys
-
+# TODO: need to add comments
+# TODO: need to look into what kind of information I am actually pulling from coinmarket urls
+# TODO: need to add viable symbols one per line into viable symbols output file
+# TODO: need to change the symbol_map in exchange_api_pull
+#		- change from "BTCUSDT" -> {BTC, USD}
 
 def main():
 	if (len(sys.argv) != 3):
@@ -32,8 +36,8 @@ def main():
 			return
 
 
-	pages_to_parse = number_coins_req // 10
-	last_page_coins = number_coins_req % 10
+	pages_to_parse = number_coins_req // 100
+	last_page_coins = number_coins_req % 100
 
 	coinmarketcap_baseURL = "https://coinmarketcap.com/?page="
 	pages_to_scrape = []

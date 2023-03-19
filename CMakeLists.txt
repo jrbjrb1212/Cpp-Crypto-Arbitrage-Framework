@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
-project(crypto)
+project(Crypto)
 
 find_package(nlohmann_json REQUIRED)
 include_directories(${nlohmann_json_INCLUDE_DIRS})

@@ -1,0 +1,25 @@
+Number of vertices: 118
+Number of edges: 1786
+
+Performing Arb Finder from BTC
+MaxProfit: 0.999413% for 4-length path
+From BTC to COTI via huobi using a ask at 357143 with 0% fee
+From COTI to USDT via gateio using a bid at 0.07682 with 0.3% fee
+From USDT to ONE via huobi using a ask at 46.6135 with 0% fee
+From ONE to BTC via kucoin using a bid at 7.969e-07 with 0.2% fee
+Time to Pull Ticker, ArbDetect and Pull Orderbook: 3471565 microseconds
+
+MaxProfit: 5.74045% for 4-length path
+From BTC to IOST via binance using a ask at 2.5641e+06 with 0.2% fee
+From IOST to ETH via kucoin using a bid at 6.128e-06 with 0.2% fee
+From ETH to POWR via gateio using a ask at 9523.81 with 0.3% fee
+From POWR to BTC via huobi using a bid at 7.13e-06 with 0% fee
+Time to Pull Ticker, ArbDetect and Pull Orderbook: 3701955 microseconds
+
+MaxProfit: 20.9003% for 4-length path
+From BTC to USDT via huobi using a bid at 26994.5 with 0% fee
+From USDT to CELR via bitmart using a ask at 47.3283 with 0.5% fee
+From CELR to ETH via gateio using a bid at 1.4683e-05 with 0.3% fee
+From ETH to BTC via bitmart using a bid at 0.065425 with 0.5% fee
+Time to Pull Ticker, ArbDetect and Pull Orderbook: 3489026 microseconds
+

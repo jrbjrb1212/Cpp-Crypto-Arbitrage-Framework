@@ -130,17 +130,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named crypto
+# Target rules for targets named Crypto
 
 # Build rule for target.
-crypto: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 crypto
-.PHONY : crypto
+Crypto: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Crypto
+.PHONY : Crypto
 
 # fast build rule for target.
-crypto/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/build
-.PHONY : crypto/fast
+Crypto/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Crypto.dir/build.make CMakeFiles/Crypto.dir/build
+.PHONY : Crypto/fast
 
 BellmanFord.o: BellmanFord.cpp.o
 
@@ -148,7 +148,7 @@ BellmanFord.o: BellmanFord.cpp.o
 
 # target to build an object file
 BellmanFord.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/BellmanFord.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Crypto.dir/build.make CMakeFiles/Crypto.dir/BellmanFord.cpp.o
 .PHONY : BellmanFord.cpp.o
 
 BellmanFord.i: BellmanFord.cpp.i
@@ -157,7 +157,7 @@ BellmanFord.i: BellmanFord.cpp.i
 
 # target to preprocess a source file
 BellmanFord.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/BellmanFord.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Crypto.dir/build.make CMakeFiles/Crypto.dir/BellmanFord.cpp.i
 .PHONY : BellmanFord.cpp.i
 
 BellmanFord.s: BellmanFord.cpp.s
@@ -166,7 +166,7 @@ BellmanFord.s: BellmanFord.cpp.s
 
 # target to generate assembly for a file
 BellmanFord.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/BellmanFord.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Crypto.dir/build.make CMakeFiles/Crypto.dir/BellmanFord.cpp.s
 .PHONY : BellmanFord.cpp.s
 
 # Help Target
@@ -177,7 +177,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... crypto"
+	@echo "... Crypto"
 	@echo "... BellmanFord.o"
 	@echo "... BellmanFord.i"
 	@echo "... BellmanFord.s"

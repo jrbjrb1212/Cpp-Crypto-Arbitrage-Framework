@@ -155,7 +155,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=crypto
+CMAKE_PROJECT_NAME:STATIC=Crypto
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -230,6 +230,12 @@ CURL_LIBRARY_DEBUG:FILEPATH=CURL_LIBRARY_DEBUG-NOTFOUND
 
 //Path to a library.
 CURL_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libcurl.so
+
+//Value Computed by CMake
+Crypto_BINARY_DIR:STATIC=/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/out/build
+
+//Value Computed by CMake
+Crypto_SOURCE_DIR:STATIC=/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-
 
 //pkg-config executable
 PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config

@@ -72,7 +72,7 @@ CMAKE_BINARY_DIR = "/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbit
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/crypto.dir/all
+all: CMakeFiles/Crypto.dir/all
 
 .PHONY : all
 
@@ -82,36 +82,36 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/crypto.dir/clean
+clean: CMakeFiles/Crypto.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/crypto.dir
+# Target rules for target CMakeFiles/Crypto.dir
 
 # All Build rule for target.
-CMakeFiles/crypto.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/out/build/CMakeFiles" --progress-num=1,2 "Built target crypto"
-.PHONY : CMakeFiles/crypto.dir/all
+CMakeFiles/Crypto.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Crypto.dir/build.make CMakeFiles/Crypto.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Crypto.dir/build.make CMakeFiles/Crypto.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/out/build/CMakeFiles" --progress-num=1,2 "Built target Crypto"
+.PHONY : CMakeFiles/Crypto.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/crypto.dir/rule: cmake_check_build_system
+CMakeFiles/Crypto.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start "/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/out/build/CMakeFiles" 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/crypto.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Crypto.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/out/build/CMakeFiles" 0
-.PHONY : CMakeFiles/crypto.dir/rule
+.PHONY : CMakeFiles/Crypto.dir/rule
 
 # Convenience name for target.
-crypto: CMakeFiles/crypto.dir/rule
+Crypto: CMakeFiles/Crypto.dir/rule
 
-.PHONY : crypto
+.PHONY : Crypto
 
 # clean rule for target.
-CMakeFiles/crypto.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/clean
-.PHONY : CMakeFiles/crypto.dir/clean
+CMakeFiles/Crypto.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Crypto.dir/build.make CMakeFiles/Crypto.dir/clean
+.PHONY : CMakeFiles/Crypto.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

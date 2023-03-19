@@ -9,6 +9,8 @@
 /mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/BellmanFord.cpp
 iostream
 -
+unistd.h
+-
 Header_Files/graph.hpp
 /mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/graph.hpp
 Header_Files/arbitrage_finder.hpp
@@ -17,8 +19,12 @@ Header_Files/exchange_api_pull.hpp
 /mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/exchange_api_pull.hpp
 Header_Files/combinations.hpp
 /mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/combinations.hpp
+Header_Files/amount_optimization.hpp
+/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/amount_optimization.hpp
 chrono
 -
+
+/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/amount_optimization.hpp
 
 /mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/arbitrage_finder.hpp
 iostream
