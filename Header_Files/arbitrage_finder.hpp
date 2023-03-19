@@ -43,7 +43,7 @@ struct TrackProfit
 *
 */
 long double WeightConversion(long double conversionMetric){
-	return exp((conversionMetric / log(exp(1))));
+	return exp(conversionMetric);
 }
 
 

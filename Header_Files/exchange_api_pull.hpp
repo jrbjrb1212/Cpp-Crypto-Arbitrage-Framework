@@ -27,6 +27,13 @@ static size_t writeCallback(void *contents, size_t size, size_t nmemb, void *use
     return size * nmemb;
 }
 
+
+/*
+*
+* Helper method that converts a string to lowercase
+* (should be in the string library)
+*
+*/
 string toLowerCase(string str) {
     for (char& c : str) {
         if (c >= 'A' && c <= 'Z') {
@@ -35,6 +42,7 @@ string toLowerCase(string str) {
     }
     return str;
 }
+
 
 /*
 *
@@ -216,8 +224,8 @@ void pullBinanceOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
                 double bidPrice = stod(strBidPrice), bidAmt = stod(strBidAmt);
                 string strAskPrice = json_data["asks"][i][0], strAskAmt = json_data["asks"][i][1];
                 double askPrice = stod(strAskPrice), askAmt = stod(strAskAmt);
-                orderBookData[0][i] = bidPrice; orderBookData[1][i] = bidAmt;
-                orderBookData[2][i] = askPrice; orderBookData[3][i] = askAmt;
+                orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
+                orderBookData[2][i] = log(askPrice); orderBookData[3][i] = askAmt;
             }
             // correct url has been traversed
             break;
@@ -344,8 +352,8 @@ void pullBitgetOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
                 double bidPrice = stod(strBidPrice), bidAmt = stod(strBidAmt);
                 string strAskPrice = json_data["data"]["asks"][i][0], strAskAmt = json_data["data"]["asks"][i][1];
                 double askPrice = stod(strAskPrice), askAmt = stod(strAskAmt);
-                orderBookData[0][i] = bidPrice; orderBookData[1][i] = bidAmt;
-                orderBookData[2][i] = askPrice; orderBookData[3][i] = askAmt;
+                orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
+                orderBookData[2][i] = log(askPrice); orderBookData[3][i] = askAmt;
             }
             // correct url has been traversed
             break;
@@ -472,8 +480,8 @@ void pullBitMartOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
                 double bidPrice = stod(strBidPrice), bidAmt = stod(strBidAmt);
                 string strAskPrice = json_data["data"]["sells"][i]["price"], strAskAmt = json_data["data"]["sells"][i]["amount"];
                 double askPrice = stod(strAskPrice), askAmt = stod(strAskAmt);
-                orderBookData[0][i] = bidPrice; orderBookData[1][i] = bidAmt;
-                orderBookData[2][i] = askPrice; orderBookData[3][i] = askAmt;
+                orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
+                orderBookData[2][i] = log(askPrice); orderBookData[3][i] = askAmt;
             }
             // correct url has been traversed
             break;
@@ -602,8 +610,8 @@ void pullGateioOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
                 double bidPrice = stod(strBidPrice), bidAmt = stod(strBidAmt);
                 string strAskPrice = json_data["asks"][i][0], strAskAmt = json_data["asks"][i][1];
                 double askPrice = stod(strAskPrice), askAmt = stod(strAskAmt);
-                orderBookData[0][i] = bidPrice; orderBookData[1][i] = bidAmt;
-                orderBookData[2][i] = askPrice; orderBookData[3][i] = askAmt;
+                orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
+                orderBookData[2][i] = log(askPrice); orderBookData[3][i] = askAmt;
             }
             // correct url has been traversed
             break;
@@ -732,8 +740,8 @@ void pullHuobiOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBoo
             {
                 double bidPrice = json_data["tick"]["bids"][i][0], bidAmt = json_data["tick"]["bids"][i][1];
                 double askPrice = json_data["tick"]["asks"][i][0], askAmt = json_data["tick"]["asks"][i][1];
-                orderBookData[0][i] = bidPrice; orderBookData[1][i] = bidAmt;
-                orderBookData[2][i] = askPrice; orderBookData[3][i] = askAmt;
+                orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
+                orderBookData[2][i] = log(askPrice); orderBookData[3][i] = askAmt;
             }
             // correct url has been traversed
             break;
@@ -864,8 +872,8 @@ void pullKucoinOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
                 double bidPrice = stod(strBidPrice), bidAmt = stod(strBidAmt);
                 string strAskPrice = json_data["data"]["asks"][i][0], strAskAmt = json_data["data"]["asks"][i][1];
                 double askPrice = stod(strAskPrice), askAmt = stod(strAskAmt);
-                orderBookData[0][i] = bidPrice; orderBookData[1][i] = bidAmt;
-                orderBookData[2][i] = askPrice; orderBookData[3][i] = askAmt;
+                orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
+                orderBookData[2][i] = log(askPrice); orderBookData[3][i] = askAmt;
             }
             // correct url has been traversed
             break;

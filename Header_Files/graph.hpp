@@ -49,7 +49,7 @@ public:
         {
             if ((edge.to == from) && (edge.exchange == exchange))
             {
-                edge.exPrice = log(1/bidPrice);
+                edge.exPrice = log(1) - log(bidPrice);
                 edge.bidOrAsk = "ask";
                 break;
             }
@@ -81,4 +81,23 @@ public:
             cout << endl;
         }
     }
+
+    void printEdge(string from, string to, string exchange) {
+        vector<Edge> edges = adjacencyList[from];
+        
+        // Loop through the edges to find the edge that ends at the specified vertex
+        for (Edge edge : edges) {
+            if (edge.to == to && exchange == edge.exchange) {
+                // Print the edge information
+                cout << "Edge from " << from << " to " << to << " with exchange " << edge.exchange << ": ";
+                cout << "ExPrice = " << edge.exPrice << ", Fee = " << edge.fee << endl;
+                return;
+            }
+        }
+        
+        // If the loop finishes without finding the edge, print an error message
+        cout << "Error: no edge found from " << from << " to " << to << endl;
+    }
+
+    
 };

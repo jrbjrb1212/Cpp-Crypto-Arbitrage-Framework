@@ -15,7 +15,7 @@ int main(){
 	unordered_map<string, double> feeMap = buildFeeMap();
 	
 	Graph g;
-	int nDepth = 10;
+	int nDepth = 20;
 
 	// Set the graph
 	pullAllTicker(symbolMap, g, true);
@@ -24,19 +24,20 @@ int main(){
 	cout << "Number of edges: " << g.getEdgeCount() << endl;
 	cout << endl;
 
-	string coin = "BTC";
+	string coin = "USDT";
 	vector<TrackProfit> arbPath;
 	cout << "Performing Arb Finder from " << coin << endl;
-	for(double i = 0.01; i < 0.31; i+=0.1){
+	for(double i = 0.05; i < 0.25; i+=0.6){
 		auto start = high_resolution_clock::now();
 		
 		// update the graph
 		pullAllTicker(symbolMap, g, false);
 		
 		arbPath = ArbDetect(g, coin, 1.0, 1.0 + i, 4);
-		printArbInfo(arbPath, feeMap);		
-	
-		amountOpt(arbPath, nDepth, feeMap);
+		printArbInfo(arbPath, feeMap);
+				
+		cout << endl;
+		amountOptControl(g, arbPath, nDepth, feeMap);
 		
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<microseconds>(stop - start);
