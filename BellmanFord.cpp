@@ -27,14 +27,15 @@ int main(){
 	string coin = "USDT";
 	vector<TrackProfit> arbPath;
 	cout << "Performing Arb Finder from " << coin << endl;
-	for(double i = 0.05; i < 0.25; i+=0.6){
+	for(double i = 0.5; i < 25; i+=0.6){
 		auto start = high_resolution_clock::now();
 		
 		// update the graph
 		pullAllTicker(symbolMap, g, false);
 		
-		arbPath = ArbDetect(g, coin, 1.0, 1.0 + i, 4);
+		arbPath = ArbDetect(g, coin, 1.1, 1.0 + i, 4);
 		printArbInfo(arbPath, feeMap);
+		break;
 				
 		cout << endl;
 		amountOptControl(g, arbPath, nDepth, feeMap);
