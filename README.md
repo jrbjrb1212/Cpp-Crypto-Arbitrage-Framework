@@ -3,10 +3,27 @@ A C++ dominant framework for pulling real-time data via public endpoints from si
 
 ![Arb_Example](ReadMEPics/Arb_Example.png)
 
-## Need for Speed, through C++ and parallelization
+## Need for Speed, through C++ and Parallelization
 Pulling active ticker data and select orderbook data via public API endpoints from all trading pairs across 6 crypto exchanges is about 2.5 MB of JSON string data. This data is used by downloading ticker data, parsing ticker data, performing arbitrage finding algorithm, formatting the arbitrage path, downloading relevant orderbook information, and determining realistic profitability. Most of these are expensive, time consuming operations that in the end will net a path that is deemed profitable. If the path takes too long to compute the profitability/trading opportunity may have disappeared.
 
 For the reason that speed is royalty in this situation, C++ is used on all time dominant operations and all operations that could have benefited from embarrassingly or data parallelism were accommodated. On my own hardware (has not been tested on outside hardware), the time dominant factor of my framework is the time spent downloading from the public endpoint. Over 99% of time is spent simply downloading ticker and orderbook data, which is both good and bad *(See Time BreakDown soon)*. It showcases that the rest of the code is inefficient, but that the code suffers from outside factors that can not be avoided without additional hardware costs. 
+
+## To Use Framework
+Install all libraries
+```console
+$ sudo apt-get install make cmake nlohmann-json3-dev curl python3 pip
+```
+```console
+$ pip install requests bs4
+```
+```console
+$ cmake -b . -s out/build
+```
+```console
+$ cd out/build/ && make && cd ../../
+```
+
+More information about single bash script execution coming soon
 
 ## Outline
 ![Outline_Diagram](ReadMEPics/Outline.png)
@@ -81,7 +98,7 @@ This type of exchange data pulling from public api endpoints is freely available
 - Coming soon
 
 
-## Possible Next Stops or Different Directions
+## Possible Next Steps or Different Directions
 - Format the data into, a matrix and using k matrix multiply to maximize the with the entry in the result or intermediate multiply matrix being the argMax of a row from matrixA and column from matrixB
     - Reduces arbitrage algorithm to $O((k+1)*n^{([2.34, 3])})$, where k is the number of desired trades, for larger arbitrage paths and is quite amendable to parallelization
     - Easy to calculate but would be harder to trace the path from the result
