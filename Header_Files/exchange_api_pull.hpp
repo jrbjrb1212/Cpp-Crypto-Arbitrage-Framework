@@ -10,6 +10,7 @@
 #include <thread>
 #include <mutex>
 #include <chrono>
+#include <algorithm>
 
 using namespace std;
 using namespace std::chrono;
@@ -48,14 +49,14 @@ string toLowerCase(string str) {
 *
 * Develops a HashMap of predetermined viable trading pairs to add to
 * an active graph of trading pair exchanges
-* Map Strucuture: Coin1Coin2 -> [Coin1, Coin2] 
+* Map Structure: "Coin1Coin2" -> ["Coin1", "Coin2"] 
 *
 */
-unordered_map<string, vector<string>> buildSymbolHashMap()
+unordered_map<string, vector<string>> buildSymbolHashMap(string symbolPath)
 {
     // read from Symbol_Space_Split.txt and build a dictionary
     //TODO: replace with updated path after scraping script has been created 
-    ifstream input_file("../../Symbol_Data_Files/Symbol_Space_Split.txt");
+    ifstream input_file(symbolPath.c_str());
     string line, lineCopy;
     short int slashPos;
     unordered_map<string, vector<string>> symbolMap;
@@ -70,8 +71,9 @@ unordered_map<string, vector<string>> buildSymbolHashMap()
             string secondCoin = line.substr(forSlashPos + 1, strLen - forSlashPos - 2);
 
             vector<string> symbolsVec = {firstCoin, secondCoin};
-            string symbol_key = firstCoin + secondCoin;
-            symbolMap[symbol_key] = symbolsVec;
+            string symbolKey = firstCoin + secondCoin;
+            // cout << "Key: " << symbolKey << " coins: " << firstCoin << ", " << secondCoin << endl;
+            symbolMap[symbolKey] = symbolsVec;
         }
         input_file.close();
     }
@@ -85,10 +87,39 @@ unordered_map<string, vector<string>> buildSymbolHashMap()
 
 /*
 *
+* Resize method to take the massive symbolMap unordered_map of random combinations
+* of possible viable trading pairs to fixed in size to only the trading pairs
+* that are identified as active on exchanges
+*
+*/
+void symbolHashMapResize(unordered_map<string, vector<string>> &symbolMap, unordered_set<string> &seenSymbols)
+{
+    vector<string> toErase;
+    string tradingPairSymbol;
+    // iterate over the keys of symbolMap
+    for (pair<string, vector<string>> symbolEntry : symbolMap)
+    {
+        // if tradingPair is not deemed as active by API pull then mark it for erase
+        tradingPairSymbol = symbolEntry.first;
+        if (seenSymbols.find(tradingPairSymbol) == seenSymbols.end())
+        {
+            toErase.push_back(tradingPairSymbol);
+        }
+    }
+
+    // erase all symbols in the symbolMap that do not relate to active trading pairs
+    for(string eraseStr : toErase)
+    {
+        symbolMap.erase(eraseStr);
+    }
+
+}
+
+/*
+*
 * Develops a HashMap of exchanges and their spot trading fees
-* Map Strucuture: Binance -> [0.002] 
-* TODO: implement API request to get most up to date trading fees
-* not public endpoint so authoritzation via API key is required
+* Map Structure: Binance -> [0.002] 
+* TODO: Consider logging the fee map entries
 *
 */
 unordered_map<string, double> buildFeeMap(){
@@ -97,7 +128,7 @@ unordered_map<string, double> buildFeeMap(){
     feeMap["bitget"] = 0.002;
     feeMap["bitmart"] = 0.005;
     feeMap["gateio"] = 0.003;
-    feeMap["huboi"] = 0.002;
+    feeMap["huobi"] = 0.002;
     feeMap["kucoin"] = 0.002;
     return feeMap;
 }
@@ -109,7 +140,7 @@ unordered_map<string, double> buildFeeMap(){
 * and add data to Graph
 *
 */
-void pullBinance(unordered_map<string, vector<string> > &symbolMap, Graph &g, mutex &symbolMapMutex, bool setGraph)
+void pullBinance(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool setGraph, unordered_set<string> &seenSymbols, mutex &seenSymbols_mutex)
 {
     CURL *curl;
     CURLcode res;
@@ -142,11 +173,13 @@ void pullBinance(unordered_map<string, vector<string> > &symbolMap, Graph &g, mu
             {
                 string tradeSymbol = string(item["symbol"]);
                 vector<string> assets = symbolMap[tradeSymbol];
+                assets = symbolMap[tradeSymbol];
+
 
                 // Trading pair is not viable by user settings
                 if (assets.size() != 2)
                     continue;
-
+    
                 string fromAsset = assets[0], toAsset = assets[1];
                 string strBidPrice = item["bidPrice"], strAskPrice = item["askPrice"];
                 double bidPrice = stod(strBidPrice), askPrice = stod(strAskPrice);
@@ -157,6 +190,12 @@ void pullBinance(unordered_map<string, vector<string> > &symbolMap, Graph &g, mu
                 if (setGraph)
                 {
                     g.addEdge(fromAsset, toAsset, exchangeFee, exchange);
+                    // Record what trading symbol was used to resize symbolMap later
+                    // mark TradingPair as seen; symbolMap will be resized at set up with this information
+                    seenSymbols_mutex.lock();
+                    seenSymbols.insert(tradeSymbol);
+                    seenSymbols.insert(toAsset + fromAsset);
+                    seenSymbols_mutex.unlock();
                 }
                 else
                 {
@@ -166,7 +205,7 @@ void pullBinance(unordered_map<string, vector<string> > &symbolMap, Graph &g, mu
         }
         catch (const exception &e)
         {
-            cout << "SSL EXCEPTION DETECTED" << endl;
+            cout <<  exchange << " SSL EXCEPTION DETECTED" << endl;
         }
         
         curl_easy_cleanup(curl);
@@ -210,6 +249,7 @@ void pullBinanceOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
             }
 
             nlohmann::json json_data = nlohmann::json::parse(response);
+            cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
             response.clear(); // Clear the response variable
             // invalid combination
             if (json_data.find("msg") != json_data.end()) 
@@ -242,7 +282,7 @@ void pullBinanceOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
 * and add data to Graph
 *
 */
-void pullBitget(unordered_map<string, vector<string> > &symbolMap, Graph &g, mutex &symbolMapMutex, bool setGraph)
+void pullBitget(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool setGraph, unordered_set<string> &seenSymbols, mutex &seenSymbols_mutex)
 {
     CURL *curl;
     CURLcode res;
@@ -286,6 +326,11 @@ void pullBitget(unordered_map<string, vector<string> > &symbolMap, Graph &g, mut
                 }
                 if (setGraph){
                     g.addEdge(fromAsset, toAsset, exchangeFee, exchange);
+                    // mark TradingPair as seen; symbolMap will be resized at set up with this information
+                    seenSymbols_mutex.lock();
+                    seenSymbols.insert(tradeSymbol);
+                    seenSymbols.insert(toAsset + fromAsset);
+                    seenSymbols_mutex.unlock();
                 }
                 else{
                     g.updateEdge(fromAsset, toAsset, bidPrice, askPrice, exchange);
@@ -294,7 +339,7 @@ void pullBitget(unordered_map<string, vector<string> > &symbolMap, Graph &g, mut
         }
         catch (const exception &e)
         {
-            cout << "SSL EXCEPTION DETECTED" << endl;
+            cout <<  exchange << " SSL EXCEPTION DETECTED" << endl;
         }
 
         // cout << "Finished pull from " << exchange << "\n" << endl;
@@ -338,6 +383,7 @@ void pullBitgetOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
             }
 
             nlohmann::json json_data = nlohmann::json::parse(response);
+            cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
             response.clear(); // Clear the response variable
             // invalid API request
             if (json_data["data"]["asks"].size() == 0) 
@@ -369,7 +415,7 @@ void pullBitgetOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
 * Pull spot ticker data from BitMart Exchange via API
 *
 */
-void pullBitMart(unordered_map<string, vector<string> > &symbolMap, Graph &g, mutex &symbolMapMutex, bool setGraph)
+void pullBitMart(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool setGraph, unordered_set<string> &seenSymbols, mutex &seenSymbols_mutex)
 {
     CURL *curl;
     CURLcode res;
@@ -414,6 +460,12 @@ void pullBitMart(unordered_map<string, vector<string> > &symbolMap, Graph &g, mu
                 }
                 if (setGraph){
                     g.addEdge(fromAsset, toAsset, exchangeFee, exchange);
+
+                    // mark TradingPair as seen; symbolMap will be resized at set up with this information
+                    seenSymbols_mutex.lock();
+                    seenSymbols.insert(tradeSymbol);
+                    seenSymbols.insert(toAsset + fromAsset);
+                    seenSymbols_mutex.unlock();
                 }
                 else{
                     g.updateEdge(fromAsset, toAsset, bidPrice, askPrice, exchange);
@@ -424,7 +476,7 @@ void pullBitMart(unordered_map<string, vector<string> > &symbolMap, Graph &g, mu
         }
         catch (const exception &e)
         {
-            cout << "SSL EXCEPTION DETECTED" << endl;
+            cout <<  exchange << " SSL EXCEPTION DETECTED" << endl;
         }
         // cout << "Finished pull from " << exchange << "\n" << endl;
         curl_easy_cleanup(curl);
@@ -466,6 +518,7 @@ void pullBitMartOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
             }
 
             nlohmann::json json_data = nlohmann::json::parse(response);
+            cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
             response.clear(); // Clear the response variable
             // invalid API request
             if (json_data["message"] != "OK") 
@@ -498,7 +551,7 @@ void pullBitMartOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
 * and add data to Graph
 *
 */
-void pullGateio(unordered_map<string, vector<string> > &symbolMap, Graph &g, mutex &symbolMapMutex, bool setGraph)
+void pullGateio(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool setGraph, unordered_set<string> &seenSymbols, mutex &seenSymbols_mutex)
 {
     CURL *curl;
     CURLcode res;
@@ -537,24 +590,28 @@ void pullGateio(unordered_map<string, vector<string> > &symbolMap, Graph &g, mut
 
                 string fromAsset = assets[0], toAsset = assets[1];
                 string strBidPrice = item["highest_bid"], strAskPrice = item["lowest_ask"];
+                if ((strBidPrice == "") || (strAskPrice == ""))
+                    continue;
                 long double bidPrice = stod(strBidPrice), askPrice = stod(strAskPrice);
                 if ((bidPrice == 0.0) || (askPrice == 0.0))
-                {
                     continue;
-                }
+
                 if (setGraph)
                 {
                     g.addEdge(fromAsset, toAsset, exchangeFee, exchange);
+                    // mark TradingPair as seen; symbolMap will be resized at set up with this information
+                    seenSymbols_mutex.lock();
+                    seenSymbols.insert(tradeSymbol);
+                    seenSymbols.insert(toAsset + fromAsset);
+                    seenSymbols_mutex.unlock();
                 }
                 else
-                {    
                     g.updateEdge(fromAsset, toAsset, bidPrice, askPrice, exchange);
-                }
             }
         }
         catch (const exception &e)
         {
-            cout << "SSL EXCEPTION DETECTED" << endl;
+            cout <<  exchange << " SSL EXCEPTION DETECTED" << endl;
         }
 
         curl_easy_cleanup(curl);
@@ -596,6 +653,7 @@ void pullGateioOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
             }
 
             nlohmann::json json_data = nlohmann::json::parse(response);
+            cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
             response.clear(); // Clear the response variable
             // invalid API request
             if (json_data.find("message") != json_data.end()) 
@@ -628,7 +686,7 @@ void pullGateioOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
 * and add data to Graph
 *
 */
-void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g, mutex &symbolMapMutex, bool setGraph)
+void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool setGraph, unordered_set<string> &seenSymbols, mutex &seenSymbols_mutex)
 {
     CURL *curl;
     CURLcode res;
@@ -674,6 +732,11 @@ void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g, mute
                 }
                 if (setGraph){
                     g.addEdge(fromAsset, toAsset, exchangeFee, exchange);
+                    // mark TradingPair as seen; symbolMap will be resized at set up with this information
+                    seenSymbols_mutex.lock();
+                    seenSymbols.insert(tradeSymbol);
+                    seenSymbols.insert(toAsset + fromAsset);
+                    seenSymbols_mutex.unlock();
                 }
                 else{
                     g.updateEdge(fromAsset, toAsset, bidPrice, askPrice, exchange);
@@ -683,7 +746,7 @@ void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g, mute
         }
         catch (const exception &e)
         {
-            cout << "SSL EXCEPTION DETECTED" << endl;
+            cout <<  exchange << " SSL EXCEPTION DETECTED" << endl;
         }
 
         // cout << "Finished pull from " << exchange << "\n" << endl;
@@ -697,7 +760,7 @@ void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g, mute
 * Pull order book data from Huobi Exchange via API
 *
 */
-void pullHuobiOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBookData, int &nDepth)
+void pullHuobiOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBookData, int nDepth)
 {
     CURL *curl;
     CURLcode res;
@@ -727,22 +790,30 @@ void pullHuobiOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBoo
             }
 
             nlohmann::json json_data = nlohmann::json::parse(response);
+            cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
             response.clear(); // Clear the response variable
 
             // invalid API request
             if (json_data.find("err-msg") != json_data.end()) 
-            {
                 continue;
-            }
+            
+            int jsonDataBidCtn = json_data["tick"]["bids"].size();
+            int jsonDataAskCtn = json_data["tick"]["asks"].size();
+            int nDepthCopy = min(min(nDepth, jsonDataAskCtn), jsonDataBidCtn);
     
             // parse out each active order in orderbook
-            for (int i = 0; i < nDepth; i++)
+            for (int i = 0; i < nDepthCopy; i++)
             {
                 double bidPrice = json_data["tick"]["bids"][i][0], bidAmt = json_data["tick"]["bids"][i][1];
                 double askPrice = json_data["tick"]["asks"][i][0], askAmt = json_data["tick"]["asks"][i][1];
                 orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
                 orderBookData[2][i] = log(askPrice); orderBookData[3][i] = askAmt;
             }
+            // probably need to resize here
+            orderBookData[0].resize(nDepthCopy); orderBookData[1].resize(nDepthCopy);
+            orderBookData[2].resize(nDepthCopy); orderBookData[3].resize(nDepthCopy);
+
+
             // correct url has been traversed
             break;
 
@@ -757,7 +828,7 @@ void pullHuobiOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBoo
 * and add data to Graph
 *
 */
-void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g, mutex &symbolMapMutex, bool setGraph)
+void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool setGraph, unordered_set<string> &seenSymbols, mutex &seenSymbols_mutex)
 {
     CURL *curl;
     CURLcode res;
@@ -785,7 +856,6 @@ void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g, mut
         {
             nlohmann::json json_data = nlohmann::json::parse(response);
 
-            symbolMapMutex.lock();
             for (auto& item : json_data["data"]["ticker"]) {
                 // symbol comes in uppercase with the coins seperated by a hyphen
                 string tradeSymbol = item["symbol"];
@@ -805,6 +875,11 @@ void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g, mut
                     string strTakerFee = item["takerFeeRate"], strMakerFee = item["makerFeeRate"];
                     exchangeFee = stod(strTakerFee) + stod(strMakerFee);
                     g.addEdge(fromAsset, toAsset, exchangeFee, exchange);
+                    // mark TradingPair as seen; symbolMap will be resized at set up with this information
+                    seenSymbols_mutex.lock();
+                    seenSymbols.insert(tradeSymbol);
+                    seenSymbols.insert(toAsset + fromAsset);
+                    seenSymbols_mutex.unlock();
                 }
                 else{
                     g.updateEdge(fromAsset, toAsset, bidPrice, askPrice, exchange);
@@ -813,7 +888,7 @@ void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g, mut
         }
         catch (const exception &e)
         {
-            cout << "SSL EXCEPTION DETECTED" << endl;
+            cout <<  exchange << " SSL EXCEPTION DETECTED" << endl;
         }
 
         curl_easy_cleanup(curl);
@@ -857,6 +932,7 @@ void pullKucoinOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
             }
 
             nlohmann::json json_data = nlohmann::json::parse(response);
+            cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
             response.clear(); // Clear the response variable
 
             // invalid API request
@@ -889,15 +965,15 @@ void pullKucoinOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
 * supported in this framework via API
 *
 */
-void pullAllTicker(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool setGraph) {
-    mutex symbolMapMutex;
+void pullAllTicker(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool setGraph, unordered_set<string> &seenSymbols) {
+    mutex seenSymbols_Mutex;
     vector<thread> threads;
-    threads.push_back(thread(pullBinance, ref(symbolMap), ref(g), ref(symbolMapMutex), ref(setGraph)));
-    threads.push_back(thread(pullBitget, ref(symbolMap), ref(g), ref(symbolMapMutex), ref(setGraph)));
-    threads.push_back(thread(pullBitMart, ref(symbolMap), ref(g), ref(symbolMapMutex), ref(setGraph)));
-    threads.push_back(thread(pullGateio, ref(symbolMap), ref(g), ref(symbolMapMutex), ref(setGraph)));
-    threads.push_back(thread(pullKucoin, ref(symbolMap), ref(g), ref(symbolMapMutex), ref(setGraph)));
-    threads.push_back(thread(pullHuobi, ref(symbolMap), ref(g), ref(symbolMapMutex), ref(setGraph)));
+    threads.push_back(thread(pullBinance, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
+    threads.push_back(thread(pullBitget, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
+    threads.push_back(thread(pullBitMart, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
+    threads.push_back(thread(pullGateio, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
+    threads.push_back(thread(pullKucoin, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
+    threads.push_back(thread(pullHuobi, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
     for (auto &thread : threads) {
         thread.join();
     }

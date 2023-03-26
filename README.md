@@ -1,4 +1,4 @@
-## C++ Crypto Arbitrage Framework
+## C++ Crypto Arbitrage Framework (Still In Development)
 A C++ dominant framework for pulling real-time data via public endpoints from six crypto exchanges to compute a crypto currency arbitrage that is both mathematically profitable and a proper amount to trade to get realistic profitability. The framework can detect bilatreal, trilateral, quadliteral, and pentalateral arbitrages from a single set of crypto currency data.
 
 ![Arb_Example](ReadMEPics/Arb_Example.png)
@@ -37,27 +37,32 @@ Crypto arbitrage refers to the practice of buying and selling cryptocurrencies a
 ### Math Behind the Algorithm
 The mathematical formula for an arbitrage is 
 
-StartingCapital $\cdot$ Trade1 $\cdot$ Trade2 $\cdot ...$ TradeN $>$ StartingCapital
+$$\text{StartingCapital} \cdot \text{Trade1} \cdot \text{Trade2} \cdot ... \cdot \text{TradeN} > \text{StartingCapital}$$
 
 For numerical stability with floating point operations, the formula can be converted to 
 
-$ln$(StartingCapital) + $ln$(Trade1) + $ln$(Trade2) + $...$ + $ln$(TradeN) > $ln$(StartingCapital)
+$$\ln(\text{StartingCapital}) + \ln(\text{Trade1}) + \ln(\text{Trade2}) + ... + \ln(\text{TradeN}) > \ln(\text{StartingCapital})$$
 
 With trading fees included,
 
-$ln$(StartingCapital) + $ln$(Trade1) + $ln$(Trade1Fee) + $ln$(Trade2) +
+$$\ln(\text{StartingCapital}) + \ln(\text{Trade1}) + \ln(\text{Trade1Fee}) + \ln(\text{Trade2}) + $$
 
-$ln$(Trade2Fee) + $...$ + $ln$(TradeN) + $ln$(TradeNFee) > $ln$(StartingCapital) 
+$$\ln(\text{Trade2Fee}) + ... + \ln(\text{TradeN}) + \ln(\text{TradeNFee}) > \ln(\text{StartingCapital}) $$
 
 
 Every set of Trades that satisfy this inequality is considered a profitable arbitrage by purely ticker data. However, there are many sets of trades with a profitability of less than 0.1%, which may be ideal for a high frequency traders but are not viable for an average trader
 
 Adding profit thresholds allows for a certain degree of profitability before a arbitrage path is said to be viable by an individual user, 
 
-$ln$(StartingCapital) + $ln$(Trade1) + $ln$(Trade1Fee) + $ln$(Trade2) +
 
-$ln$(Trade2Fee) + $...$ + $ln$(TradeN) + $ln$(TradeNFee) $> ln$(StartingCapital) + $ln$(1 + LowerThreshold)
+\begin{align*}
+\ln(\text{StartingCapital}) &+ \ln(\text{Trade1}) + \ln(\text{Trade1Fee}) + \ln(\text{Trade2}) + \\
+&\ln(\text{Trade2Fee}) + \dots + \ln(\text{TradeN}) + \ln(\text{TradeNFee}) \\
+&> \ln(\text{StartingCapital}) + \ln(1 + \text{LowerThreshold})
+\end{align*}
+
 - LowerThreshold is percentage expressed as a decimal
+
 
 ### Algorithm and Data Structure Implementation
 To find sets of trades that satisfy the equation above, the arbitrage finder [arbitrage_finder.hpp]() implements a brute force path searching algorithm from a given source coin. As every arbitrage path starts and ends with the same coin, each path is a cycle within the graph data structure being used. 

@@ -1,58 +1,24 @@
-Number of vertices: 118
-Number of edges: 1786
+Number of vertices: 49
+Number of edges: 1284
 
 Performing Arb Finder from USDT
-MaxProfit: 4.89659% for 4-length path
-From USDT to ELF via gateio using a ask at 3.25267 with 0.3% fee
-From ELF to ETH via kucoin using a bid at 0.0001804 with 0.2% fee
-From ETH to ELF via kucoin using a ask at 5820.72 with 0.2% fee
-From ELF to USDT via huobi using a bid at 0.3099 with 0% fee
+MaxProfit: 3.56127% for 3-length path
+MaxProfit: 5.29847% for 4-length path
+MaxProfit: 9.43192% for 5-length path
+Error: no edge found from USDC to USDT
+Edge from USDT to USDC with exchange huobi: ExPrice = 0.0010005, Fee = -0.002002
 
-Edge from USDT to ELF with exchange gateio: ExPrice = 1.17948, Fee = -0.00300451
--1.17931, -1.17935, -1.17964, -1.17983, -1.17993, -1.18127, -1.18189, -1.18192, -1.18283, -1.18391, -1.18482, -1.18594, -1.18682, -1.18784, -1.18797, -1.18885, -1.18987, -1.18997, -1.19086, -1.19185, 
-807.713, 86.098, 22.632, 23.127, 4781.76, 129.029, 1852.01, 3913.45, 305.444, 670.825, 213.434, 1094.88, 497.557, 23.127, 3223.4, 385.039, 99.101, 2977.38, 570.727, 38.174, 
--1.17131, -1.17128, -1.17105, -1.17073, -1.16906, -1.16873, -1.16706, -1.16674, -1.16507, -1.16475, -1.16405, -1.16309, -1.16277, -1.1611, -1.16079, -1.15913, -1.15881, -1.15715, -1.15683, -1.15626, 
-751.805, 75.155, 81.751, 317.06, 86.757, 272.054, 109.751, 401.7, 74.081, 887.686, 23.127, 335.746, 490.757, 88.61, 331.771, 238.048, 594.317, 260.756, 585.052, 23.127, 
+Edge from MATIC to USDC with exchange bitmart: ExPrice = 0.082759, Fee = -0.00501254
+Error: no edge found from USDC to MATIC
 
-Edge from ELF to ETH with exchange kucoin: ExPrice = -8.62033, Fee = -0.002002
--8.66918, -8.67209, -8.68266, -8.69991, -8.70052, -8.70232, -8.71321, -8.75482, -8.75545, -8.76245, -9.07406, -9.07581, -9.07756, -9.07931, -9.08107, -9.08283, -9.08459, -9.08635, -9.08812, -9.08989, 
-454.5, 1.7477, 2154.76, 836.749, 918.215, 95.0857, 44.8063, 139.363, 296.825, 967.299, 10321.9, 11056.8, 8491.86, 11628, 8501.43, 8105.46, 8300.44, 2587.84, 11499.1, 11677.1, 
--8.62033, -8.61978, -8.60493, -8.60439, -8.53944, -8.51719, -8.44487, -8.38441, -8.29405, -8.2556, -8.25521, -8.25137, -8.18072, -8.13568, -8.1265, -8.11507, -8.11473, -8.11173, -8.03786, -8.0323, 
-824.456, 226.323, 124.074, 1677.93, 1403.96, 583.135, 20.9, 31.5, 946.416, 15.7, 5, 730.46, 971.797, 124.251, 8.9757, 15.8, 19.4, 30.1803, 1.1288, 33, 
+Edge from ETH to MATIC with exchange huobi: ExPrice = 7.38403, Fee = -0.002002
+Edge from MATIC to ETH with exchange huobi: ExPrice = -7.38403, Fee = -0.002002
 
-Edge from ETH to ELF with exchange kucoin: ExPrice = 8.66918, Fee = -0.002002
--8.66918, -8.67209, -8.68266, -8.69991, -8.70052, -8.70232, -8.71321, -8.75482, -8.75545, -8.76245, -9.07406, -9.07581, -9.07756, -9.07931, -9.08107, -9.08283, -9.08459, -9.08635, -9.08812, -9.08989, 
-454.5, 1.7477, 2154.76, 836.749, 918.215, 95.0857, 44.8063, 139.363, 296.825, 967.299, 10321.9, 11056.8, 8491.86, 11628, 8501.43, 8105.46, 8300.44, 2587.84, 11499.1, 11677.1, 
--8.62033, -8.61978, -8.60493, -8.60439, -8.53944, -8.51719, -8.44487, -8.38441, -8.29405, -8.2556, -8.25521, -8.25137, -8.18072, -8.13568, -8.1265, -8.11507, -8.11473, -8.11173, -8.03786, -8.0323, 
-824.456, 226.323, 124.074, 1677.93, 1403.96, 583.135, 20.9, 31.5, 946.416, 15.7, 5, 730.46, 971.797, 124.251, 8.9757, 15.8, 19.4, 30.1803, 1.1288, 33, 
+Error: no edge found from STETH to ETH
+Edge from ETH to STETH with exchange huobi: ExPrice = 0.00220242, Fee = -0.002002
 
-Edge from ELF to USDT with exchange huobi: ExPrice = -1.17151, Fee = -0.002002
--1.17603, -1.17701, -1.17896, -1.18352, -1.18384, -1.18417, -1.18679, -1.18744, -1.18777, -1.1881, -1.18876, -1.18941, -1.19073, -1.19237, -1.1927, -1.19336, -1.19402, -1.19534, -1.22282, -1.40202, 
-104.6, 953.717, 100, 490, 532.895, 240, 120, 729, 67.9732, 159, 250, 70, 140, 2175.66, 250, 159, 159, 70, 43.6233, 130, 
--1.17151, -1.17022, -1.16925, -1.16764, -1.16732, -1.16379, -1.16347, -1.16315, -1.16283, -1.16155, -1.16027, -1.15996, -1.14288, -1.14256, -1.14225, -1.14194, -1.14162, -1.141, -1.14037, -1.13975, 
-64.4487, 749.439, 121.058, 159, 100, 719, 526.838, 329, 140, 159, 250, 257.853, 250, 272.552, 695, 204.256, 1522.8, 140, 110, 90, 
+Edge from USDT to STETH with exchange huobi: ExPrice = -7.47897, Fee = -0.002002
+Error: no edge found from STETH to USDT
 
-Trade: USDTELF Start Capital: 1000
-Edge from USDT to ELF with exchange gateio: ExPrice = 1.17948, Fee = -0.00300451
-activeTradeAmt: 751.636 cost: 0.30749 lot size: 807.713
-activeTradeAmt: 725.163 cost: 0.30748 lot size: 86.098
-activeTradeAmt: 718.206 cost: 0.30739 lot size: 22.632
-activeTradeAmt: 711.098 cost: 0.30733 lot size: 23.127
-End Capital: 3253.59
-Trade: ELFETH Start Capital: 3243.83
-Edge from ELF to ETH with exchange kucoin: ExPrice = -8.62033, Fee = -0.002002
-End Capital: 0.585187
-Trade: ETHELF Start Capital: 0.584016
-Edge from ETH to ELF with exchange kucoin: ExPrice = 8.66918, Fee = -0.002002
-activeTradeAmt: 0.505933 cost: 0.0001718 lot size: 454.5
-activeTradeAmt: 0.505634 cost: 0.0001713 lot size: 1.7477
-activeTradeAmt: 0.140401 cost: 0.0001695 lot size: 2154.76
-activeTradeAmt: 0.000998896 cost: 0.0001666 lot size: 836.749
-End Capital: 3453.76
-Trade: ELFUSDT Start Capital: 3446.85
-Edge from ELF to USDT with exchange huobi: ExPrice = -1.17151, Fee = -0.002002
-End Capital: 1069.94
-Predicted Profitability from scanning Order Books: 
-startAmt: 1000 endAmt: 1069.94
-Time to Pull Ticker, ArbDetect and Pull Orderbook: 3307550 microseconds
+Time to Pull Ticker, ArbDetect and Pull Orderbook: 145306 microseconds
 

@@ -49,7 +49,7 @@ long double WeightConversion(long double conversionMetric){
 
 /*
 *
-* Heplful method that prints out the trades of an arbritage opporutunity
+* Helpful method that prints out the trades of an arbritage opporutunity
 *
 */
 void PrintCycle(vector<TrackProfit> cycleVec)
@@ -66,7 +66,7 @@ void PrintCycle(vector<TrackProfit> cycleVec)
 
 /*
 *
-* Heplful method that prints out contents of a string vector
+* Helpful method that prints out contents of a string vector
 *
 */
 void printVector(const vector<string> &vec)
@@ -80,7 +80,7 @@ void printVector(const vector<string> &vec)
 
 /*
 *
-* Heplful method that prints out contents of a double vector
+* Helpful method that prints out contents of a double vector
 *
 */
 void PrintVector(const vector<double> &vec)
@@ -96,7 +96,7 @@ void PrintVector(const vector<double> &vec)
 
 /*
 *
-* Heplful method that prints out contents of a hash set vector
+* Helpful method that prints out contents of a hash set vector
 *
 */
 void printUnorderedSet(const unordered_set<string> &set)
@@ -111,7 +111,7 @@ void printUnorderedSet(const unordered_set<string> &set)
 
 /*
 *
-* Heplful method that prints out contents of a hash map vector
+* Helpful method that prints out contents of a hash map vector
 *
 */
 void printUnorderedMap(const unordered_map<string, string> &map)
@@ -139,6 +139,20 @@ void printArbInfo(vector<TrackProfit> &arbPath, unordered_map<string, double> &f
 	}
 }
 
+/*
+*
+* Print method for logging Arbitrage path vertex and edges
+*
+*/
+void printArbEdgeInfo(Graph &g, vector<TrackProfit> &arbPath)
+{
+	for (int i = 0; i < arbPath.size(); i++)
+	{
+		g.printEdge(arbPath[i].to, arbPath[i].from, arbPath[i].exchange);
+		g.printEdge(arbPath[i].from, arbPath[i].to, arbPath[i].exchange);
+		cout << endl;
+	}
+}
 
 /*
 *

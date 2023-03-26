@@ -8,6 +8,9 @@
 
 using namespace std;
 
+// TODO: Comment this
+
+
 struct Edge
 {
     string to;
@@ -34,13 +37,13 @@ public:
         m_graphEdges += 2;
     }
 
-    void updateEdge(string from, string to, double bidPrice, double askprice, string exchange)
+    void updateEdge(string from, string to, double bidPrice, double askPrice, string exchange)
     {
         for (Edge& edge : adjacencyList[from])
         {
             if ((edge.to == to) && (edge.exchange == exchange))
             {
-                edge.exPrice = log(askprice);
+                edge.exPrice = log(askPrice);
                 edge.bidOrAsk = "bid";
                 break;
             }
@@ -49,7 +52,7 @@ public:
         {
             if ((edge.to == from) && (edge.exchange == exchange))
             {
-                edge.exPrice = log(1) - log(bidPrice);
+                edge.exPrice = log(1) - log(askPrice);
                 edge.bidOrAsk = "ask";
                 break;
             }
