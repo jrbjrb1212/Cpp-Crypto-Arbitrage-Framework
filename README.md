@@ -65,7 +65,7 @@ Adding profit thresholds allows for a certain degree of profitability before a a
 
 
 ### Algorithm and Data Structure Implementation
-To find sets of trades that satisfy the equation above, the arbitrage finder [arbitrage_finder.hpp]() implements a brute force path searching algorithm from a given source coin. As every arbitrage path starts and ends with the same coin, each path is a cycle within the graph data structure being used. 
+To find sets of trades that satisfy the equation above, the arbitrage finder [arbitrage_finder.hpp](Header_Files/arbitrage_finder.hpp) implements a brute force path searching algorithm from a given source coin. As every arbitrage path starts and ends with the same coin, each path is a cycle within the graph data structure being used. 
 
 Within this graph data structure, each vertex is a tradable crypto currency and each edge away from said vertex is a trading pair available on same exchange. There may be multiple edges from one vertex to another and that equates to this trading pair available on multiple exchanges. The end goal of discovering an arbitrage path is to complete the trades in the path as soon as possible on relevant exchanges. To do this, a user will end up overspending the average user by placing bids at or above ask price and asks at or below bid price to create the best chance to for automatic order completion. This structure choice makes edge weights in a trading pair the ask price from the start currency to the end currency and bid price for the vice versa.
 
@@ -73,7 +73,7 @@ Within this graph data structure, each vertex is a tradable crypto currency and 
 ## Ideal Trading Amount Algorithm
 As the arbitrage path finding algorithm satisfies the mathematical formula described above based on ticker prices, the path falls prey to discovering paths that are profitable by ticker data, but the order book lacks liquidity to support a similar profitability. The path may be profitable by ticker data but is fruitless without knowing how much one should trade. 
 
-The ideal trading amount algorithm, [amount_optimization.hpp]() takes the path found by the arbitrage finding algorithm and determines an upperbound for a trading amount. The algorithm will peak into the top-N, N is specified by the user, active trades in the orderbook for each trade in the path. Looking into each of these active trades will allow the algorithm to recognize trading pairs with low liquidity on either the bid or ask side.
+The ideal trading amount algorithm, [amount_optimization.hpp](Header_Files/amount_optimization.hpp) takes the path found by the arbitrage finding algorithm and determines an upperbound for a trading amount. The algorithm will peak into the top-N, N is specified by the user, active trades in the orderbook for each trade in the path. Looking into each of these active trades will allow the algorithm to recognize trading pairs with low liquidity on either the bid or ask side.
 
 The result of this algorithm will determine a realistic profitability, the corollary slippage rate from ticker profitability, and the amount of source capital the user should trade.
 
@@ -89,7 +89,7 @@ The result of this algorithm will determine a realistic profitability, the corol
 ## Exchange Data Pulling
 ![Parallel_Example](ReadMEPics/Parallel_Example.png)
 
-Pinging and downloading ticker and orderbook data via public exchange endpoints takes a lot of time that cannot be avoided. Each public endpoint web request will take *(See Time BreakDown soon)* between 1 and 3 seconds. To avoid a serial implementation of doing one request after another, the requests are multithreaded (assuming multiple threads are available) to reduce the total time to make all endpoint data requests around 3 seconds with the slowest endpoint request being the bottleneck.
+Pinging and downloading ticker and orderbook data via public exchange endpoints takes a lot of time that cannot be avoided. Each public endpoint web request will take *(See Time BreakDown soon)* between 1 and 3 seconds. To avoid a serial implementation of doing one request after another, the requests are multithreaded (assuming multiple threads are available) to reduce the total time to make all endpoint data requests around 3 seconds with the slowest endpoint request being the bottleneck. [API pulling code](Header_Files/exchange_api_pull.hpp)
 
 This type of exchange data pulling from public api endpoints is freely available via open-source projects such as [ccxt](https://github.com/ccxt/ccxt) and [freqtrade](https://github.com/freqtrade/freqtrade). I choose six strong exchanges to allow myself the opportunity to learn to pull and manipulate trading data.
 

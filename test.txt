@@ -1,2 +1,0 @@
-Please enter a number a real number for amount of coins
-CLI Format: python3 scrape_coinmarketcap.py <Number of coins> <minimum 24hr trade volume (USD)>

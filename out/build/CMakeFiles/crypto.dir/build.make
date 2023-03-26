@@ -76,27 +76,27 @@ include CMakeFiles/Crypto.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Crypto.dir/flags.make
 
-CMakeFiles/Crypto.dir/BellmanFord.cpp.o: CMakeFiles/Crypto.dir/flags.make
-CMakeFiles/Crypto.dir/BellmanFord.cpp.o: ../../BellmanFord.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/out/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Crypto.dir/BellmanFord.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Crypto.dir/BellmanFord.cpp.o -c "/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/BellmanFord.cpp"
+CMakeFiles/Crypto.dir/main.cpp.o: CMakeFiles/Crypto.dir/flags.make
+CMakeFiles/Crypto.dir/main.cpp.o: ../../main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/out/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Crypto.dir/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Crypto.dir/main.cpp.o -c "/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/main.cpp"
 
-CMakeFiles/Crypto.dir/BellmanFord.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Crypto.dir/BellmanFord.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/BellmanFord.cpp" > CMakeFiles/Crypto.dir/BellmanFord.cpp.i
+CMakeFiles/Crypto.dir/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Crypto.dir/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/main.cpp" > CMakeFiles/Crypto.dir/main.cpp.i
 
-CMakeFiles/Crypto.dir/BellmanFord.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Crypto.dir/BellmanFord.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/BellmanFord.cpp" -o CMakeFiles/Crypto.dir/BellmanFord.cpp.s
+CMakeFiles/Crypto.dir/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Crypto.dir/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/main.cpp" -o CMakeFiles/Crypto.dir/main.cpp.s
 
 # Object files for target Crypto
 Crypto_OBJECTS = \
-"CMakeFiles/Crypto.dir/BellmanFord.cpp.o"
+"CMakeFiles/Crypto.dir/main.cpp.o"
 
 # External object files for target Crypto
 Crypto_EXTERNAL_OBJECTS =
 
-Crypto: CMakeFiles/Crypto.dir/BellmanFord.cpp.o
+Crypto: CMakeFiles/Crypto.dir/main.cpp.o
 Crypto: CMakeFiles/Crypto.dir/build.make
 Crypto: CMakeFiles/Crypto.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/out/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Crypto"

@@ -1,11 +1,6 @@
 import requests
 import sys
 # TODO: consider changing order of the code for readability
-# TODO: Consider moving all the if statements to separate method(s)
-# TODO: need to look into what kind of information I am actually pulling from coinmarket urls
-# TODO: need to add viable symbols one per line into viable symbols output file
-# TODO: need to change the symbol_map in exchange_api_pull
-#		- change from "BTCUSDT" -> {BTC, USD}
 
 
 """

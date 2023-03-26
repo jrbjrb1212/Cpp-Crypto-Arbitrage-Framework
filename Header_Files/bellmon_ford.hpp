@@ -46,19 +46,6 @@ void PrintCycle(vector<string> cycleVec)
 	cout << cycleVec[cycleVec.size() - 1] << endl;
 }
 
-// vector<string> CorrectArbCycle(vector<string> cycleVec, int sourcePos)
-// {
-//     vector<string> vecPopped;
-//     for (int i = 0; i < sourcePos; i++)
-//     {
-//         // TODO: replace later; useless O(n) operation
-//         vecPopped.push_back(cycleVec[i]);
-//         cycleVec.erase(cycleVec.begin());
-//     }
-//     cycleVec.push_back(cycleVec[0]);
-//     PrintCycle(cycleVec);
-//     return cycleVec;
-// }
 
 /*
 *
@@ -99,6 +86,7 @@ double ProfitCalc(vector<string> cycleVec, unordered_map<string, vector<Edge> > 
 	return sourceVal;
 }
 
+
 void printVector(const vector<string> &vec)
 {
 	for (const string &str : vec)
@@ -108,6 +96,7 @@ void printVector(const vector<string> &vec)
 	cout << endl;
 }
 
+
 void printUnorderedSet(const unordered_set<string> &set)
 {
 	for (const string &str : set)
@@ -116,6 +105,7 @@ void printUnorderedSet(const unordered_set<string> &set)
 	}
 	cout << endl;
 }
+
 
 void printUnorderedMap(const unordered_map<string, string> &map)
 {

@@ -249,13 +249,12 @@ void pullBinanceOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
             }
 
             nlohmann::json json_data = nlohmann::json::parse(response);
-            cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
+            // cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
             response.clear(); // Clear the response variable
             // invalid combination
             if (json_data.find("msg") != json_data.end()) 
-            {
                 continue;
-            }
+
     
             // parse out each active order in orderbook
             for (int i = 0; i < nDepth; i++)
@@ -265,7 +264,7 @@ void pullBinanceOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
                 string strAskPrice = json_data["asks"][i][0], strAskAmt = json_data["asks"][i][1];
                 double askPrice = stod(strAskPrice), askAmt = stod(strAskAmt);
                 orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
-                orderBookData[2][i] = log(askPrice); orderBookData[3][i] = askAmt;
+                orderBookData[2][i] = log(askPrice); orderBookData[3][i] = log(askPrice) + askAmt;
             }
             // correct url has been traversed
             break;
@@ -383,7 +382,7 @@ void pullBitgetOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
             }
 
             nlohmann::json json_data = nlohmann::json::parse(response);
-            cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
+            // cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
             response.clear(); // Clear the response variable
             // invalid API request
             if (json_data["data"]["asks"].size() == 0) 
@@ -518,7 +517,7 @@ void pullBitMartOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
             }
 
             nlohmann::json json_data = nlohmann::json::parse(response);
-            cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
+            // cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
             response.clear(); // Clear the response variable
             // invalid API request
             if (json_data["message"] != "OK") 
@@ -653,16 +652,18 @@ void pullGateioOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
             }
 
             nlohmann::json json_data = nlohmann::json::parse(response);
-            cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
+            // cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
             response.clear(); // Clear the response variable
             // invalid API request
             if (json_data.find("message") != json_data.end()) 
-            {
                 continue;
-            }
-    
+
+            int jsonDataBidCtn = json_data["bids"].size();
+            int jsonDataAskCtn = json_data["asks"].size();
+            int nDepthCopy = min(min(nDepth, jsonDataAskCtn), jsonDataBidCtn);
+            
             // parse out each active order in orderbook
-            for (int i = 0; i < nDepth; i++)
+            for (int i = 0; i < nDepthCopy; i++)
             {
                 string strBidPrice = json_data["bids"][i][0], strBidAmt = json_data["bids"][i][1];
                 double bidPrice = stod(strBidPrice), bidAmt = stod(strBidAmt);
@@ -671,6 +672,13 @@ void pullGateioOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
                 orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
                 orderBookData[2][i] = log(askPrice); orderBookData[3][i] = askAmt;
             }
+            // resize the array when needed
+            if (nDepthCopy != nDepth)
+            {
+                orderBookData[0].resize(nDepthCopy); orderBookData[1].resize(nDepthCopy);
+                orderBookData[2].resize(nDepthCopy); orderBookData[3].resize(nDepthCopy);
+            }
+
             // correct url has been traversed
             break;
 
@@ -790,7 +798,7 @@ void pullHuobiOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBoo
             }
 
             nlohmann::json json_data = nlohmann::json::parse(response);
-            cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
+            // cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
             response.clear(); // Clear the response variable
 
             // invalid API request
@@ -809,9 +817,12 @@ void pullHuobiOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBoo
                 orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
                 orderBookData[2][i] = log(askPrice); orderBookData[3][i] = askAmt;
             }
-            // probably need to resize here
-            orderBookData[0].resize(nDepthCopy); orderBookData[1].resize(nDepthCopy);
-            orderBookData[2].resize(nDepthCopy); orderBookData[3].resize(nDepthCopy);
+            // resize the array when needed
+            if (nDepthCopy != nDepth)
+            {
+                orderBookData[0].resize(nDepthCopy); orderBookData[1].resize(nDepthCopy);
+                orderBookData[2].resize(nDepthCopy); orderBookData[3].resize(nDepthCopy);
+            }
 
 
             // correct url has been traversed
@@ -932,7 +943,7 @@ void pullKucoinOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
             }
 
             nlohmann::json json_data = nlohmann::json::parse(response);
-            cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
+            // cout << "exchange: " << spotTrade.exchange << "response: " << response << endl;
             response.clear(); // Clear the response variable
 
             // invalid API request

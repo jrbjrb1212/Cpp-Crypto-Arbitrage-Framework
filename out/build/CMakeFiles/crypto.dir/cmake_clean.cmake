@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Crypto.dir/BellmanFord.cpp.o"
+  "CMakeFiles/Crypto.dir/main.cpp.o"
   "Crypto"
   "Crypto.pdb"
 )
