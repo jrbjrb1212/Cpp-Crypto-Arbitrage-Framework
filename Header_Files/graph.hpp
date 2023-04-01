@@ -43,7 +43,7 @@ public:
         {
             if ((edge.to == to) && (edge.exchange == exchange))
             {
-                edge.exPrice = log(askPrice);
+                edge.exPrice = log(bidPrice);
                 edge.bidOrAsk = "bid";
                 break;
             }
@@ -52,7 +52,7 @@ public:
         {
             if ((edge.to == from) && (edge.exchange == exchange))
             {
-                edge.exPrice = log(bidPrice);
+                edge.exPrice = log(1) - log(askPrice);
                 edge.bidOrAsk = "ask";
                 break;
             }

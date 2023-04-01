@@ -115,6 +115,28 @@ void symbolHashMapResize(unordered_map<string, vector<string>> &symbolMap, unord
 
 }
 
+
+/*
+*
+* Helper method for identifying which buy and sell side of orderbook
+* by the units for coin amount and coin price
+*
+*/
+void updateOrderBookSides(vector<string> &orderBookSides, string &symbol, TrackProfit &spotTrade, string &delimiter)
+{
+    if (symbol == spotTrade.to + delimiter + spotTrade.from)
+    {
+        orderBookSides[0] = spotTrade.to;   // Amount unit
+        orderBookSides[1] = spotTrade.from; // Price unit
+    } 
+    else
+    {
+        orderBookSides[0] = spotTrade.from; // Amount unit
+        orderBookSides[1] = spotTrade.to;   // Price unit
+    }
+}
+
+
 /*
 *
 * Develops a HashMap of exchanges and their spot trading fees
@@ -219,12 +241,12 @@ void pullBinance(unordered_map<string, vector<string> > &symbolMap, Graph &g, bo
 * and return info
 *
 */
-void pullBinanceOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBookData, int &nDepth)
+void pullBinanceOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBookData, vector<string> &orderBookSides, int &nDepth)
 {
     CURL *curl;
     CURLcode res;
     string response;
-    vector<string> symbolCombo;
+    vector<string> symbolCombo; string delimiter = "";
     symbolCombo.push_back(spotTrade.to + spotTrade.from); symbolCombo.push_back(spotTrade.from + spotTrade.to);
     string baseURL = "https://api.binance.com/api/v3/depth", query, URL;
 
@@ -232,7 +254,7 @@ void pullBinanceOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
     curl = curl_easy_init();
     if (curl)
     {
-        for(const string &symbol : symbolCombo)
+        for(string &symbol : symbolCombo)
         {
             query = "?symbol=" + symbol + "&limit=" + to_string(nDepth);
             URL = baseURL + query;
@@ -266,7 +288,8 @@ void pullBinanceOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
                 orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
                 orderBookData[2][i] = log(askPrice); orderBookData[3][i] = log(askPrice) + askAmt;
             }
-            // correct url has been traversed
+    
+            updateOrderBookSides(orderBookSides, symbol, spotTrade, delimiter);
             break;
 
         }
@@ -353,12 +376,12 @@ void pullBitget(unordered_map<string, vector<string> > &symbolMap, Graph &g, boo
 * and add data to Graph
 *
 */
-void pullBitgetOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBookData, int &nDepth)
+void pullBitgetOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBookData, vector<string> &orderBookSides, int nDepth)
 {
     CURL *curl;
     CURLcode res;
     string response;
-    vector<string> symbolCombo;
+    vector<string> symbolCombo; string delimiter = "";
     symbolCombo.push_back(spotTrade.to + spotTrade.from); symbolCombo.push_back(spotTrade.from + spotTrade.to);
     string baseURL = "https://capi.bitget.com/data/v1/market/depth", query, URL;
 
@@ -400,6 +423,8 @@ void pullBitgetOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
                 orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
                 orderBookData[2][i] = log(askPrice); orderBookData[3][i] = askAmt;
             }
+
+            updateOrderBookSides(orderBookSides, symbol, spotTrade, delimiter);
             // correct url has been traversed
             break;
 
@@ -488,12 +513,12 @@ void pullBitMart(unordered_map<string, vector<string> > &symbolMap, Graph &g, bo
 * Pull order book data from BitMart Exchange via API
 *
 */
-void pullBitMartOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBookData, int &nDepth)
+void pullBitMartOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBookData, vector<string> &orderBookSides, int nDepth)
 {
     CURL *curl;
     CURLcode res;
     string response;
-    vector<string> symbolCombo;
+    vector<string> symbolCombo; string delimiter = "_";
     symbolCombo.push_back(spotTrade.to + "_" +spotTrade.from); symbolCombo.push_back(spotTrade.from + "_" + spotTrade.to);
     string baseURL = "https://api-cloud.bitmart.com/spot/v1/symbols/book", query, URL;
 
@@ -535,6 +560,8 @@ void pullBitMartOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
                 orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
                 orderBookData[2][i] = log(askPrice); orderBookData[3][i] = askAmt;
             }
+
+            updateOrderBookSides(orderBookSides, symbol, spotTrade, delimiter);
             // correct url has been traversed
             break;
 
@@ -623,12 +650,12 @@ void pullGateio(unordered_map<string, vector<string> > &symbolMap, Graph &g, boo
 * Pull order book data from Gate.io Exchange via API
 *
 */
-void pullGateioOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBookData, int &nDepth)
+void pullGateioOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBookData, vector<string> &orderBookSides, int nDepth)
 {
     CURL *curl;
     CURLcode res;
     string response;
-    vector<string> symbolCombo;
+    vector<string> symbolCombo; string delimiter = "_";
     symbolCombo.push_back(spotTrade.to + "_" +spotTrade.from); symbolCombo.push_back(spotTrade.from + "_" + spotTrade.to);
     string baseURL = "https://api.gateio.ws/api/v4/spot/order_book", query, URL;
 
@@ -679,6 +706,7 @@ void pullGateioOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
                 orderBookData[2].resize(nDepthCopy); orderBookData[3].resize(nDepthCopy);
             }
 
+            updateOrderBookSides(orderBookSides, symbol, spotTrade, delimiter);
             // correct url has been traversed
             break;
 
@@ -705,7 +733,6 @@ void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool
     curl = curl_easy_init();
     if (curl)
     {
-        // cout << "Start pull from " << exchange << "...";
         const char* exchangeURL = "https://api.huobi.pro/market/tickers";
         curl_easy_setopt(curl, CURLOPT_URL, exchangeURL);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallback);
@@ -728,25 +755,27 @@ void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool
                 for (char c : tradeSymbol){
                     tradeSymbolUpper += toupper(c);
                 }
-                tradeSymbolUpper = tradeSymbolUpper;
+                
                 vector<string> assets = symbolMap[tradeSymbolUpper];
                 if (assets.size() != 2)
                     continue;
-
+                
                 string fromAsset = assets[0], toAsset = assets[1];
-                long double bidPrice = item["bid"], askPrice = item["ask"];
+                double bidPrice = item["bid"], askPrice = item["ask"];
                 if ((bidPrice == 0.0) || (askPrice == 0.0)){
                     continue;
                 }
                 if (setGraph){
                     g.addEdge(fromAsset, toAsset, exchangeFee, exchange);
+                    // Record what trading symbol was used to resize symbolMap later
                     // mark TradingPair as seen; symbolMap will be resized at set up with this information
                     seenSymbols_mutex.lock();
-                    seenSymbols.insert(tradeSymbol);
+                    seenSymbols.insert(tradeSymbolUpper);
                     seenSymbols.insert(toAsset + fromAsset);
                     seenSymbols_mutex.unlock();
                 }
-                else{
+                else
+                {
                     g.updateEdge(fromAsset, toAsset, bidPrice, askPrice, exchange);
                 }
                 
@@ -757,7 +786,6 @@ void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool
             cout <<  exchange << " SSL EXCEPTION DETECTED" << endl;
         }
 
-        // cout << "Finished pull from " << exchange << "\n" << endl;
         curl_easy_cleanup(curl);
     }
 }
@@ -768,22 +796,22 @@ void pullHuobi(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool
 * Pull order book data from Huobi Exchange via API
 *
 */
-void pullHuobiOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBookData, int nDepth)
+void pullHuobiOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBookData, vector<string> &orderBookSides, int nDepth)
 {
     CURL *curl;
     CURLcode res;
     string response;
-    vector<string> symbolCombo;
+    vector<string> symbolCombo; string delimiter = "";
     symbolCombo.push_back(toLowerCase(spotTrade.to + spotTrade.from)); 
     symbolCombo.push_back(toLowerCase(spotTrade.from + spotTrade.to));
-    string baseURL = "https://api.huobi.pro/market/depth?type=step0", query, URL;
+    string baseURL = "https://api.huobi.pro/market/depth?", query, URL;
 
     curl = curl_easy_init();
     if (curl)
     {
         for(string &symbol : symbolCombo)
         {
-            query = "&symbol=" + symbol + "&depth=" + to_string(nDepth);
+            query = "&symbol=" + symbol + "&type=step0";
             URL = baseURL + query;
             const char* exchangeURL = URL.c_str();
             curl_easy_setopt(curl, CURLOPT_URL, exchangeURL);
@@ -824,7 +852,7 @@ void pullHuobiOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBoo
                 orderBookData[2].resize(nDepthCopy); orderBookData[3].resize(nDepthCopy);
             }
 
-
+            updateOrderBookSides(orderBookSides, symbol, spotTrade, delimiter);
             // correct url has been traversed
             break;
 
@@ -886,6 +914,7 @@ void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g, boo
                     string strTakerFee = item["takerFeeRate"], strMakerFee = item["makerFeeRate"];
                     exchangeFee = stod(strTakerFee) + stod(strMakerFee);
                     g.addEdge(fromAsset, toAsset, exchangeFee, exchange);
+                    // Record what trading symbol was used to resize symbolMap later
                     // mark TradingPair as seen; symbolMap will be resized at set up with this information
                     seenSymbols_mutex.lock();
                     seenSymbols.insert(tradeSymbol);
@@ -912,12 +941,12 @@ void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g, boo
 * Pull order book data from Kucoin Exchange via API
 *
 */
-void pullKucoinOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBookData, int &nDepth)
+void pullKucoinOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBookData, vector<string> &orderBookSides, int nDepth)
 {
     CURL *curl;
     CURLcode res;
     string response;
-    vector<string> symbolCombo;
+    vector<string> symbolCombo; string delimiter = "-";
     symbolCombo.push_back(spotTrade.to + "-" + spotTrade.from); 
     symbolCombo.push_back(spotTrade.from + "-" + spotTrade.to);
     string baseURL = "https://api.kucoin.com/api/v1/market/orderbook/level2_100", query, URL;
@@ -952,8 +981,12 @@ void pullKucoinOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
                 continue;
             }
 
+            int jsonDataBidCtn = json_data["data"]["bids"].size();
+            int jsonDataAskCtn = json_data["data"]["asks"].size();
+            int nDepthCopy = min(min(nDepth, jsonDataAskCtn), jsonDataBidCtn);
+
             // parse out each active order in orderbook
-            for (int i = 0; i < nDepth; i++)
+            for (int i = 0; i < nDepthCopy; i++)
             {
                 string strBidPrice = json_data["data"]["bids"][i][0], strBidAmt = json_data["data"]["bids"][i][1];
                 double bidPrice = stod(strBidPrice), bidAmt = stod(strBidAmt);
@@ -962,6 +995,14 @@ void pullKucoinOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
                 orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
                 orderBookData[2][i] = log(askPrice); orderBookData[3][i] = askAmt;
             }
+            // resize the array when needed
+            if (nDepthCopy != nDepth)
+            {
+                orderBookData[0].resize(nDepthCopy); orderBookData[1].resize(nDepthCopy);
+                orderBookData[2].resize(nDepthCopy); orderBookData[3].resize(nDepthCopy);
+            }
+
+            updateOrderBookSides(orderBookSides, symbol, spotTrade, delimiter);
             // correct url has been traversed
             break;
 
@@ -993,27 +1034,26 @@ void pullAllTicker(unordered_map<string, vector<string> > &symbolMap, Graph &g, 
 
 /*
 *
-* Parallel pull spot ticker data for all coins on all exchanges currently
-* supported in this framework via API
+* Parallel pull orderbook data for all trading pairs that 
+* have been identified as a profitable by arbitrage finder
 *
 */
-void pullAllOrderBook(vector<TrackProfit> &arbPath, vector<vector<vector<double>>> &orderBookData, int &nDepth) {
-    
+void pullAllOrderBook(vector<TrackProfit> &arbPath, vector<vector<vector<double>>> &orderBookData, vector<vector<string>> &orderBookSides,  int &nDepth) {    
     vector<thread> threads;
     for (int i = 0; i < arbPath.size(); i++)
     {
         if (arbPath[i].exchange == "binance")
-            threads.push_back(thread(pullBinanceOrderBook, ref(arbPath[i]), ref(orderBookData[i]), ref(nDepth)));
+            threads.push_back(thread(pullBinanceOrderBook, ref(arbPath[i]), ref(orderBookData[i]), ref(orderBookSides[i]), ref(nDepth)));
         else if (arbPath[i].exchange == "bitget")
-            threads.push_back(thread(pullBitgetOrderBook, ref(arbPath[i]), ref(orderBookData[i]), ref(nDepth)));
+            threads.push_back(thread(pullBitgetOrderBook, ref(arbPath[i]), ref(orderBookData[i]), ref(orderBookSides[i]), ref(nDepth)));
         else if (arbPath[i].exchange == "bitmart")
-            threads.push_back(thread(pullBitMartOrderBook, ref(arbPath[i]), ref(orderBookData[i]), ref(nDepth)));
+            threads.push_back(thread(pullBitMartOrderBook, ref(arbPath[i]), ref(orderBookData[i]), ref(orderBookSides[i]), ref(nDepth)));
         else if (arbPath[i].exchange == "gateio")
-            threads.push_back(thread(pullGateioOrderBook, ref(arbPath[i]), ref(orderBookData[i]), ref(nDepth)));
+            threads.push_back(thread(pullGateioOrderBook, ref(arbPath[i]), ref(orderBookData[i]), ref(orderBookSides[i]), ref(nDepth)));
         else if (arbPath[i].exchange == "kucoin")
-            threads.push_back(thread(pullKucoinOrderBook, ref(arbPath[i]), ref(orderBookData[i]), ref(nDepth)));
+            threads.push_back(thread(pullKucoinOrderBook, ref(arbPath[i]), ref(orderBookData[i]), ref(orderBookSides[i]), ref(nDepth)));
         else if (arbPath[i].exchange == "huobi")
-            threads.push_back(thread(pullHuobiOrderBook, ref(arbPath[i]), ref(orderBookData[i]), ref(nDepth)));
+            threads.push_back(thread(pullHuobiOrderBook, ref(arbPath[i]), ref(orderBookData[i]), ref(orderBookSides[i]), ref(nDepth)));
     }
     for (auto &thread : threads) {
         thread.join();

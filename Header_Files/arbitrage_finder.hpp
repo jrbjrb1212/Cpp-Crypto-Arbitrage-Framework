@@ -473,8 +473,8 @@ void ArbDetectControl(Graph &g, vector<TrackProfit> &negCyclePath, processInput 
 
 
 /*
-* O(n^k) brute force algorithm for determing arbritage profitability
-* k is the length of the arb path requested by user
+* O(n^2/p * n^3) brute force algorithm for determining arbitrage profitability
+* p is the number of available processors 
 * Algorithm attempts to fill in this path with the most profitable trade
 * source --> Coin1 --> Coin2 --> ... --> source
 *  - Each --> represents a trade and at each the bid or ask price can be used

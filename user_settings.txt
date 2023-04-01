@@ -1,0 +1,7 @@
+pathLen=4
+startCoin=USDT
+tradeAmt=20
+exchangeRemove=binance
+lowerBound=0.1
+coinReq=100
+volReq=10000.0

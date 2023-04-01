@@ -17,8 +17,6 @@ using namespace std;
 vector<string> maxPath;
 // double maxProfit = 0;
 
-//TODO: Fix snake case typing of adjaceny list
-//TODO: Remove any size() for loop as size is a member variable of atleast the vector container
 
 double weightConversion(double edgeWeight){
 	return exp(-1 * (edgeWeight / log(exp(1))));

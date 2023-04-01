@@ -146,6 +146,7 @@ def cli_parse():
 	if cli_vol_parse():
 		return True
 
+
 """
 "
 " Drive method for parsing CLI 
@@ -153,9 +154,6 @@ def cli_parse():
 "
 """
 def main():
-	if cli_parse():
-		return
-	
 
 	number_coins_req = int(sys.argv[1])
 	min_coin_vol = float(sys.argv[2])
@@ -170,7 +168,7 @@ def main():
 			return
 	
 	create_symbol_output_file(viable_coins)
+	return
 	
-
 if __name__ == "__main__":
 	main()
