@@ -124,7 +124,9 @@ void symbolHashMapResize(unordered_map<string, vector<string>> &symbolMap, unord
 */
 void updateOrderBookSides(vector<string> &orderBookSides, string &symbol, TrackProfit &spotTrade, string &delimiter)
 {
-    if (symbol == spotTrade.to + delimiter + spotTrade.from)
+    // check naming variations for different exchanges
+    if (symbol == spotTrade.to + delimiter + spotTrade.from ||
+            toLowerCase(symbol) == toLowerCase(spotTrade.to) + delimiter + toLowerCase(spotTrade.from))
     {
         orderBookSides[0] = spotTrade.to;   // Amount unit
         orderBookSides[1] = spotTrade.from; // Price unit
@@ -276,10 +278,13 @@ void pullBinanceOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
             // invalid combination
             if (json_data.find("msg") != json_data.end()) 
                 continue;
-
+            
+            int jsonDataBidCtn = json_data["bids"].size();
+            int jsonDataAskCtn = json_data["asks"].size();
+            int nDepthCopy = min(min(nDepth, jsonDataAskCtn), jsonDataBidCtn);
     
             // parse out each active order in orderbook
-            for (int i = 0; i < nDepth; i++)
+            for (int i = 0; i < nDepthCopy; i++)
             {
                 string strBidPrice = json_data["bids"][i][0], strBidAmt = json_data["bids"][i][1];
                 double bidPrice = stod(strBidPrice), bidAmt = stod(strBidAmt);
@@ -287,6 +292,12 @@ void pullBinanceOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
                 double askPrice = stod(strAskPrice), askAmt = stod(strAskAmt);
                 orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
                 orderBookData[2][i] = log(askPrice); orderBookData[3][i] = log(askPrice) + askAmt;
+            }
+            // resize the array when needed
+            if (nDepthCopy != nDepth)
+            {
+                orderBookData[0].resize(nDepthCopy); orderBookData[1].resize(nDepthCopy);
+                orderBookData[2].resize(nDepthCopy); orderBookData[3].resize(nDepthCopy);
             }
     
             updateOrderBookSides(orderBookSides, symbol, spotTrade, delimiter);
@@ -412,9 +423,13 @@ void pullBitgetOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
             {
                 continue;
             }
+            
+            int jsonDataBidCtn = json_data["data"]["bids"].size();
+            int jsonDataAskCtn = json_data["data"]["asks"].size();
+            int nDepthCopy = min(min(nDepth, jsonDataAskCtn), jsonDataBidCtn);
     
             // parse out each active order in orderbook
-            for (int i = 0; i < nDepth; i++)
+            for (int i = 0; i < nDepthCopy; i++)
             {
                 string strBidPrice = json_data["data"]["bids"][i][0], strBidAmt = json_data["data"]["bids"][i][1];
                 double bidPrice = stod(strBidPrice), bidAmt = stod(strBidAmt);
@@ -422,6 +437,12 @@ void pullBitgetOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
                 double askPrice = stod(strAskPrice), askAmt = stod(strAskAmt);
                 orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
                 orderBookData[2][i] = log(askPrice); orderBookData[3][i] = askAmt;
+            }
+            // resize the array when needed
+            if (nDepthCopy != nDepth)
+            {
+                orderBookData[0].resize(nDepthCopy); orderBookData[1].resize(nDepthCopy);
+                orderBookData[2].resize(nDepthCopy); orderBookData[3].resize(nDepthCopy);
             }
 
             updateOrderBookSides(orderBookSides, symbol, spotTrade, delimiter);
@@ -549,9 +570,12 @@ void pullBitMartOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
             {
                 continue;
             }
+            int jsonDataBidCtn = json_data["data"]["buys"].size();
+            int jsonDataAskCtn = json_data["data"]["sells"].size();
+            int nDepthCopy = min(min(nDepth, jsonDataAskCtn), jsonDataBidCtn);
     
             // parse out each active order in orderbook
-            for (int i = 0; i < nDepth; i++)
+            for (int i = 0; i < nDepthCopy; i++)
             {
                 string strBidPrice = json_data["data"]["buys"][i]["price"], strBidAmt = json_data["data"]["buys"][i]["amount"];
                 double bidPrice = stod(strBidPrice), bidAmt = stod(strBidAmt);
@@ -559,6 +583,12 @@ void pullBitMartOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderB
                 double askPrice = stod(strAskPrice), askAmt = stod(strAskAmt);
                 orderBookData[0][i] = log(bidPrice); orderBookData[1][i] = bidAmt;
                 orderBookData[2][i] = log(askPrice); orderBookData[3][i] = askAmt;
+            }
+            // resize the array when needed
+            if (nDepthCopy != nDepth)
+            {
+                orderBookData[0].resize(nDepthCopy); orderBookData[1].resize(nDepthCopy);
+                orderBookData[2].resize(nDepthCopy); orderBookData[3].resize(nDepthCopy);
             }
 
             updateOrderBookSides(orderBookSides, symbol, spotTrade, delimiter);
@@ -811,7 +841,7 @@ void pullHuobiOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBoo
     {
         for(string &symbol : symbolCombo)
         {
-            query = "&symbol=" + symbol + "&type=step0";
+            query = "symbol=" + symbol + "&type=step0";
             URL = baseURL + query;
             const char* exchangeURL = URL.c_str();
             curl_easy_setopt(curl, CURLOPT_URL, exchangeURL);
@@ -1017,15 +1047,27 @@ void pullKucoinOrderBook(TrackProfit &spotTrade, vector<vector<double>> &orderBo
 * supported in this framework via API
 *
 */
-void pullAllTicker(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool setGraph, unordered_set<string> &seenSymbols) {
+void pullAllTicker(unordered_map<string, vector<string> > &symbolMap, Graph &g, bool setGraph, unordered_set<string> &seenSymbols, unordered_set<string> ignoreExchanges) {
     mutex seenSymbols_Mutex;
     vector<thread> threads;
-    threads.push_back(thread(pullBinance, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
-    threads.push_back(thread(pullBitget, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
-    threads.push_back(thread(pullBitMart, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
-    threads.push_back(thread(pullGateio, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
-    threads.push_back(thread(pullKucoin, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
-    threads.push_back(thread(pullHuobi, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
+    if (ignoreExchanges.find("binance") == ignoreExchanges.end())
+        threads.push_back(thread(pullBinance, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
+    
+    if (ignoreExchanges.find("bitget") == ignoreExchanges.end())
+        threads.push_back(thread(pullBitget, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
+    
+    if (ignoreExchanges.find("bitmart") == ignoreExchanges.end())
+        threads.push_back(thread(pullBitMart, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
+    
+    if (ignoreExchanges.find("gateio") == ignoreExchanges.end())
+        threads.push_back(thread(pullGateio, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
+    
+    if (ignoreExchanges.find("kucoin") == ignoreExchanges.end())
+        threads.push_back(thread(pullKucoin, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
+    
+    if (ignoreExchanges.find("huobi") == ignoreExchanges.end())
+        threads.push_back(thread(pullHuobi, ref(symbolMap), ref(g), ref(setGraph), ref(seenSymbols), ref(seenSymbols_Mutex)));
+    
     for (auto &thread : threads) {
         thread.join();
     }

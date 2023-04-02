@@ -15,6 +15,8 @@ graph.hpp
 /mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/graph.hpp
 algorithm
 -
+chrono
+-
 
 /mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/Header_Files/arbitrage_finder.hpp
 iostream

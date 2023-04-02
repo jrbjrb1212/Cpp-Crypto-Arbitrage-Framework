@@ -31,6 +31,11 @@ import os
 import requests
 
 
+"""
+"
+" Get desired arbitrage path length from user
+"
+"""
 def path_len_selection():
 	path_len = -1
 	while (path_len == -1):
@@ -48,6 +53,11 @@ def path_len_selection():
 	return path_len
 
 
+"""
+"
+" Get arbitrage path start and end coin from user
+"
+"""
 def start_currency_selection():
 	start_coin = None
 	valid_coins = ["USDT", "BTC", "ETH", "BNB"]
@@ -65,8 +75,18 @@ def start_currency_selection():
 	return start_coin
 
 
+"""
+"
+" Method to determine minimum trade size for a given coin
+" As of April 1st, 2023, all exchanges supported by this framework
+" have a minimum trade size that is equal to or less than 10 USDT
+"
+"""
 def trading_amount_selection(start_coin):
+	# min trade size for USDT
 	min_trade_size = 20
+
+	# determine min trade size if not in USDT
 	while (start_coin != "USDT"):
 		try:
 			print("Requesting Active Trade Prices")
@@ -80,10 +100,15 @@ def trading_amount_selection(start_coin):
 		except:
 			continue
 	
-	print("")
 	return min_trade_size
 
 
+"""
+"
+" Method to format exchanges the user wishes to remove
+" from API data pulling
+"
+"""
 def format_exchanges(to_remove):
 	to_remove_str = ""
 	for i in range(len(to_remove)-1):
@@ -92,12 +117,20 @@ def format_exchanges(to_remove):
 	to_remove_str += to_remove[len(to_remove)-1]
 	return to_remove_str
 
+
+"""
+"
+" Get exchanges that the user wants to blacklist
+" from active pulling
+"
+"""
 def remove_exchanges():
-	exchanges = ["binance", "kucoin", "bitmart", "bitget", "gate.io", "huobi"]
+	# current 6 supported exchanges
+	exchanges = ["binance", "kucoin", "bitmart", "bitget", "gateio", "huobi"]
 	to_remove = []
 
 	print("Currently supported exchanges: ")
-	print("{Binance, KuCoin, BitMart, Bitget, Gate.io, Huobi}")
+	print("{Binance, KuCoin, BitMart, Bitget, Gateio, Huobi}")
 	print("Enter any exchanges you wish to remove (comma separated)")
 	ex_to_remove = input("If none, enter NA ").lower()
 	ex_to_remove = ex_to_remove.replace(" ", "").split(",")
@@ -109,11 +142,19 @@ def remove_exchanges():
 	if to_remove:
 		to_remove = format_exchanges(to_remove)
 	else:
-		return ""
+		print("")
+		return "None"
 
 	print("")
 	return to_remove
 
+
+"""
+"
+" Get the lower bound for a profitable arbitrage path
+" user expresses as a percentage
+"
+"""
 def lower_bound_selection():
 	lower_bound = -1.0
 	print("Active arbitrage paths can be as little as 0.001% profitable and extremely profitable such as 10%")
@@ -132,6 +173,13 @@ def lower_bound_selection():
 	print("")
 	return lower_bound
 
+
+"""
+"
+" Get the minimum cryptocurrencies a user wants to consider
+" the cryptocurrencies are retrieved from coingecko.com
+"
+"""
 def min_coins_selection():
 	coin_req = -1
 	print("Please request a number of coins you wish for this framework to consider")
@@ -156,6 +204,13 @@ def min_coins_selection():
 	print("")
 	return coin_req
 
+
+""""
+"
+" Get the 24hr minimum volume that each cryptocurrency must
+" have to be deemed as viable for trading
+"
+"""
 def min_vol_selection():
 	trade_vol = -1.0
 	print("Please request a 24hr trade volume for each coin you wish for this framework to consider")
@@ -163,7 +218,7 @@ def min_vol_selection():
 
 	while(trade_vol == -1.0):
 		try:
-			in_vol = float(input("24hr Trading Volume (minimum is 0.0): "))
+			in_vol = float(input("24hr Trading Volume in USDT (minimum is 0.0 USDT): "))
 	
 			if in_vol > 400000000:
 				print("More than 400m in trading volume as it limits your arbitrage opportunities to less than 100 coins")
@@ -181,6 +236,98 @@ def min_vol_selection():
 	return trade_vol
 
 
+""""
+"
+" Get desired orderbook depth to search when determining
+" realistic path profitability
+"
+"""
+def order_book_depth_selection():
+	order_book_depth = 0
+	print("This framework retrieves most up to date orderbook information (active market orders)")
+	print("before terming a series of trades as a profitable arbitrage")
+
+	while (order_book_depth == 0):
+		try:
+			in_n_depth = int(input("How many active orders would you like to consider at any given time? (0, 250]: "))
+			if in_n_depth < 5:
+				print(f'{in_n_depth} may be too small with order books of lower liquidity')
+				in_res = input("Are you sure you want to proceed? (Y/N): ").lower()
+				if in_res == "y":
+					order_book_depth = in_n_depth
+				else:
+					raise ValueError
+			if in_n_depth > 250:
+				print(f'{in_n_depth} is too many orders for most trading pairs. Truncating {in_n_depth} down to 250')
+				order_book_depth = 250
+				continue
+			order_book_depth = in_n_depth
+
+
+		except ValueError as verr:
+			continue
+		except Exception as ex:
+			print("Bad input. Try again")
+	
+	print("")
+	return order_book_depth
+
+
+""""
+"
+" Get debug/test mode activation from user 
+"
+"""
+def debug_time_mode():
+	print("This framework is presented as easy to use, modify, and adapt")
+	print("For this reason, there are two modes outside of normal arbitrage find mode")
+	print(" - Debug Mode: Print all important information about a single framework iteration to learn how it works")
+	print(" - Time Mode: Used to benchmark speed of the framework, will provide a time breakdown per iteration")
+
+	debug_mode = time_mode = "0"
+	end_condition = False
+	while (not end_condition):
+		try:
+			in_include = input("Would you like to enable either of these options (Y/N): ").lower()
+			if in_include == "n":
+				end_condition = True
+			elif in_include == "y":
+				in_debug_mode = input("Would you like to enable debug mode (Y/N): ").lower()
+				if in_debug_mode == "y":
+					end_condition = True
+					debug_mode = "1"
+					break
+				if in_debug_mode != "n":
+					raise ValueError
+
+				in_test_mode = input("Would you like to enable time mode (Y/N): ").lower()
+				if in_test_mode == "y":
+					end_condition = True
+					time_mode = "1"
+				elif in_test_mode == "n":
+					end_condition = True
+				else:
+					raise ValueError
+
+			else:
+				raise ValueError
+		except ValueError as verr:
+			print("Bad input. Try again")
+		except Exception as ex:
+			print("Bad input. Try again")
+	
+
+	print("")
+	return debug_mode, time_mode
+
+
+""""
+"
+" Print current user selections to console
+" and ask user to okay them before a user_settings.txt
+" is created
+"
+"""
 def print_to_console(selected_user_settings):
 	for setting in selected_user_settings:
 		if "tradeAmt" in setting:
@@ -190,12 +337,18 @@ def print_to_console(selected_user_settings):
 			percentage = float(setting[1]) * 100
 			print(f'{setting[0]}={percentage}%')
 			continue
+		if "Mode" in setting:
+			setting = setting.replace("\n", "").split("=")
+			t_f_str = "True" if setting[1] == "1" else "False"
+			print(f'{setting[0]}={t_f_str}')
+			continue
 		print(setting, end="")
 
 	green_light = input("Is all of this information correct? (Y/N): ")
 	if green_light.lower() == "y":
 		return True
 	else:
+		os.system("clear")
 		print("Restarting user questions now")
 		return False
 
@@ -211,11 +364,17 @@ def generate_output_file(user_filepath, user_settings):
 			f_out.write(line)
 
 
+""""
+"
+" Driver code to get user options
+"
+"""
 def main():
-	print(f'Input file is {sys.argv[1]}')
 	green_light = False
 	user_settings = []
+
 	while (not green_light):
+		# Invoke all user customization methods
 		path_len = path_len_selection()
 		start_coin = start_currency_selection()
 		min_trading_amount = trading_amount_selection(start_coin)
@@ -223,7 +382,10 @@ def main():
 		profit_lower_bound = lower_bound_selection()
 		coin_req = min_coins_selection()
 		vol_req = min_vol_selection()
+		order_book_depth = order_book_depth_selection()
+		debug_mode, time_mode = debug_time_mode()
 		
+		# Format all user customization choices
 		path_len_str = f'pathLen={path_len}\n'
 		start_coin_str = f'startCoin={start_coin}\n'
 		trading_amount_str = f'tradeAmt={min_trading_amount}\n'
@@ -231,14 +393,19 @@ def main():
 		lower_bound_str = f'lowerBound={profit_lower_bound}\n'
 		coin_req_str = f'coinReq={coin_req}\n'
 		vol_req_str = f'volReq={vol_req}\n'
+		debug_str = f'debugMode={debug_mode}\n'
+		time_str = f'timeMode={time_mode}\n'
+		order_book_depth_str = f'orderBookDepth={order_book_depth}\n'
 
 		user_settings = [path_len_str, start_coin_str, trading_amount_str,\
 						exchanges_remove_str, lower_bound_str,\
-						coin_req_str, vol_req_str]
+						coin_req_str, vol_req_str,\
+						debug_str, time_str,\
+						order_book_depth_str]
 		os.system("clear")
 		green_light = print_to_console(user_settings)
 
-	
+	# Once user approves selections, create the user_settings.txt file
 	generate_output_file(sys.argv[1], user_settings)
 
 

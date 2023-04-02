@@ -26,91 +26,273 @@ struct UserInput
 	double lowerBound;
 	int coinReq;
 	double volReq;
+	bool debugMode;
+	bool timeMode;
+	int orderBookDepth;
 };
 
 
 /*
 *
-* 
+* Print method to print information about parsed
+* user info
+*
+*/
+void printUserInput(UserInput userInput)
+{
+	cout << "Arb Path Length: " << userInput.pathLen << endl;
+	cout << "Start Crypto: " << userInput.startCoin << endl;
+	cout << "Min Trade Amount: " << userInput.tradeAmt << endl;
+	cout << "Removed exchanges: " << userInput.exchangeRemove << endl;
+	cout << "Lower bound profitability: " << userInput.lowerBound << endl;
+	cout << "Coin amount requested: " << userInput.coinReq << endl;
+	cout << "Volume requested: " << userInput.volReq << endl;
+	cout << "Debug mode: " << userInput.debugMode << endl;
+	cout << "Time mode: " << userInput.timeMode << endl;
+	cout << "Order book depth: " << userInput.orderBookDepth << endl;
+}
+
+
+/*
+*
+* Parse user settings from a user_settings.txt file
+* and fill a UserInput struct
 *
 */
 void parseUserSettings(UserInput &userInput)
 {
 	ifstream file("../../user_settings.txt");
-    unordered_map<string, string> values;
-    string line;
-    while (getline(file, line)) {
-        istringstream iss(line);
-        string key, value;
-        getline(iss, key, '=');
-        getline(iss, value);
-        values[key] = value;
-    }
-    userInput.pathLen = stoi(values["pathLen"]);
-    userInput.startCoin = values["startCoin"];
-    userInput.tradeAmt = stod(values["tradeAmt"]);
-    userInput.exchangeRemove = values["exchangeRemove"];
-    userInput.lowerBound = stod(values["lowerBound"]);
-    userInput.coinReq = stoi(values["coinReq"]);
-    userInput.volReq = stod(values["volReq"]);
+	unordered_map<string, string> values;
+	string line;
+	while (getline(file, line)) {
+		istringstream iss(line);
+		string key, value;
+		getline(iss, key, '=');
+		getline(iss, value);
+		values[key] = value;
+	}
+	userInput.pathLen = stoi(values["pathLen"]);
+	userInput.startCoin = values["startCoin"];
+	userInput.tradeAmt = stod(values["tradeAmt"]);
+	userInput.exchangeRemove = values["exchangeRemove"];
+	userInput.lowerBound = stod(values["lowerBound"]);
+	userInput.coinReq = stoi(values["coinReq"]);
+	userInput.volReq = stod(values["volReq"]);
+	if (values["debugMode"].at(0) == '1')
+		userInput.debugMode = true;
+	else
+		userInput.debugMode = false;
+	if (values["timeMode"].at(0) == '1')
+		userInput.timeMode = true;
+	else
+		userInput.timeMode = false;
+	userInput.orderBookDepth = stoi(values["orderBookDepth"]);
 }
 
 
+unordered_set<string> removeExchanges(string removeExchanges)
+{
+	unordered_set<string> exchangeVec;
 
-int main(){
-	bool test = true;
-	UserInput userInput;
-	if (test)
-	{
-		parseUserSettings(userInput);
-		cout << userInput.pathLen << endl;
+	// Use a loop to find each delimiter and extract the substring between the delimiters
+	size_t startPos = 0;
+	size_t delimPos = removeExchanges.find('/');
+	while (delimPos != string::npos) {
+		exchangeVec.insert(removeExchanges.substr(startPos, delimPos - startPos));
+		startPos = delimPos + 1;
+		delimPos = removeExchanges.find('/', startPos);
 	}
-	else{
 
-	unordered_map<string, vector<string>> symbolMap = buildSymbolHashMap("../../Symbol_Data_Files/Viable_Trading_Pairs.txt");
-	unordered_set<string> seenSymbols;
-	unordered_map<string, double> feeMap = buildFeeMap();
-	
-	Graph g;
-	int nDepth = 100;
+	// Add the final substring to the vector
+	exchangeVec.insert(removeExchanges.substr(startPos));
+
+	// Print the extracted elements
+	return exchangeVec;
+}
+
+
+void mainArbOnly(UserInput &userInput, Graph &g, unordered_map<string, vector<string>> &symbolMap, 
+				unordered_set<string> &seenSymbols, unordered_map<string, double> &feeMap,
+				unordered_set<string> &exchangeRemove)
+{
+	int framework_iterations=0, negative_arbs=0;
+	vector<TrackProfit> arbPath;
 
 	// Set the graph
-	pullAllTicker(symbolMap, g, true, seenSymbols);
-	// call the buildSymbolHashMap resize method
+	pullAllTicker(symbolMap, g, true, seenSymbols, exchangeRemove);
+	
+	// call resize the symbolMap to only hold viable trading pairs
+	symbolHashMapResize(symbolMap, seenSymbols);
+	seenSymbols.clear();
+
+	// update the graph
+	pullAllTicker(symbolMap, g, false, seenSymbols, exchangeRemove);
+
+	// detect best arbitrage path in the graph
+	arbPath = ArbDetect(g, userInput.startCoin, 1.0, 1.25, 3);
+	printArbInfo(arbPath, feeMap);
+	if (arbPath.size() > 0)
+	{
+		// determine optimal trade amount through orderbook information
+		amountOptControl(g, arbPath, userInput.orderBookDepth, feeMap, userInput.tradeAmt);
+		
+		// this should be a method in amount optimization
+		// logArbInfo(arbPath, feeMap);
+	}
+}
+
+
+// if in debug mode, I need to print a shit ton more information
+// 		- Like number of edges, vertices, printArbInfo, orderbook data, and optimization info
+//		- Restrict this mode to only doing one iteration
+// 		- Push everything to a log file
+void mainDebugMode(UserInput &userInput, Graph &g, unordered_map<string, vector<string>> &symbolMap, 
+				unordered_set<string> &seenSymbols, unordered_map<string, double> &feeMap,
+				unordered_set<string> &exchangeRemove)
+{
+	string startCoin = userInput.startCoin;
+	vector<TrackProfit> arbPath;
+
+	printStars();
+	cout << "UserInput:" << endl;
+	printUserInput(userInput);
+	printStars();
+	cout << endl;
+	// Set the graph
+	pullAllTicker(symbolMap, g, true, seenSymbols, exchangeRemove);
+
+	// call resize the symbolMap to only hold viable trading pairs
 	symbolHashMapResize(symbolMap, seenSymbols);
 	seenSymbols.clear();
 	
+	printStars();
+	cout << "Graph Stats:" << endl;
 	cout << "Number of vertices: " << g.getVertexCount() << endl;
 	cout << "Number of edges: " << g.getEdgeCount() << endl;
+	printStars();
 	cout << endl;
 
-	string coin = "USDT";
-	vector<TrackProfit> arbPath;
-	cout << "Performing Arb Finder from " << coin << endl;
+	printStars();
+	cout << "Performing Arb Finder from " << startCoin << endl;
+	printStars();
 
-	int found = 0, need = 1;
+	int found = 0, need = 1, iterations = 1;
 	while (found < need)
 	{
 		// update the graph
-		auto start = high_resolution_clock::now();
-		pullAllTicker(symbolMap, g, false, seenSymbols);
-		auto stop = high_resolution_clock::now();
-		auto duration = duration_cast<microseconds>(stop - start);
-		cout << "Time to Pull Update Ticker: " << duration.count() << " microseconds" << endl;
-
+		pullAllTicker(symbolMap, g, false, seenSymbols, exchangeRemove);
 
 		// detect best arbitrage path in the graph
-		arbPath = ArbDetect(g, coin, 1.0, 1.25, 3);
+		arbPath = ArbDetect(g, startCoin, 1.0 + userInput.lowerBound, 1.10, userInput.pathLen);
 		if (arbPath.size() > 0)
 		{
-			found++;
-
-			// (FOR TESTING) print arbitrage information in full detail
+			cout << "Found Arb Path in " << iterations << " iterations" << endl;
+			printStars();
+			cout << endl;
+			cout << "Arbitrage Path" << endl;
 			printArbInfo(arbPath, feeMap);
+			printStars();
+			cout << endl;
 			
-			// determine optimal trade amount through orderbook information
-			amountOptControl(g, arbPath, nDepth, feeMap);
+			printStars();
+			cout << "Amount Optimization Debug Info" << endl;
+			amountOptControl(g, arbPath, userInput.orderBookDepth, feeMap, userInput.tradeAmt);
+			printStars();
+			
+			found++;
+		}
+		else
+		{
+			cout << "Iteration " << iterations << " found no arbitrage path" << endl;
+			iterations += 1;
 		}
 	}
+}
+
+
+// if in test mode, I need to record times for all major time computations
+// 		- These include pulling setUp time, ticker data, arb finding, pulling orderbook data, and running optimization amount algo
+// 		- Could probably print these to a log file with each line being a iteration
+void mainTimeMode(UserInput &userInput, Graph &g, unordered_map<string, vector<string>> &symbolMap, 
+				unordered_set<string> &seenSymbols, unordered_map<string, double> &feeMap,
+				unordered_set<string> &exchangeRemove)
+{
+	string startCoin = userInput.startCoin;
+	vector<TrackProfit> arbPath;
+
+	// Set the graph
+	pullAllTicker(symbolMap, g, true, seenSymbols, exchangeRemove);
+
+	// call resize the symbolMap to only hold viable trading pairs
+	symbolHashMapResize(symbolMap, seenSymbols);
+	seenSymbols.clear();
+
+	int iterations = 1, foundPaths = 0;
+	while (true)
+	{
+		vector<double> times(4);
+		// check point print every
+		if (iterations % 100 == 0)
+		{
+			cout << iterations << " Iterations Check Point: ";
+			cout << foundPaths << " profitable paths found" << endl;
+		}
+
+		// update the graph
+		auto start = high_resolution_clock::now();
+		pullAllTicker(symbolMap, g, false, seenSymbols, exchangeRemove);
+		auto end = high_resolution_clock::now();
+		auto duration = duration_cast<microseconds>(end - start);
+		times[0] = (duration / 1e-3s);
+
+		// detect best arbitrage path in the graph
+		start = high_resolution_clock::now();
+		arbPath = ArbDetect(g, startCoin, 1.0 + userInput.lowerBound, 1.10, userInput.pathLen);
+		end = high_resolution_clock::now();
+		duration = duration_cast<microseconds>(end - start);
+		times[1] = (duration / 1e-3s);
+		if (arbPath.size() > 0)
+		{
+			// printArbInfo(arbPath, feeMap);
+			amountOptControl(g, arbPath, userInput.orderBookDepth, feeMap, userInput.tradeAmt, times);
+			foundPaths++;
+		}
+		
+		// print iteration information
+		cout << "Iter " << iterations << ": ";
+		cout << "Ticker_t=" << times[0] << " ms, ";
+		cout << "ArbFind_t=" << times[1] << " ms, ";
+		cout << "OrdBook_t=" << times[2] << " ms, ";
+		cout << "OptAmt_t=" << times[3] << " ms" << endl;
+		cout << "\t" << userInput.startCoin << "->";
+		for (int i = 0; i < arbPath.size()-1; i++)
+			cout << arbPath[i].to << "->";
+		cout << userInput.startCoin;
+		cout << ", profit=" << arbPathMaxProfit(arbPath, feeMap) << "%" << endl;
+		iterations++;
+		sleep(1);
 	}
+}
+
+
+int main(){
+	UserInput userInput;
+	parseUserSettings(userInput);
+
+	unordered_set<string> seenSymbols;
+	Graph g;
+	unordered_map<string, vector<string>> symbolMap = buildSymbolHashMap("../../Symbol_Data_Files/Viable_Trading_Pairs.txt");
+	unordered_map<string, double> feeMap = buildFeeMap();
+	unordered_set<string> exchangeRemove = removeExchanges(userInput.exchangeRemove);
+
+	// mainArbOnly(userInput, g, symbolMap, seenSymbols, feeMap);
+	if (userInput.debugMode)
+		mainDebugMode(userInput, g, symbolMap, seenSymbols, feeMap, exchangeRemove);
+	else if (userInput.timeMode)
+		mainTimeMode(userInput, g, symbolMap, seenSymbols, feeMap, exchangeRemove);
+	// else
+	// 	mainArbOnly(userInput, g, symbolMap, seenSymbols, feeMap);
+
+
+	return 1;
 }

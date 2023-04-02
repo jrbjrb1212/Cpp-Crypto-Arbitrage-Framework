@@ -37,6 +37,33 @@ public:
         m_graphEdges += 2;
     }
 
+    void deleteEdge(string from, string to, string exchange)
+    {
+        vector<Edge> &edges = adjacencyList[from];
+        for (int i = 0; i < edges.size(); i++)
+        {
+            if ((edges[i].to == to) && (edges[i].exchange == exchange))
+            {
+                edges.erase(edges.begin() + i);
+                if (edges.size() == 0)
+                    adjacencyList.erase(from);
+                break;
+            }
+        }
+        edges = adjacencyList[to];
+        for (int i = 0; i < edges.size(); i++)
+        {
+            if ((edges[i].to == from) && (edges[i].exchange == exchange))
+            {
+                edges.erase(edges.begin() + i);
+                if (edges.size() == 0)
+                    adjacencyList.erase(to);
+                break;
+            }
+        }
+    }
+
+
     void updateEdge(string from, string to, double bidPrice, double askPrice, string exchange)
     {
         for (Edge& edge : adjacencyList[from])

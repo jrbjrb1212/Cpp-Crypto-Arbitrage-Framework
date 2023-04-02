@@ -8,28 +8,28 @@
 
 
 filename="user_settings.txt"
+fileCopyLoc="out/build/user_settings.txt"
 
 if [ -e "$filename" ]
 then
-    # call the script
-    echo "user_settings are already generated"
-    echo "starting framework main driver"
-    cd out/build/
-    make
-    cd ../../
+    if diff "$filename" "$fileCopyLoc" >/dev/null
+    then
+        # run the framework
+        echo "user_settings are already generated"
+        echo "building framework"
+        echo ""
+        cmake -S . -B out/build/
+        cd out/build/
+        make ../../
+        echo ""
+        echo "finished framework build"  
+        
+    else
+        bash create_user_settings.sh
+    fi
     
-
 else
     # create user_settings from console input
-    python3 generate_user_settings.py $filename
-    if [ -e "$filename" ]
-    then
-        clear
-        echo "user_settings are generated"
-        echo "starting framework main driver"
-        cd out/build/
-        make
-        ./Crypto 
-    fi
+    bash create_user_settings.sh
 fi
 

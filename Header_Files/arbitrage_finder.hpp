@@ -81,9 +81,9 @@ void printVector(const vector<string> &vec)
 * Helpful method that prints out contents of a double vector
 *
 */
-void PrintVector(const vector<double> &vec)
+void PrintVector(vector<double> &vec)
 {
-	for (const double &doub : vec)
+	for (double &doub : vec)
 	{
 		cout << doub << ", ";
 	}
@@ -137,6 +137,18 @@ void printArbInfo(vector<TrackProfit> &arbPath, unordered_map<string, double> &f
 }
 
 
+
+double arbPathMaxProfit(vector<TrackProfit> &arbPath, unordered_map<string, double> &feeMap)
+{
+	double profit = 0;
+	for (int i = 0; i < arbPath.size(); i++)
+	{
+		profit += arbPath[i].orderPrice + log(1-feeMap[arbPath[i].exchange]);
+	}
+	profit = (WeightConversion(profit) - 1) * 100;
+	return profit;
+}
+
 /*
 *
 * Print method for logging Arbitrage path vertex and edges
@@ -151,6 +163,18 @@ void printArbEdgeInfo(Graph &g, vector<TrackProfit> &arbPath)
 		cout << endl;
 	}
 }
+
+
+/*
+*
+* Debugging print method for printing some stars
+*
+*/
+void printStars()
+{
+	cout << "*****************" << endl;
+}
+
 
 /*
 *
@@ -169,7 +193,7 @@ bool maxProfitCheck(double& maxProfit, double& currProfit, double& lowerThreshol
 
 /*
 *
-* Method to record information about the most proftiable arbritrage path
+* Method to record information about the most profitable arbitrage path
 * Designed to be used for profit validation and order/trade amount optimization 
 *
 */
@@ -491,10 +515,10 @@ vector<TrackProfit> ArbDetect(Graph& g, string source, double lowerProfitThresho
 	ArbDetectControl(g, negCyclePath, arbFindVars);
 
 	//TODO: Remove to another function that is used to validate the profitability of a series of trades
-	if (maxProfit != 0) 
-	{
-		cout << "MaxProfit: " << (WeightConversion(maxProfit) - 1) * 100 << "% for " << arbLen << "-length path" << endl;
-	}
+	// if (maxProfit != 0) 
+	// {
+	// 	cout << "MaxProfit: " << (WeightConversion(maxProfit) - 1) * 100 << "% for " << arbLen << "-length path" << endl;
+	// }
 	
 	return negCyclePath;
 }
