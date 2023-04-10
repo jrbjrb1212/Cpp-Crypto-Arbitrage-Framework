@@ -60,6 +60,7 @@ Adding a lower bound profit threshold allows for a certain degree of profitabili
 
 
 $$\ln(\text{StartingCapital}) + \ln(\text{Trade1}) + \ln(\text{Trade1Fee}) + ... + \ln(\text{TradeN}) + \ln(\text{TradeNFee}) $$
+
 $$ \geq \ln(\text{StartingCapital}) + \ln(1 + \text{LowerThreshold})$$
 
 - **LowerThreshold** is percentage expressed as a decimal
