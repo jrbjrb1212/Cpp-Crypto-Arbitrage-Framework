@@ -1,3 +1,0 @@
-/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/out/build/CMakeFiles/rebuild_cache.dir
-/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/out/build/CMakeFiles/edit_cache.dir
-/mnt/c/Users/johnb/OneDrive/Desktop/Github Code/Crypto-Arbitrage-/out/build/CMakeFiles/Crypto.dir
