@@ -1,9 +1,12 @@
 #!/bin/bash
-##########################################
-#
-#
-#
-##########################################
+#################################################
+#                                               #
+# Shell script to run the arbitrage framework   #
+# - A single execution of this will facilite    #
+#   user setting creation and execute the first #
+#   iterations of the frame work                #
+#                                               #
+#################################################
 
 
 
@@ -20,7 +23,7 @@ then
         echo ""
         cmake -S . -B out/build/
         cd out/build/
-        make ../../
+        make 
         echo ""
         echo "finished framework build"  
         

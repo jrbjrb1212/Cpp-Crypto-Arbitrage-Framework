@@ -1,10 +1,10 @@
-pathLen=3
+pathLen=2
 startCoin=USDT
 tradeAmt=20
 exchangeRemove=None
-lowerBound=0.000
+lowerBound=0.03
 coinReq=100
-volReq=100.0
+volReq=10000.0
 debugMode=0
-timeMode=1
+timeMode=0
 orderBookDepth=25

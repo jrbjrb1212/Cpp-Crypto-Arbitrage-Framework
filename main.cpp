@@ -111,6 +111,13 @@ unordered_set<string> removeExchanges(string removeExchanges)
 }
 
 
+/*
+*
+* main arbitrage running branch
+* - Facilitates all features of the framework
+* 	while minimizing the log information 
+*
+*/
 void mainArbOnly(UserInput &userInput, Graph &g, unordered_map<string, vector<string>> &symbolMap, 
 				unordered_set<string> &seenSymbols, unordered_map<string, double> &feeMap,
 				unordered_set<string> &exchangeRemove)
@@ -142,10 +149,16 @@ void mainArbOnly(UserInput &userInput, Graph &g, unordered_map<string, vector<st
 }
 
 
-// if in debug mode, I need to print a shit ton more information
-// 		- Like number of edges, vertices, printArbInfo, orderbook data, and optimization info
-//		- Restrict this mode to only doing one iteration
-// 		- Push everything to a log file
+/*
+*
+* debug arbitrage running branch
+* - Facilitates all features of the framework
+* 	for exactly one successful arbitrage find 
+* - Debug mode will print important arbitrage
+*  	log information such as graph size, arbitrage
+* 	path information, orderbook parsing, and 
+* 	ideal size finding
+*/
 void mainDebugMode(UserInput &userInput, Graph &g, unordered_map<string, vector<string>> &symbolMap, 
 				unordered_set<string> &seenSymbols, unordered_map<string, double> &feeMap,
 				unordered_set<string> &exchangeRemove)
@@ -210,9 +223,16 @@ void mainDebugMode(UserInput &userInput, Graph &g, unordered_map<string, vector<
 }
 
 
-// if in test mode, I need to record times for all major time computations
-// 		- These include pulling setUp time, ticker data, arb finding, pulling orderbook data, and running optimization amount algo
-// 		- Could probably print these to a log file with each line being a iteration
+/*
+*
+* time arbitrage running branch
+* - Facilitates all features of the framework
+* 	to benchmark the time dominant operations
+* 	of the framework
+* - These operations include ticker data pulling,
+*	arbitrage finding, orderbook pulling, and
+*	ideal amount finding
+*/
 void mainTimeMode(UserInput &userInput, Graph &g, unordered_map<string, vector<string>> &symbolMap, 
 				unordered_set<string> &seenSymbols, unordered_map<string, double> &feeMap,
 				unordered_set<string> &exchangeRemove)
