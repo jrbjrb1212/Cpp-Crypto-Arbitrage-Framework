@@ -1,7 +1,7 @@
 ## C++ Crypto Arbitrage Framework (Still In Development)
 A **C++ dominant framework** for pulling real-time data via public endpoints from six crypto exchanges to **compute a crypto currency arbitrage** that is both mathematically profitable and a proper amount to trade to get realistic profitability. The framework can **detect bilatreal, trilateral, quadliteral, and pentalateral arbitrages** from a single set of crypto currency data.
 
-<p align="center"><img width="600" src="https://github.com/jrbjrb1212/Cpp-Crypto-Arbitrage-Framework/blob/main/ReadMEPics/Arb_Example.png?raw=true"></p>
+<p align="center"><img width="600" src="https://github.com/jrbjrb1212/Cpp-Crypto-Arbitrage-Framework/blob/main/Framework/ReadMEPics/Arb_Example.png?raw=true"></p>
 
 ## Need for Speed, through C++ and Parallelization
 Pulling active ticker data and select orderbook data via public API endpoints from all trading pairs across 6 crypto exchanges is about **2.7 MB of JSON string data per pull**. That is about **46.6 GB** of ticker and orderbook data **per day** from only 6 exchanges. This framework downloads active ticker data, parses active ticker data, performs arbitrage finding, formats the arbitrage path, downloads relevant orderbook information, and determines realistic profitability. Most of these **operations are expensive**, time consuming operations that in the end will net a path that is deemed profitable. **If the path takes too long to compute the profitability/trading opportunity may have disappeared.**
@@ -30,7 +30,7 @@ $ bash shell_driver.sh
 
 ## Outline
 
-<p align="center"><img width="600" src="https://github.com/jrbjrb1212/Cpp-Crypto-Arbitrage-Framework/blob/main/ReadMEPics/Outline.png?raw=true"></p>
+<p align="center"><img width="600" src="https://github.com/jrbjrb1212/Cpp-Crypto-Arbitrage-Framework/blob/main/Framework/ReadMEPics/Outline.png?raw=true"></p>
 
 The project is set up into **five** main section crypto ticker data pulling, graph building, arbitrage finding, orderbook data pulling, and trading amount determination
 
@@ -127,7 +127,7 @@ Places the arbitrage framework into time mode. Facilitates all features of the f
 Sets the depth to request from each trading pair orderbook when determining realistic profitability and price slippage in the [ideal trading amount algorithm](Framework/Header_Files/amount_optimization.hpp). The higher the depth the longer each API request will take to generate and download. It is also unlikely that orderbooks will have a large amount of active trades (250+), if it is not a extremely popular trading pair. It is also worth noting that the deeper one looks into an orderbook for potential trading liquidity the more spread one will deal with.
 
 ## Exchange Data Pulling
-<p align="center"><img width="600" src="https://github.com/jrbjrb1212/Cpp-Crypto-Arbitrage-Framework/blob/main/ReadMEPics/Parallel_Example.png?raw=true"></p>
+<p align="center"><img width="600" src="https://github.com/jrbjrb1212/Cpp-Crypto-Arbitrage-Framework/blob/main/Framework/ReadMEPics/Parallel_Example.png?raw=true"></p>
 
 Pinging and downloading ticker and orderbook data via public exchange endpoints takes a lot of time that cannot be avoided. Each public endpoint web request will take, [see benchmarks](#speed-benchmarks-wip), between 1 and 3 seconds. To avoid a serial implementation of doing one request after another, the **requests are multithreaded** (assuming multiple threads are available) to reduce the total time to make all endpoint data requests around 3 seconds with the slowest endpoint request being the bottleneck. [API pulling code](Framework/Header_Files/exchange_api_pull.hpp)
 
