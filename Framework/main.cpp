@@ -1,8 +1,22 @@
+#pragma once
+
 #include <iostream>
 #include <chrono>
+#include <sstream>
 #include <unordered_set>
 #include <unordered_map>
+#include <vector>
 #include <unistd.h>
+#include <cmath>
+#include <algorithm>
+#include <limits>
+#include <tuple>
+#include <thread>
+#include <mutex>
+#include <assert.h>
+#include <fstream>
+#include <curl/curl.h>
+#include <nlohmann/json.hpp>
 #include "Header_Files/graph.hpp"
 #include "Header_Files/arbitrage_finder.hpp"
 #include "Header_Files/exchange_api_pull.hpp"
@@ -122,30 +136,41 @@ void mainArbOnly(UserInput &userInput, Graph &g, unordered_map<string, vector<st
 				unordered_set<string> &seenSymbols, unordered_map<string, double> &feeMap,
 				unordered_set<string> &exchangeRemove)
 {
-	int framework_iterations=0, negative_arbs=0;
+	string startCoin = userInput.startCoin;
+	int frameworkIterations=0, positiveArbs=0;
+	int currIterations=0, currArbsFound=0;
+	int optimalAmount;
+	double profitability;
 	vector<TrackProfit> arbPath;
 
 	// Set the graph
 	pullAllTicker(symbolMap, g, true, seenSymbols, exchangeRemove);
-	
+
 	// call resize the symbolMap to only hold viable trading pairs
 	symbolHashMapResize(symbolMap, seenSymbols);
 	seenSymbols.clear();
 
-	// update the graph
-	pullAllTicker(symbolMap, g, false, seenSymbols, exchangeRemove);
+	while (true){
+		// update the graph
+		pullAllTicker(symbolMap, g, false, seenSymbols, exchangeRemove);
 
-	// detect best arbitrage path in the graph
-	arbPath = ArbDetect(g, userInput.startCoin, 1.0, 1.25, 3);
-	printArbInfo(arbPath, feeMap);
-	if (arbPath.size() > 0)
-	{
-		// determine optimal trade amount through orderbook information
-		amountOptControl(g, arbPath, userInput.orderBookDepth, feeMap, userInput.tradeAmt);
+		// detect best arbitrage path in the graph
+		arbPath = ArbDetect(g, startCoin, 1.0 + userInput.lowerBound, 1.10, userInput.pathLen);
+		frameworkIterations++; currIterations++;
+		cout << "Iteration " << frameworkIterations << ": ";
+		if (arbPath.size() > 0)
+		{
+			// determine optimal trade amount through orderbook information
+			profitability = amountOptControlMain(g, arbPath, userInput.orderBookDepth, feeMap, userInput.tradeAmt);
+			positiveArbs++; currArbsFound++;
+		}
 		
-		// this should be a method in amount optimization
-		// logArbInfo(arbPath, feeMap);
+		LogArbInfo(arbPath, feeMap, userInput.startCoin, profitability);
+
+		CheckPointInfo(frameworkIterations, positiveArbs, currIterations, currArbsFound);
+		sleep(1);
 	}
+	
 }
 
 
@@ -165,7 +190,6 @@ void mainDebugMode(UserInput &userInput, Graph &g, unordered_map<string, vector<
 {
 	string startCoin = userInput.startCoin;
 	vector<TrackProfit> arbPath;
-
 	printStars();
 	cout << "UserInput:" << endl;
 	printUserInput(userInput);
@@ -177,7 +201,7 @@ void mainDebugMode(UserInput &userInput, Graph &g, unordered_map<string, vector<
 	// call resize the symbolMap to only hold viable trading pairs
 	symbolHashMapResize(symbolMap, seenSymbols);
 	seenSymbols.clear();
-	
+		
 	printStars();
 	cout << "Graph Stats:" << endl;
 	cout << "Number of vertices: " << g.getVertexCount() << endl;
@@ -192,6 +216,7 @@ void mainDebugMode(UserInput &userInput, Graph &g, unordered_map<string, vector<
 	int found = 0, need = 1, iterations = 1;
 	while (found < need)
 	{
+		sleep(2);
 		// update the graph
 		pullAllTicker(symbolMap, g, false, seenSymbols, exchangeRemove);
 
@@ -204,12 +229,13 @@ void mainDebugMode(UserInput &userInput, Graph &g, unordered_map<string, vector<
 			cout << endl;
 			cout << "Arbitrage Path" << endl;
 			printArbInfo(arbPath, feeMap);
+			printArbProfitability(arbPath, feeMap);
 			printStars();
 			cout << endl;
 			
 			printStars();
 			cout << "Amount Optimization Debug Info" << endl;
-			amountOptControl(g, arbPath, userInput.orderBookDepth, feeMap, userInput.tradeAmt);
+			amountOptControlDebug(g, arbPath, userInput.orderBookDepth, feeMap, userInput.tradeAmt);
 			printStars();
 			
 			found++;
@@ -239,6 +265,7 @@ void mainTimeMode(UserInput &userInput, Graph &g, unordered_map<string, vector<s
 {
 	string startCoin = userInput.startCoin;
 	vector<TrackProfit> arbPath;
+	double profitability;
 
 	// Set the graph
 	pullAllTicker(symbolMap, g, true, seenSymbols, exchangeRemove);
@@ -262,19 +289,19 @@ void mainTimeMode(UserInput &userInput, Graph &g, unordered_map<string, vector<s
 		auto start = high_resolution_clock::now();
 		pullAllTicker(symbolMap, g, false, seenSymbols, exchangeRemove);
 		auto end = high_resolution_clock::now();
-		auto duration = duration_cast<microseconds>(end - start);
-		times[0] = (duration / 1e-3s);
+		auto duration = duration_cast<milliseconds>(end - start);
+		times[0] = (duration.count());
 
 		// detect best arbitrage path in the graph
 		start = high_resolution_clock::now();
 		arbPath = ArbDetect(g, startCoin, 1.0 + userInput.lowerBound, 1.10, userInput.pathLen);
 		end = high_resolution_clock::now();
-		duration = duration_cast<microseconds>(end - start);
-		times[1] = (duration / 1e-3s);
+		duration = duration_cast<milliseconds>(end - start);
+		times[1] = (duration.count());
+		
 		if (arbPath.size() > 0)
 		{
-			// printArbInfo(arbPath, feeMap);
-			amountOptControl(g, arbPath, userInput.orderBookDepth, feeMap, userInput.tradeAmt, times);
+			profitability = amountOptControlTime(g, arbPath, userInput.orderBookDepth, feeMap, userInput.tradeAmt, times);
 			foundPaths++;
 		}
 		
@@ -284,11 +311,10 @@ void mainTimeMode(UserInput &userInput, Graph &g, unordered_map<string, vector<s
 		cout << "ArbFind_t=" << times[1] << " ms, ";
 		cout << "OrdBook_t=" << times[2] << " ms, ";
 		cout << "OptAmt_t=" << times[3] << " ms" << endl;
-		cout << "\t" << userInput.startCoin << "->";
-		for (int i = 0; i < arbPath.size()-1; i++)
-			cout << arbPath[i].to << "->";
-		cout << userInput.startCoin;
-		cout << ", profit=" << arbPathMaxProfit(arbPath, feeMap) << "%" << endl;
+		if (arbPath.size() > 0){
+			cout << "\t-";
+			LogArbInfo(arbPath, feeMap, userInput.startCoin, profitability);
+		}
 		iterations++;
 		sleep(1);
 	}
@@ -305,14 +331,12 @@ int main(){
 	unordered_map<string, double> feeMap = buildFeeMap();
 	unordered_set<string> exchangeRemove = removeExchanges(userInput.exchangeRemove);
 
-	// mainArbOnly(userInput, g, symbolMap, seenSymbols, feeMap);
 	if (userInput.debugMode)
 		mainDebugMode(userInput, g, symbolMap, seenSymbols, feeMap, exchangeRemove);
 	else if (userInput.timeMode)
 		mainTimeMode(userInput, g, symbolMap, seenSymbols, feeMap, exchangeRemove);
-	// else
-	// 	mainArbOnly(userInput, g, symbolMap, seenSymbols, feeMap);
-
+	else
+		mainArbOnly(userInput, g, symbolMap, seenSymbols, feeMap, exchangeRemove);
 
 	return 1;
 }

@@ -61,7 +61,7 @@ def scrape_pages(viable_coin_count, min_vol):
 		page_URL = f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page={iters}&sparkline=false"
 		json_coins_data = extract_coin_info(page_URL)
 		parse_coin_from_json(json_coins_data, viable_coins, min_vol)
-		print(len(viable_coins))
+		# print(len(viable_coins))
 		
 		iters += 1	
 
@@ -154,7 +154,6 @@ def cli_parse():
 "
 """
 def main():
-
 	number_coins_req = int(sys.argv[1])
 	min_coin_vol = float(sys.argv[2])
 	

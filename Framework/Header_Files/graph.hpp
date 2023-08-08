@@ -8,9 +8,12 @@
 
 using namespace std;
 
-// TODO: Comment this
 
-
+/*
+*
+* Defines an edge in the graph
+*
+*/
 struct Edge
 {
     string to;
@@ -20,6 +23,15 @@ struct Edge
     string bidOrAsk;
 };
 
+
+/*
+*
+* Adjacency list graph custom data
+* structure that defines trade relations
+* across all exchanges that the arbitrage bot 
+* pulls active ticker data from.
+*
+*/
 class Graph
 {
 private:
@@ -29,14 +41,18 @@ public:
     Graph() {}
     unordered_map<string, vector<Edge> > adjacencyList;
 
+    // Expand the graph by adding an edge
+    // - Usually only done during the 1st set of GET requests
     void addEdge(string from, string to, double fee, string exchange)
     {
-        // TODO: Maybe consider fixing this log(1-fee) to just computing it once on feeMap setup
         adjacencyList[from].push_back({to, 0.0, log(1-fee), exchange, ""});
         adjacencyList[to].push_back({from, 0.0, log(1-fee), exchange, ""});
         m_graphEdges += 2;
     }
 
+    // Expand the graph by adding an edge
+    // - Done when an orderbook is searched but it comes up empty
+    //   thus the edge is illiquid and should not be searched in the
     void deleteEdge(string from, string to, string exchange)
     {
         vector<Edge> &edges = adjacencyList[from];
@@ -64,6 +80,8 @@ public:
     }
 
 
+    // Update an edge with new ticker prices
+    // - Completed each time new ticker data is obtained
     void updateEdge(string from, string to, double bidPrice, double askPrice, string exchange)
     {
         for (Edge& edge : adjacencyList[from])
@@ -96,6 +114,8 @@ public:
         return m_graphEdges;
     }
 
+
+    // Prints the all data contained within the graph
     void printGraph()
     {
         cout << "\nGraph Print in form of Adjaceny List: " << endl;
@@ -112,6 +132,8 @@ public:
         }
     }
 
+
+    // Prints all data associated with a particular edge in the graph
     void printEdge(string from, string to, string exchange) {
         vector<Edge> edges = adjacencyList[from];
         
@@ -127,7 +149,5 @@ public:
         
         // If the loop finishes without finding the edge, print an error message
         cout << "Error: no edge found from " << from << " to " << to << endl;
-    }
-
-    
+    } 
 };

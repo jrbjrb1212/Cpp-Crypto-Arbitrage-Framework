@@ -16,7 +16,6 @@ using namespace std;
 using namespace std::chrono;
 
 
-
 /*
 *
 * Determines size for buffer needed for data received from API responses
@@ -924,7 +923,6 @@ void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g, boo
         try
         {
             nlohmann::json json_data = nlohmann::json::parse(response);
-
             for (auto& item : json_data["data"]["ticker"]) {
                 // symbol comes in uppercase with the coins seperated by a hyphen
                 string tradeSymbol = item["symbol"];
@@ -940,6 +938,7 @@ void pullKucoin(unordered_map<string, vector<string> > &symbolMap, Graph &g, boo
                 if ((bidPrice == 0.0) || (askPrice == 0.0)){
                     continue;
                 }
+
                 if (setGraph){
                     string strTakerFee = item["takerFeeRate"], strMakerFee = item["makerFeeRate"];
                     exchangeFee = stod(strTakerFee) + stod(strMakerFee);

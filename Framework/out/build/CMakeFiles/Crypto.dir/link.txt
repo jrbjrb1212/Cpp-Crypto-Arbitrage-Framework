@@ -1,1 +1,0 @@
-/usr/bin/c++  -pthread CMakeFiles/Crypto.dir/main.cpp.o -o Crypto  -lcurl 

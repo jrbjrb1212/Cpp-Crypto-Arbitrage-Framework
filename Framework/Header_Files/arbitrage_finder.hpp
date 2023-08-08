@@ -1,6 +1,5 @@
 #pragma once
 
-// TODO: Remove imports that never get used
 #include <iostream>
 #include <unordered_map>
 #include <unordered_set>
@@ -20,7 +19,7 @@ using namespace std;
 
 /*
 *
-* Struct designed for log data storage and arbirtage validation outside of initali discovery
+* Struct designed for log data storage and arbitrage validation outside of inital discovery
 *
 */
 struct TrackProfit
@@ -46,12 +45,12 @@ long double WeightConversion(long double conversionMetric){
 
 /*
 *
-* Helpful method that prints out the trades of an arbritage opporutunity
+* Helpful method that prints out the trades of an arbitrage opportunity
 *
 */
 void PrintCycle(vector<TrackProfit> cycleVec)
 {
-	cout << "Arbritrage Detected!" << endl;
+	cout << "Arbitrage Detected!" << endl;
 	for (int i = 0; i < cycleVec.size() - 1; i++)
 	{
 		cout << cycleVec[i].from << " --> ";
@@ -83,9 +82,9 @@ void printVector(const vector<string> &vec)
 */
 void PrintVector(vector<double> &vec)
 {
-	for (double &doub : vec)
+	for (double &num : vec)
 	{
-		cout << doub << ", ";
+		cout << num << ", ";
 	}
 	cout << endl;
 }
@@ -137,7 +136,51 @@ void printArbInfo(vector<TrackProfit> &arbPath, unordered_map<string, double> &f
 }
 
 
+/*
+*
+* Print method for a checkpoint update on the arbitrage 
+* find rate overall and since the last checkpoint
+*
+*/
+void CheckPointInfo(int frameworkIterations, int positiveArbs, int &currIterations,  int &currArbsFound)
+{
+	if (frameworkIterations % 25 == 0)
+	{
+		cout << endl;
+		cout << "Current iteration: " << frameworkIterations << endl;;
+		cout << "\t-over last 25 iterations, arbitrage find rate:\t" << (double)currArbsFound/currIterations << "%" << endl;
+		cout << "\t-overall arbitrage find rate:\t" << (double)positiveArbs/frameworkIterations<< "%" << endl;  
+		cout << endl;
+		currIterations=0;
+		currArbsFound=0;
+	}
+}
 
+
+/*
+*
+* Print method for determining the profitability 
+* of a given arbitrage cycle detected
+*
+*/
+void printArbProfitability(vector<TrackProfit> &arbPath, unordered_map<string, double> &feeMap)
+{
+	double currProfit = 0;
+	int arbLen = arbPath.size();
+	for (int i=0; i<arbPath.size(); i++){
+		currProfit += arbPath[i].orderPrice + feeMap[arbPath[i].exchange];
+	}
+	cout << "MaxProfit: " << (WeightConversion(currProfit) - 1) * 100 << "% for " << arbLen << "-length path" << endl;
+}
+
+
+
+/*
+*
+* Determine the profit from 
+* a given arbitrage cycle
+*
+*/
 double arbPathMaxProfit(vector<TrackProfit> &arbPath, unordered_map<string, double> &feeMap)
 {
 	double profit = 0;
@@ -148,6 +191,7 @@ double arbPathMaxProfit(vector<TrackProfit> &arbPath, unordered_map<string, doub
 	profit = (WeightConversion(profit) - 1) * 100;
 	return profit;
 }
+
 
 /*
 *
@@ -175,10 +219,27 @@ void printStars()
 	cout << "*****************" << endl;
 }
 
+void LogArbInfo(vector<TrackProfit> &arbPath, unordered_map<string, double> &feeMap, string startCoin, double idealAmountProfit)
+{	
+	if (arbPath.size() > 0)
+	{
+		cout << startCoin << "->";
+		for (int i = 0; i < arbPath.size()-1; i++)
+			cout << arbPath[i].to << "->";
+		cout << startCoin;
+		cout << ", tick_p=" << arbPathMaxProfit(arbPath, feeMap) << "%";
+		cout << ", orbo_p=" << idealAmountProfit << "%" << endl;
+	}
+	else
+	{
+		cout << "no profitable path detected" << endl;
+	}
+}
+
 
 /*
 *
-* Method for determing if current profit is the max profit
+* Method for determining if current profit is the max profit
 *
 */
 bool maxProfitCheck(double& maxProfit, double& currProfit, double& lowerThreshold, double& upperThreshold){
@@ -218,7 +279,7 @@ void updateMaxPath(vector<TrackProfit>& negCyclePath, vector<Edge> trades)
 
 /*
 *
-* Band-aid struct created to reduce arguments required for arbirtrage finding functions
+* Band-aid struct created to reduce arguments required for arbitrage finding functions
 *
 */
 struct processInput{
@@ -319,8 +380,8 @@ void ProcessLen3(Graph &g, vector<TrackProfit> &negCyclePath, processInput input
 
 /*
 *
-* Base triangular arbirtarge algorithm from ProcessLen3 extrolated
-* for parallel time improvment of 4 path arbirtrages
+* Base triangular arbitrage algorithm from ProcessLen3 extrapolated
+* for parallel time improvement of 4 path arbitrages
 * 
 */
 void ProcessBase3For4(Graph &g, vector<TrackProfit> &negCyclePath, processInput inputVars, 
@@ -365,8 +426,8 @@ void ProcessBase3For4(Graph &g, vector<TrackProfit> &negCyclePath, processInput 
 
 /*
 *
-* Base triangular arbirtarge algorithm from ProcessLen3 extrolated
-* for parallel time improvment of 5 path arbirtrages
+* Base triangular arbitrage algorithm from ProcessLen3 extrapolated
+* for parallel time improvement of 5 path arbitrages
 * 
 */
 void ProcessBase3For5(Graph &g, vector<TrackProfit> &negCyclePath, processInput inputVars, 
@@ -390,6 +451,7 @@ void ProcessBase3For5(Graph &g, vector<TrackProfit> &negCyclePath, processInput 
 				if (fifthTradeEdge.to == inputVars.source)
 				{
 					currProfit += (fifthTradeEdge.exPrice + fifthTradeEdge.fee);
+					
 					// need to do a max profit check
 					if (maxProfitCheck(inputVars.maxProfit, currProfit, inputVars.lowerBound, inputVars.upperBound))
 					{
@@ -513,12 +575,6 @@ vector<TrackProfit> ArbDetect(Graph& g, string source, double lowerProfitThresho
 
 	processInput arbFindVars = {lowerBound, upperBound, maxProfit, arbLen, source};
 	ArbDetectControl(g, negCyclePath, arbFindVars);
-
-	//TODO: Remove to another function that is used to validate the profitability of a series of trades
-	// if (maxProfit != 0) 
-	// {
-	// 	cout << "MaxProfit: " << (WeightConversion(maxProfit) - 1) * 100 << "% for " << arbLen << "-length path" << endl;
-	// }
 	
 	return negCyclePath;
 }

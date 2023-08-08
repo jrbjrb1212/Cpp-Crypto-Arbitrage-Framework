@@ -3,7 +3,7 @@
 #                                               #
 # Shell script to run the arbitrage framework   #
 # - A single execution of this will facilite    #
-#   user setting creation and execute the first #
+#   user setting creation and execute           #
 #   iterations of the frame work                #
 #                                               #
 #################################################
@@ -15,18 +15,13 @@ fileCopyLoc="out/build/user_settings.txt"
 
 if [ -e "$filename" ]
 then
-    if diff "$filename" "$fileCopyLoc" >/dev/null
+    if diff "$filename" "$fileCopyLoc" > /dev/null
     then
-        # run the framework
+        # build the framework
         echo "user_settings are already generated"
         echo "building framework"
         echo ""
         cmake -S . -B out/build/
-        cd Framework/out/build/
-        make 
-        echo ""
-        echo "finished framework build"  
-        
     else
         bash create_user_settings.sh
     fi
@@ -36,3 +31,9 @@ else
     bash create_user_settings.sh
 fi
 
+cd out/build/
+# compile the frame work
+make
+echo ""
+echo "finished framework build"  
+./Crypto
