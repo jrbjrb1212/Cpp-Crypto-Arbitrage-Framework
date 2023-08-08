@@ -154,10 +154,10 @@ This type of exchange data pulling from public api endpoints is freely available
     - **Objective function would be the maximization profit** from available trades at any given time 
     - Separate **objective function could be the optimized trading amount** from the parsed orderbook data 
 
-- Additionally **before deploying the framework** as an active trading bot, one should consider hooking up the arbitrage paths that the bot finds to a Twilio text message/email bot. The Twilio application could send a user text messages about discovered arbitrage paths and the user could manually check them to recognize potential strengths and weaknesses of this framework. From there, a user can tweak user customization or my code entirely to feel comfortable with the framework before deploying an active trading bot 
+- Additionally **before deploying the framework** as an active trading bot, one should consider hooking up the arbitrage paths that the bot finds to a Twilio text message/email bot. The Twilio application could send a user text messages about discovered arbitrage paths and the user could manually check them to recognize potential strengths and weaknesses of this framework. From there, a user can tweak user_settings customization or my code entirely to feel comfortable with the framework before deploying an active trading bot 
 
 
 ## Disclaimer and Drawbacks
 - This crypto arbitrage framework was done for **personal interest**. It is possible that this framework will output a **false positive path** that **produces financial loss** because of outdated orderbook data so any outside use of this code is at the users discretion and risk 
-- **Very few exchanges offer cross exchange trades**, so **keeping balances on all exchanges in use would be required** for the best market order completion speed. Else one would have transfer funds from exchanges and pay additional fees and suffer for a slower execution of an arbitrage path.
+- **Very few exchanges offer cross exchange trades**, so **keeping balances on all exchanges in use would be required** for the best market order completion speed. Else, one would have transfer funds between exchanges, pay transfer fees, and suffer from a slower execution of an arbitrage path.
     - If trading on multiple exchanges with large enough balances, it is possible for a user to parallelize market order submission by trading each pair independently. If the arbitrage path is profitable at order completion, the result overall will be profitable
