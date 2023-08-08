@@ -1,1 +1,0 @@
-/usr/bin/c++  -pthread CMakeFiles/crypto.dir/BellmanFord.cpp.o -o crypto  -lcurl -lBoost 
