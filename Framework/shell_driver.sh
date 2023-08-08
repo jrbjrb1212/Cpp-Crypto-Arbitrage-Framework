@@ -31,6 +31,7 @@ else
     bash create_user_settings.sh
 fi
 
+clear
 cd out/build/
 # compile the frame work
 make
